@@ -17,7 +17,7 @@ let every seconds ~f ~stop =
 ;;
 
 let handle_keys (_interface : Interface.t) ~game_over =
-  every ~stop:game_over 0.001 ~f:(fun () ->
+  every ~stop:(game_over) 0.001 ~f:(fun () ->
     match Interface_graphics.read_key () with
     | None -> ()
     | Some _key -> () 
@@ -25,7 +25,7 @@ let handle_keys (_interface : Interface.t) ~game_over =
 ;;
 
 let run () =
-  let game = Interface_graphics.init_exn () in
-  Interface_graphics.render game;
-  handle_keys game;
+  (* let game = Interface_graphics.init_exn () in *)
+  Interface_graphics.render ();
+  handle_keys;
 ;;

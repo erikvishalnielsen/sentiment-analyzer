@@ -1,6 +1,13 @@
 (library
- (inline_tests)
- (name demo1)
+ (name interface_lib)
  (libraries async core graphics)
+ (inline_tests)
  (preprocess
-  (pps ppx_inline_test)))
+  (pps ppx_jane)))
+
+ (env
+ (dev
+  (flags
+   (:standard -w -20 -w -27 -w -32 -w -34 -w -37 -w -39 -w -69)))
+ (release
+  (flags (:standard))))
