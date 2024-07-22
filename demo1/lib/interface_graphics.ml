@@ -30,13 +30,14 @@ let init_exn () =
        " %dx%d"
        (gui_height + header_height)
        gui_width);
+  Interface.create ();
 ;;
 
 let read_key () =
   if Graphics.key_pressed () then Some (Graphics.read_key ()) else None
 ;;
 
-let draw_header =
+let draw_header () =
   let open Constants in
   let header_color = Colors.black in
   Graphics.set_color header_color;
@@ -66,7 +67,7 @@ let render () =
      [display_mode] to true and then synchronize. This guarantees that there
      won't be flickering! *)
   Graphics.display_mode false;
-  draw_header;
+  draw_header ();
   draw_play_area ();
   Graphics.display_mode true;
   Graphics.synchronize ()

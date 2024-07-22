@@ -3,6 +3,3 @@ lib: [
   "_build/install/default/lib/demo1/dune-package"
   "_build/install/default/lib/demo1/opam"
 ]
-bin: [
-  "_build/install/default/bin/demo1"
-]

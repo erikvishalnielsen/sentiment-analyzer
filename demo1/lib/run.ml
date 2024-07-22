@@ -2,6 +2,8 @@ open! Core
 
 (* This is the core logic that actually runs the game. We have implemented
    all of this for you, but feel free to read this file as a reference. *)
+let game_over = ref false
+  
 let every seconds ~f ~stop =
   let open Async in
   let rec loop () =
@@ -16,7 +18,7 @@ let every seconds ~f ~stop =
   don't_wait_for (loop ())
 ;;
 
-let handle_keys (_interface : Interface.t) ~game_over =
+let handle_keys () =
   every ~stop:(game_over) 0.001 ~f:(fun () ->
     match Interface_graphics.read_key () with
     | None -> ()
@@ -25,7 +27,7 @@ let handle_keys (_interface : Interface.t) ~game_over =
 ;;
 
 let run () =
-  (* let game = Interface_graphics.init_exn () in *)
+  let _interface = Interface_graphics.init_exn () in
   Interface_graphics.render ();
-  handle_keys;
+  handle_keys ();
 ;;

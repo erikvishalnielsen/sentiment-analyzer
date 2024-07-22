@@ -1,1 +1,1 @@
-lib/interface_graphics.pp.ml: Core Expect_test_collector Float Graphics Ppx_bench_lib Ppx_inline_test_lib Ppx_module_timer_runtime Printf
+lib/interface_graphics.pp.ml: Core Expect_test_collector Float Graphics Interface Ppx_bench_lib Ppx_inline_test_lib Ppx_module_timer_runtime Printf

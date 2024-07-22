@@ -1,1 +1,1 @@
-lib/interface_graphics.pp.mli: Core
+lib/interface_graphics.pp.mli: Core Interface
