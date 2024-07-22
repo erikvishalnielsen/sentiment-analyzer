@@ -18,16 +18,41 @@ let every seconds ~f ~stop =
   don't_wait_for (loop ())
 ;;
 
-let handle_keys () =
+let handle_keys (interface : Interface.t) =
   every ~stop:(game_over) 0.001 ~f:(fun () ->
     match Interface_graphics.read_key () with
     | None -> ()
-    | Some _key -> () 
+    | Some key -> (
+      if (interface.timeBox) then (
+        match (Char.is_digit key && (interface.input_timeframe) < 100) with 
+        | true -> interface.input_timeframe <- Int.of_string (String.concat [Int.to_string (interface.input_timeframe) ; (String.of_char key)]);
+        | false -> ()
+      );
+      if (interface.tickerBox) then (
+        match (Char.is_alpha key && (String.length interface.input_ticker) < 6) with 
+        | true -> interface.input_ticker <- String.concat [(interface.input_ticker) ; (String.of_char key)];
+        | false -> ()
+      );
+    ) 
     )
 ;;
 
+let handle_clicks (interface : Interface.t) = 
+  every ~stop:(game_over) 0.001 ~f:(fun () ->
+    if (Graphics.button_down ()) then (Interface.handle_click interface (Graphics.mouse_pos ())))
+;;
+
+let handle_steps (game : Interface.t) =
+  every ~stop:(game_over) 0.1 ~f:(fun () ->
+    Interface_graphics.render game)
+;;
+
 let run () =
-  let _interface = Interface_graphics.init_exn () in
-  Interface_graphics.render ();
-  handle_keys ();
+  let interface = Interface_graphics.init_exn () in
+  Interface_graphics.render interface;
+  handle_keys interface;
+  handle_clicks interface;
+  handle_steps interface;
+  
+  (* if (Graphics.button_down ()) then check_stock_box *)
 ;;

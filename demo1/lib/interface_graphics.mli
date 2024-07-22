@@ -9,4 +9,4 @@ val init_exn : unit -> Interface.t
 (** [read_key] returns a keyboard input, if it's available. *)
 val read_key : unit -> char option
 
-val render : unit -> unit
+val render : Interface.t -> unit

@@ -1,1 +1,1 @@
-lib/interface.pp.ml: Core Expect_test_collector Ppx_bench_lib Ppx_inline_test_lib Ppx_module_timer_runtime Sexplib0 Stdlib
+lib/interface.pp.ml: Array Core Expect_test_collector Ppx_bench_lib Ppx_inline_test_lib Ppx_module_timer_runtime Ppx_sexp_conv_lib Sexplib0 Stdlib

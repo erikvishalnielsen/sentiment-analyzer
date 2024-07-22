@@ -45,11 +45,43 @@ let draw_header () =
   let header_text = "STOCK SENTIMENT" in
   Graphics.set_color Colors.white;
   Graphics.set_text_size 1000;
-  Graphics.moveto 0 (gui_height + 25);
+  Graphics.moveto (gui_width / 2 - 45) (gui_height + 25);
   Graphics.draw_string (Printf.sprintf " %s" header_text);
-  Graphics.moveto (gui_width - 75) (gui_height + 25);
-  Graphics.draw_string (Printf.sprintf "STOCK SENTIMENT")
 ;;
+
+let draw_ticker_box clicked message =
+  let text_color = if clicked then Graphics.cyan else 0x058BBD in
+  Graphics.set_color text_color;
+  Graphics.fill_rect 94 575 100 25;
+  let header_text = "Stock:" in
+  Graphics.set_color Colors.black;
+  Graphics.set_text_size 200;
+  Graphics.moveto 99 581;
+  Graphics.draw_string (Printf.sprintf " %s %s" header_text message);
+;;
+
+let draw_timeline_box clicked message =
+  let text_color = if clicked then Graphics.cyan else 0x058BBD in
+  Graphics.set_color text_color;
+  Graphics.fill_rect 288 575 100 25;
+  let header_text = "Months:" in
+  Graphics.set_color Colors.black;
+  Graphics.set_text_size 200;
+  Graphics.moveto 293 581;
+  Graphics.draw_string (Printf.sprintf " %s %d" header_text message);
+;;
+
+let draw_calculate_box clicked =
+  let text_color = if clicked then Graphics.green else 0x06A217 in
+  Graphics.set_color text_color;
+  Graphics.fill_rect 482 575 100 25;
+  let header_text = "Calculate" in
+  Graphics.set_color Colors.black;
+  Graphics.set_text_size 200;
+  Graphics.moveto 499 581;
+  Graphics.draw_string (Printf.sprintf " %s" header_text);
+;;
+
 
 let draw_play_area () =
   let open Constants in
@@ -57,8 +89,21 @@ let draw_play_area () =
   Graphics.fill_rect 0 0 gui_width gui_height
 ;;
 
+let draw_graph (interface : Interface.t) = 
+  Graphics.set_line_width 5;
+  if (interface.calcBox) then (
+    let edges : (int * int) array = [| (100,interface.graph.height); (100,50); (interface.graph.width, 50) |] in
+    let graphPts = (interface.graph).data in
+    Graphics.draw_poly_line graphPts;
+    Graphics.draw_poly_line edges;
+    Graphics.moveto 10 (interface.graph.height / 2);
+    Graphics.draw_string "Sentiment";
+    Graphics.moveto ((interface.graph.width / 2) + 50) 10;
+    Graphics.draw_string "Months";
+  ) else ()
+;;
 
-let render () =
+let render (interface : Interface.t) =
   (* We want double-buffering. See
      https://v2.ocaml.org/releases/4.03/htmlman/libref/Graphics.html for more
      info!
@@ -69,6 +114,11 @@ let render () =
   Graphics.display_mode false;
   draw_header ();
   draw_play_area ();
+  draw_ticker_box interface.tickerBox interface.input_ticker;
+  draw_timeline_box interface.timeBox interface.input_timeframe;
+  draw_calculate_box interface.calcBox;
+  draw_graph interface;
   Graphics.display_mode true;
   Graphics.synchronize ()
 ;;
+
