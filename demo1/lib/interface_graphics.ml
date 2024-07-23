@@ -64,7 +64,7 @@ let draw_timeline_box clicked message =
   let text_color = if clicked then Graphics.cyan else 0x058BBD in
   Graphics.set_color text_color;
   Graphics.fill_rect 288 575 100 25;
-  let header_text = "Months:" in
+  let header_text = "Weeks:" in
   Graphics.set_color Colors.black;
   Graphics.set_text_size 200;
   Graphics.moveto 293 581;
@@ -99,7 +99,7 @@ let draw_graph (interface : Interface.t) =
     Graphics.moveto 10 (interface.graph.height / 2);
     Graphics.draw_string "Sentiment";
     Graphics.moveto ((interface.graph.width / 2) + 50) 10;
-    Graphics.draw_string "Months";
+    Graphics.draw_string "Weeks";
   ) else ()
 ;;
 

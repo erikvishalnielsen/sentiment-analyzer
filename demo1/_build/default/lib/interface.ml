@@ -55,7 +55,7 @@ let handle_click t (pos : int * int) =
     Core.print_s [%message "timebox"]
     )
   else
-    (t.calcBox <- false;
+    (t.calcBox <- t.calcBox;
     t.tickerBox <- false;
     t.timeBox <- false;
     Core.print_s [%message "nothing"]

@@ -26,12 +26,28 @@ let handle_keys (interface : Interface.t) =
       if (interface.timeBox) then (
         match (Char.is_digit key && (interface.input_timeframe) < 100) with 
         | true -> interface.input_timeframe <- Int.of_string (String.concat [Int.to_string (interface.input_timeframe) ; (String.of_char key)]);
-        | false -> ()
+        | false -> (
+          match (Char.to_int key) with 
+          | 8 -> (
+            let len = String.length (Int.to_string interface.input_timeframe) in
+            if not (len = 1 || len = 0) then (
+            interface.input_timeframe <- Int.of_string (String.slice (Int.to_string (interface.input_timeframe)) 0 (len-1))) else (interface.input_timeframe <- 0);
+          ) 
+          | _ -> ()
+        )
       );
       if (interface.tickerBox) then (
         match (Char.is_alpha key && (String.length interface.input_ticker) < 6) with 
         | true -> interface.input_ticker <- String.concat [(interface.input_ticker) ; (String.of_char key)];
-        | false -> ()
+        | false -> (
+          match (Char.to_int key) with 
+          | 8 -> (
+            let len = String.length interface.input_ticker in
+            if not (len = 1 || len = 0) then (
+            interface.input_ticker <- (String.slice (interface.input_ticker) 0 (len-1))) else (interface.input_ticker <- "");
+          ) 
+          | _ -> ()
+        )
       );
     ) 
     )
