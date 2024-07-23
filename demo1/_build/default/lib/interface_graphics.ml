@@ -90,16 +90,36 @@ let draw_play_area () =
 ;;
 
 let draw_graph (interface : Interface.t) = 
-  Graphics.set_line_width 5;
   if (interface.calcBox) then (
     let edges : (int * int) array = [| (100,interface.graph.height); (100,50); (interface.graph.width, 50) |] in
+    let line : (int * int) array = [| (100,(interface.graph.height + 50) / 2); (interface.graph.width, (interface.graph.height + 50) / 2) |] in
     let graphPts = (interface.graph).data in
-    Graphics.draw_poly_line graphPts;
+    Graphics.set_line_width 5;
     Graphics.draw_poly_line edges;
-    Graphics.moveto 10 (interface.graph.height / 2);
+    Graphics.draw_poly_line line;
+    Graphics.set_line_width 3;
+    Graphics.set_color Colors._green;
+    Graphics.draw_poly_line graphPts;
+    Graphics.set_color Colors.black;
+    Graphics.moveto 10 (((interface.graph.height + 50) / 2) - 5);
     Graphics.draw_string "Sentiment";
+    Graphics.moveto 90 (((interface.graph.height + 50) / 2) - 5);
+    Graphics.draw_string "0";
+    Graphics.moveto 75 (interface.graph.height-5);
+    Graphics.draw_string "100";
+    Graphics.moveto 70 50;
+    Graphics.draw_string "-100";
+    Graphics.moveto 100 30;
+    Graphics.draw_string "0";
+    Graphics.moveto (interface.graph.width-5) 30;
+    Graphics.draw_string (Int.to_string interface.input_timeframe);
     Graphics.moveto ((interface.graph.width / 2) + 50) 10;
     Graphics.draw_string "Weeks";
+    Graphics.moveto ((interface.graph.width / 2) + 25) (interface.graph.height);
+    Graphics.draw_string (interface.input_ticker ^ " Sentiment Graph");
+
+    let _img_link = ("https://eodhd.com/img/logos/US/" ^ interface.input_ticker ^ ".png") in
+    ()
   ) else ()
 ;;
 

@@ -1,1 +1,1 @@
-lib/interface.pp.mli: Core Sexplib0
+lib/interface.pp.mli: Core Finviz_parser Sexplib0

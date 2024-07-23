@@ -15,7 +15,8 @@ type t =
     mutable graph : Graph.t;
     mutable tickerBox : bool;
     mutable timeBox : bool; 
-    mutable calcBox : bool
+    mutable calcBox : bool;
+    mutable finViz : Finviz_parser.Finviz_parser.t
   }
 [@@deriving sexp_of]
 

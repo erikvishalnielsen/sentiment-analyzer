@@ -16,6 +16,7 @@ type t =
     mutable tickerBox : bool;
     mutable timeBox : bool; 
     mutable calcBox : bool;
+    mutable finViz : Finviz_parser.Finviz_parser.t
   }
 [@@deriving sexp_of]
 
@@ -26,7 +27,7 @@ let create_graph (data : (int * int) array) : Graph.t =
 let create () =
   let data = Array.init 5 ~f:(fun num -> ((num * 100) + 100, ((num + 5) * 25) + 50)) in
   let interface = {input_ticker = "" ; input_timeframe = 0 ; graph = (create_graph data) ; tickerBox = false ;
-    timeBox = false ; calcBox = false} in
+    timeBox = false ; calcBox = false ; finViz = {stock_ticker = "" ; time_period = 0 ; link = "" ; headlines = [(Finviz_parser.get_date "Jan-01-24", "")]}} in
   interface
 ;;
 

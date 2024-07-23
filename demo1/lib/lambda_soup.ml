@@ -35,15 +35,16 @@ let get_title contents : string =
 (* Gets all of the list items contained in an HTML page. *)
 let get_list_items contents : (string * string) list =
   let open Soup in
-  parse contents
-  $$ "table" |> to_list |> List.filter ~f:(fun table -> List.exists (classes table) ~f:(fun a -> String.equal a "news-table")) |> List.hd_exn
-  $$ "tr"
-  |> to_list
-  |> List.filter ~f:(fun tr -> List.exists (classes tr) ~f:(fun a -> String.equal a "has-label"))
-  |> List.map ~f:(fun li -> let tds = li $$ "td" |> to_list in 
+  let all_tables = parse contents $$ "table" |> to_list in
+  let news_table = List.find_exn all_tables ~f:(fun table -> List.exists (classes table) ~f:(fun a -> String.equal a "news-table")) in
+  let table_rows = news_table $$ "tr" |> to_list |> List.filter ~f:(fun tr -> List.exists (classes tr) ~f:(fun a -> String.equal a "has-label")) in
+  List.map table_rows ~f:(fun li -> let tds = li $$ "td" |> to_list in 
     match tds with 
-    | first::second::[] -> (String.strip (String.concat (texts first)), String.strip(String.concat (texts second)))
-    | thing -> print_s [%message (String.concat (List.map thing ~f:(fun a -> String.concat (texts a))) : string)]; failwith "Something's wrong"
+    | first::second::[] -> 
+      let date = String.strip (String.concat (texts first)) in
+      let actual_name = List.find_exn (second $$ "a" |> to_list) ~f:(fun table -> List.exists (classes table) ~f:(fun a -> String.equal a "tab-link-news")) in
+      (date, String.strip (String.concat (texts actual_name)))
+    | _thing -> failwith "Something's wrong"
   )
 
 
@@ -75,7 +76,6 @@ let get_bolded_text contents : string list =
 ;;
 
 let%expect_test "web scraper" =
-  
   print_s
     [%sexp
       (get_list_items (Curl.get_exn "https://finviz.com/quote.ashx?t=AMZN&p=d") : (string * string) list)];
