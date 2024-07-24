@@ -30,14 +30,22 @@ ticker = sys.argv[1]
 start = sys.argv[2]
 end = sys.argv[3]
 
-jsonFileFund, jsonFileNews = my_api(ticker, start, end)
-file_pathFUND = "data/" + ticker + '_fundamentals.json'  # specify your file path here
-file_pathNEWS = "data/" + ticker + '_news.json'
+try: 
+    open(ticker + "_fundamentals.json", "r")
+except IOError:
+    jsonFileFund, jsonFileNews = my_api(ticker, start, end)
+    file_pathFUND = "data/" + ticker + '_fundamentals.json'  # specify your file path here
+    file_pathNEWS = "data/" + ticker + '_news.json'
 
-with open(file_pathFUND, 'w') as file:
-    json.dump(jsonFileFund, file, indent=4)
-print(f'JSON data has been written to {file_pathFUND}')
+    with open(file_pathFUND, 'w') as file:
+        json.dump(jsonFileFund, file, indent=4)
+    print(f'JSON data has been written to {file_pathFUND}')
 
-with open(file_pathNEWS, 'w') as file:
-    json.dump(jsonFileNews, file, indent=4)
-print(f'JSON data has been written to {file_pathNEWS}')
+    with open(file_pathNEWS, 'w') as file:
+        json.dump(jsonFileNews, file, indent=4)
+    print(f'JSON data has been written to {file_pathNEWS}')
+
+
+# FILE OPENING
+#file = open(ticker + "_fundamentals.json")
+#data = json.load(file) # returns list of dicts
