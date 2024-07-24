@@ -36,7 +36,11 @@ let handle_click t (pos : int * int) =
   let y_pos = snd pos in
   (* Calculate: 482 575 100 25 *)
   if (x_pos >= 482 && x_pos <= 582 && y_pos >= 575 && y_pos <= 600) then
-    (t.calcBox <- true;
+    (t.calcBox <- (
+      let todayDate = Date.today ~zone:(Timezone.utc) in 
+      Finviz_parser.createFindlJson interface.input_ticker ~startDate:(Finviz_parser.convert_date_tostring (Date.add_days (todayDate) (-1 * interface.input_timeframe)))
+        ~endDate:(Finviz_parser.convert_date_tostring (Date.add_days (todayDate) (-1)));
+      true);
     t.tickerBox <- false;
     t.timeBox <- false;
     Core.print_s [%message "calcbox"]
