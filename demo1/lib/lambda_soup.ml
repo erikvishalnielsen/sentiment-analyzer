@@ -81,4 +81,3 @@ let get_bolded_text contents : string list =
       (get_list_items (Curl.get_exn "https://finviz.com/quote.ashx?t=AMZN&p=d") : (string * string) list)];
   [%expect {|true|}] 
 ;; *)
-
