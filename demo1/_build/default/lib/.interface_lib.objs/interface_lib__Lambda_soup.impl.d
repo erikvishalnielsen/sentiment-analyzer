@@ -1,1 +1,1 @@
-lib/lambda_soup.pp.ml: Buffer Core Curl Expect_test_collector Expect_test_common Expect_test_config Inline_test_config List Ppx_bench_lib Ppx_inline_test_lib Ppx_module_timer_runtime R Sexplib0 Soup String
+lib/lambda_soup.pp.ml: Buffer Core Curl Expect_test_collector Expect_test_common Expect_test_config Inline_test_config List Ppx_bench_lib Ppx_inline_test_lib Ppx_module_timer_runtime Ppx_sexp_conv_lib R Sexplib0 Soup String

@@ -1,6 +1,6 @@
 (library
  (name interface_lib)
- (libraries async core graphics lambdasoup curl)
+ (libraries async core graphics lambdasoup curl jsonaf yojson)
  (inline_tests)
  (preprocess
   (pps ppx_jane)))

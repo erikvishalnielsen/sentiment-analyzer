@@ -8,6 +8,10 @@ module Stock_date = struct
   [@@deriving sexp_of]
 end
 
+let getStockDate (t : Stock_date.t) : string = 
+  Date.to_string t.date;
+;;
+
 module Finviz_parser = struct
   type t = {
     stock_ticker : string;
@@ -54,6 +58,7 @@ let get_date (date : string) : Stock_date.t =
 ;;
 
 let get_relevant_info (url : string) : (Stock_date.t * string) list =
+  Core.print_s [%message "Link: " url];
   let data_with_times = Lambda_soup.get_list_items (Lambda_soup.Curl.get_exn url) in
   let date = 
   ref (if ((String.length (fst (List.hd_exn data_with_times))) > 8) then {Stock_date.date = (Date.today ~zone:(Timezone.utc)) ; days_from_beginning = 0} else get_date (String.slice (fst (List.hd_exn data_with_times)) 0 9)) in

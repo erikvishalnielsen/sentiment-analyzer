@@ -89,8 +89,34 @@ let draw_play_area () =
   Graphics.fill_rect 0 0 gui_width gui_height
 ;;
 
+let toJsonFile (interface : Interface.t) =
+
+  (* Convert the list to a JSON value *)
+  let json_value = `List (List.map ~f:(fun s -> `String ((Int.to_string ((fst s).days_from_beginning)) ^ " " ^ (Finviz_parser.getStockDate (fst s)) ^ " " ^ (snd s))) interface.finViz.headlines) in
+
+  (* Convert the JSON value to a string *)
+  let json_string = Yojson.Basic.to_string json_value in
+
+(* Write the JSON string to a file *)
+  let write_to_file filename content =
+    Out_channel.write_all filename ~data:content
+  in
+
+(* Specify the output file path *)
+  let output_file = (interface.input_ticker ^ "_finviz.json") in
+
+  (* Write the JSON string to the output file *)
+  write_to_file output_file json_string;
+
+  (* Optional: Print the JSON string to console *)
+  print_endline ("JSON content:\n" ^ json_string)
+;;
+
 let draw_graph (interface : Interface.t) = 
   if (interface.calcBox) then (
+    let finVizData = Finviz_parser.create_finviz_parser interface.input_ticker interface.input_timeframe in
+    interface.finViz <- finVizData;
+
     let edges : (int * int) array = [| (100,interface.graph.height); (100,50); (interface.graph.width, 50) |] in
     let line : (int * int) array = [| (100,(interface.graph.height + 50) / 2); (interface.graph.width, (interface.graph.height + 50) / 2) |] in
     let graphPts = (interface.graph).data in

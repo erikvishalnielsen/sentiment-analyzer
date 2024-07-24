@@ -7,6 +7,8 @@ module Stock_date : sig
     }
 end
 
+val getStockDate : Stock_date.t -> string 
+
 module Finviz_parser : sig
     type t = {
       stock_ticker : string;

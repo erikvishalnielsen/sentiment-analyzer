@@ -35,6 +35,7 @@ let get_title contents : string =
 (* Gets all of the list items contained in an HTML page. *)
 let get_list_items contents : (string * string) list =
   let open Soup in
+  Core.print_s [%message "Contents: " contents];
   let all_tables = parse contents $$ "table" |> to_list in
   let news_table = List.find_exn all_tables ~f:(fun table -> List.exists (classes table) ~f:(fun a -> String.equal a "news-table")) in
   let table_rows = news_table $$ "tr" |> to_list |> List.filter ~f:(fun tr -> List.exists (classes tr) ~f:(fun a -> String.equal a "has-label")) in
