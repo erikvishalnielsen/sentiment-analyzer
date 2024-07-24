@@ -101,7 +101,7 @@ let createFindlJson ticker ~(startDate : string) ~(endDate : string) : unit =
   Printf.printf "Command status: %s\n" (Core_unix.Exit_or_signal.to_string_hum status)
 ;;
 
-let create_json (ticker : string) days =
+(* let create_json (ticker : string) days =
   let api_token = "66a11a43014e19.64423066" in
   let today =
     convert_date_tostring (Date.today ~zone:Timezone.utc)
@@ -124,4 +124,4 @@ let create_json (ticker : string) days =
       ]
   in
   url
-;;
+;; *)
