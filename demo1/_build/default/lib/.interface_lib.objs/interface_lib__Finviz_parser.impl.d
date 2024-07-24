@@ -1,1 +1,1 @@
-lib/finviz_parser.pp.ml: Core Date Expect_test_collector Expect_test_common Expect_test_config Hashtbl Inline_test_config Int Lambda_soup List Month Ppx_bench_lib Ppx_inline_test_lib Ppx_module_timer_runtime Ppx_sexp_conv_lib Sexplib0 Stdlib String Timezone
+lib/finviz_parser.pp.ml: Core Core_unix Date Expect_test_collector Expect_test_common Expect_test_config File_perm Hashtbl Inline_test_config Int Lambda_soup List Month Ppx_bench_lib Ppx_inline_test_lib Ppx_module_timer_runtime Ppx_sexp_conv_lib Printf Sexplib0 Stdlib String Timezone

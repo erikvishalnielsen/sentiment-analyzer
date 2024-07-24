@@ -90,25 +90,15 @@ let create_finviz_parser ticker time =
   newParser
 ;;
 
-let executeCmd command =
-    let output, status =
-    try
-      (* Run the command synchronously *)
-      let output = In_channel.read_all (Core_unix.open_process_in command) in
-      let status = Unix.close_process_in in_channel in
-      output, status
-    with
-    | Unix.Unix_error (err, _, _) ->
-        failwith (sprintf "Error executing command: %s" (Unix.error_message err))n
-    output
+let executeCmd (command : string) =
+  let open Core_unix in 
+  Core_unix.system command;
 ;;
 
 let createFindlJson ticker ~(startDate : string) ~(endDate : string) : unit = 
   let open Core_unix in 
-  let open Core_kernel in
-  
 
-  let command : string = "python /home/ubuntu/sentiment-analyzer/demo1/lib/sentiment_ml.py " + ticker + " " + startDate + " " + endDate in  (* Example command: list files in long format *)
-  let output, status = executeCmd command in
-  Printf.printf "Command status: %s\n" (Core_unix.Exit.to_string status)
+  let command : string = ("bin/python3 /home/ubuntu/sentiment-analyzer/demo1/lib/sentiment_ml.py " + ticker + " " + startDate + " " + endDate) in  (* Example command: list files in long format *)
+  let status = executeCmd command in
+  Printf.printf "Command status: %s\n" (Core_unix.Exit_or_signal.to_string_hum status)
 ;;
