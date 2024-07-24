@@ -113,9 +113,14 @@ let toJsonFile (interface : Interface.t) =
 ;;
 
 let draw_graph (interface : Interface.t) = 
+  (* let open Interface_lib__Finviz_parser in *)
   if (interface.calcBox) then (
-    let finVizData = Finviz_parser.create_finviz_parser interface.input_ticker interface.input_timeframe in
-    interface.finViz <- finVizData;
+    (* let finVizData = Finviz_parser.create_finviz_parser interface.input_ticker interface.input_timeframe in
+    interface.finViz <- finVizData; *)
+
+    let _todayDate = Date.today ~zone:(Timezone.utc) in 
+    (* Finviz_parser.createFindlJson interface.input_ticker ~startDate:(Finviz_parser.convert_date_tostring (Date.add_days (todayDate)) (-1 * interface.input_timeframe))
+      ~endDate:(Finviz_parser.convert_date_tostring (Date.add_days (todayDate) -1)); *)
 
     let edges : (int * int) array = [| (100,interface.graph.height); (100,50); (interface.graph.width, 50) |] in
     let line : (int * int) array = [| (100,(interface.graph.height + 50) / 2); (interface.graph.width, (interface.graph.height + 50) / 2) |] in

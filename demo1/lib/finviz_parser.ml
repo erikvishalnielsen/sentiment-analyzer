@@ -57,8 +57,7 @@ let get_date (date : string) : Stock_date.t =
   {date = date ; days_from_beginning = Date.diff currDate date}
 ;;
 
-let convert_date_tostring (dateStock : Stock_date.t) : string = 
-  let date = dateStock.date in
+let convert_date_tostring (date : Date.t) : string = 
   let str = Date.to_string date in
   str
 ;;  
@@ -66,7 +65,7 @@ let convert_date_tostring (dateStock : Stock_date.t) : string =
 let%expect_test "convert_date" =
   print_s
     [%sexp
-      (convert_date_tostring {Stock_date.date = (Date.today ~zone:(Timezone.utc)) ; days_from_beginning = 0} : string)];
+      (convert_date_tostring (Date.today ~zone:(Timezone.utc)) : string)];
   [%expect {|true|}] 
 ;;
 
@@ -91,15 +90,25 @@ let create_finviz_parser ticker time =
   newParser
 ;;
 
-let createFindlJson ticker ~startDate ~endDate = 
-  let open Core_Unix in 
-  let execute_command command = (
-    let ic, oc, ec = Unix.open_process_full command (Unix.environment ()) in
-    let output = really_input_string ic (in_channel_length ic) in
-    let status = Unix.close_process_full (ic, oc, ec) in
-    output, status)
-  in
-  let command = "/bin/python3 /home/ubuntu/sentiment-analyzer/demo1/lib/sentiment_ml.py " + ticker + " " + startDate in  (* Example command: list files in long format *)
-  let output, status = execute_command command in
-  Printf.printf "Command status: %s\n" (Unix.Exit.to_string status)
+let executeCmd command =
+    let output, status =
+    try
+      (* Run the command synchronously *)
+      let output = In_channel.read_all (Core_unix.open_process_in command) in
+      let status = Unix.close_process_in in_channel in
+      output, status
+    with
+    | Unix.Unix_error (err, _, _) ->
+        failwith (sprintf "Error executing command: %s" (Unix.error_message err))n
+    output
+;;
+
+let createFindlJson ticker ~(startDate : string) ~(endDate : string) : unit = 
+  let open Core_unix in 
+  let open Core_kernel in
+  
+
+  let command : string = "python /home/ubuntu/sentiment-analyzer/demo1/lib/sentiment_ml.py " + ticker + " " + startDate + " " + endDate in  (* Example command: list files in long format *)
+  let output, status = executeCmd command in
+  Printf.printf "Command status: %s\n" (Core_unix.Exit.to_string status)
 ;;

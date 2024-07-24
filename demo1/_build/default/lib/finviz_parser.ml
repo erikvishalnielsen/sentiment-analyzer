@@ -57,8 +57,7 @@ let get_date (date : string) : Stock_date.t =
   {date = date ; days_from_beginning = Date.diff currDate date}
 ;;
 
-let convert_date_tostring (dateStock : Stock_date.t) : string = 
-  let date = dateStock.date in
+let convert_date_tostring (date : Date.t) : string = 
   let str = Date.to_string date in
   str
 ;;  
@@ -66,7 +65,7 @@ let convert_date_tostring (dateStock : Stock_date.t) : string =
 let%expect_test "convert_date" =
   print_s
     [%sexp
-      (convert_date_tostring {Stock_date.date = (Date.today ~zone:(Timezone.utc)) ; days_from_beginning = 0} : string)];
+      (convert_date_tostring (Date.today ~zone:(Timezone.utc)) : string)];
   [%expect {|true|}] 
 ;;
 
@@ -90,3 +89,16 @@ let create_finviz_parser ticker time =
   let newParser = {Finviz_parser.stock_ticker = ticker ; time_period = time ; link = newlink ; headlines = (get_relevant_info newlink) } in
   newParser
 ;;
+
+(* let createFindlJson ticker ~(startDate : string) ~(endDate : string) : unit = 
+  let open Core_unix in 
+  let executeCmd (command : string) = (
+    let ic, oc, ec = Core_unix.open_process_full command ~env:(Core_unix.environment ()) in
+    let output = really_input_string ic (in_channel_length ic) in
+    let status = Core_unix.close_process_full (ic, oc, ec) in
+    output, status)
+  in
+  let command = "/bin/python3 /home/ubuntu/sentiment-analyzer/demo1/lib/sentiment_ml.py " + ticker + " " + startDate + " " + endDate in  (* Example command: list files in long format *)
+  let output, status = executeCmd command in
+  Printf.printf "Command status: %s\n" (Core_unix.Exit.to_string status)
+;; *)
