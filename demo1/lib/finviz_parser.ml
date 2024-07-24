@@ -95,7 +95,33 @@ let executeCmd (command : string) =
 ;;
 
 let createFindlJson ticker ~(startDate : string) ~(endDate : string) : unit = 
+  Core.print_s [%message "Dates: " startDate endDate];
   let command = Printf.sprintf "/bin/python3 /home/ubuntu/sentiment-analyzer/demo1/lib/sentiment_ml.py %s %s %s" ticker startDate endDate in
   let status = executeCmd command in
   Printf.printf "Command status: %s\n" (Core_unix.Exit_or_signal.to_string_hum status)
+;;
+
+let create_json (ticker : string) days =
+  let api_token = "66a11a43014e19.64423066" in
+  let today =
+    convert_date_tostring (Date.today ~zone:Timezone.utc)
+  in
+  let last_date =
+    convert_date_tostring
+      (Date.add_days (Date.today ~zone:Timezone.utc) days)
+  in
+  let url =
+    String.concat
+      [ "https://eodhd.com/api/news?s="
+      ; ticker
+      ; ".US&offset=0&limit=1000&api_token="
+      ; api_token
+      ; "&from="
+      ; today
+      ; "&to="
+      ; last_date
+      ; "&fmt=json"
+      ]
+  in
+  url
 ;;
