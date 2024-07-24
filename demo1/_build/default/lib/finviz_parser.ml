@@ -68,7 +68,7 @@ let get_relevant_info (url : string) : (Stock_date.t * string) list =
 let%expect_test "web scraper - relevant info test" =
   print_s
     [%sexp
-      (get_relevant_info "https://finviz.com/quote.ashx?t=AMZN&p=d" : (Stock_date.t * string) list)];
+      (get_relevant_info "https://finviz.com/quote.ashx?t=GOOGL&p=d" : (Stock_date.t * string) list)];
   [%expect {|true|}] 
 ;;
 

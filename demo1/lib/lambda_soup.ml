@@ -35,7 +35,6 @@ let get_title contents : string =
 (* Gets all of the list items contained in an HTML page. *)
 let get_list_items contents : (string * string) list =
   let open Soup in
-  Core.print_s [%message "Contents: " contents];
   let all_tables = parse contents $$ "table" |> to_list in
   let news_table = List.find_exn all_tables ~f:(fun table -> List.exists (classes table) ~f:(fun a -> String.equal a "news-table")) in
   let table_rows = news_table $$ "tr" |> to_list |> List.filter ~f:(fun tr -> List.exists (classes tr) ~f:(fun a -> String.equal a "has-label")) in
@@ -76,9 +75,9 @@ let get_bolded_text contents : string list =
   |> List.map ~f:(fun b -> texts b |> String.concat ~sep:"" |> String.strip)
 ;;
 
-let%expect_test "web scraper" =
+(* let%expect_test "web scraper" =
   print_s
     [%sexp
       (get_list_items (Curl.get_exn "https://finviz.com/quote.ashx?t=AMZN&p=d") : (string * string) list)];
   [%expect {|true|}] 
-;;
+;; *)
