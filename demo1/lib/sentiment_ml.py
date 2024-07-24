@@ -22,18 +22,19 @@ def my_api(ticker, start, end):
     print(newsData.status_code)
     return(priceData.json(),newsData.json())
 
-if len(sys.argv) != 4:
-    print("Usage: python sentiment_ml.py [ticker] [starting_date] [ending_date]")
+if len(sys.argv) != 5:
+    print("Usage: python sentiment_ml.py [ticker] [starting_date] [ending_date] [max_search]")
     sys.exit(1)
 
 ticker = sys.argv[1]
 start = sys.argv[2]
 end = sys.argv[3]
+max_search = sys.argv[4]
 
 try: 
     open("data/" + ticker + "_fundamentals.json", "r")
 except IOError:
-    jsonFileFund, jsonFileNews = my_api(ticker, start, end)
+    jsonFileFund, jsonFileNews = my_api(ticker, start, max_search)
     file_pathFUND = "data/" + ticker + '_fundamentals.json'  # specify your file path here
     file_pathNEWS = "data/" + ticker + '_news.json'
 

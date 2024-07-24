@@ -39,7 +39,7 @@ let handle_click t (pos : int * int) =
     (t.calcBox <- (
       let todayDate = Date.today ~zone:(Timezone.utc) in 
       Finviz_parser.createFindlJson t.input_ticker ~startDate:(Finviz_parser.convert_date_tostring (Date.add_days (todayDate) (-1 * t.input_timeframe)))
-        ~endDate:(Finviz_parser.convert_date_tostring (Date.add_days (todayDate) (-1)));
+        ~endDate:(Finviz_parser.convert_date_tostring (Date.add_days (todayDate) (-1))) ~max_search:(Finviz_parser.convert_date_tostring (Date.add_days todayDate 180));
       true);
     t.tickerBox <- false;
     t.timeBox <- false;

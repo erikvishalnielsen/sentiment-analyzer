@@ -94,9 +94,9 @@ let executeCmd (command : string) =
   Core_unix.system command;
 ;;
 
-let createFindlJson ticker ~(startDate : string) ~(endDate : string) : unit = 
+let createFindlJson ticker ~(startDate : string) ~(endDate : string) ~(max_search : string) : unit = 
   Core.print_s [%message "Dates: " startDate endDate];
-  let command = Printf.sprintf "/bin/python3 /home/ubuntu/sentiment-analyzer/demo1/lib/sentiment_ml.py %s %s %s" ticker startDate endDate in
+  let command = Printf.sprintf "/bin/python3 /home/ubuntu/sentiment-analyzer/demo1/lib/sentiment_ml.py %s %s %s %s" ticker startDate endDate max_search in
   let status = executeCmd command in
   Printf.printf "Command status: %s\n" (Core_unix.Exit_or_signal.to_string_hum status)
 ;;
