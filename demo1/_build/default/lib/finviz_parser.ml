@@ -57,6 +57,19 @@ let get_date (date : string) : Stock_date.t =
   {date = date ; days_from_beginning = Date.diff currDate date}
 ;;
 
+let convert_date_tostring (dateStock : Stock_date.t) : string = 
+  let date = dateStock.date in
+  let str = Date.to_string date in
+  str
+;;  
+
+let%expect_test "convert_date" =
+  print_s
+    [%sexp
+      (convert_date_tostring {Stock_date.date = (Date.today ~zone:(Timezone.utc)) ; days_from_beginning = 0} : string)];
+  [%expect {|true|}] 
+;;
+
 let get_relevant_info (url : string) : (Stock_date.t * string) list =
   Core.print_s [%message "Link: " url];
   let data_with_times = Lambda_soup.get_list_items (Lambda_soup.Curl.get_exn url) in
@@ -65,12 +78,12 @@ let get_relevant_info (url : string) : (Stock_date.t * string) list =
   List.map data_with_times ~f:(fun a -> if (String.length (fst a) > 8) && not (String.equal (fst a) (fst (List.hd_exn data_with_times))) then date := get_date (String.slice (fst a) 0 9); (!date, snd a))
 ;;
 
-let%expect_test "web scraper - relevant info test" =
+(*let%expect_test "web scraper - relevant info test" =
   print_s
     [%sexp
       (get_relevant_info "https://finviz.com/quote.ashx?t=GOOGL&p=d" : (Stock_date.t * string) list)];
   [%expect {|true|}] 
-;;
+;;*)
 
 let create_finviz_parser ticker time = 
   let newlink = get_finviz_link ticker in

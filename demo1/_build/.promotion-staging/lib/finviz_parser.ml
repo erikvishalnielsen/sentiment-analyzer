@@ -57,6 +57,19 @@ let get_date (date : string) : Stock_date.t =
   {date = date ; days_from_beginning = Date.diff currDate date}
 ;;
 
+let convert_date (dateStock : Stock_date.t) : string = 
+  let date = dateStock.date in
+  let str = Date.to_string date in
+  str
+;;  
+
+let%expect_test "convert_date" =
+  print_s
+    [%sexp
+      (convert_date {Stock_date.date = (Date.today ~zone:(Timezone.utc)) ; days_from_beginning = 0} : string)];
+  [%expect {|2024-07-24|}] 
+;;
+
 let get_relevant_info (url : string) : (Stock_date.t * string) list =
   Core.print_s [%message "Link: " url];
   let data_with_times = Lambda_soup.get_list_items (Lambda_soup.Curl.get_exn url) in
@@ -65,29 +78,12 @@ let get_relevant_info (url : string) : (Stock_date.t * string) list =
   List.map data_with_times ~f:(fun a -> if (String.length (fst a) > 8) && not (String.equal (fst a) (fst (List.hd_exn data_with_times))) then date := get_date (String.slice (fst a) 0 9); (!date, snd a))
 ;;
 
-let%expect_test "web scraper - relevant info test" =
+(*let%expect_test "web scraper - relevant info test" =
   print_s
     [%sexp
       (get_relevant_info "https://finviz.com/quote.ashx?t=GOOGL&p=d" : (Stock_date.t * string) list)];
-  [%expect.unreachable]
-[@@expect.uncaught_exn {|
-  (* CR expect_test_collector: This test expectation appears to contain a backtrace.
-     This is strongly discouraged as backtraces are fragile.
-     Please change this test to not include a backtrace. *)
-
-  (Not_found_s "List.find_exn: not found")
-  Raised at Base__List.find_exn.find_exn in file "src/list.ml", line 323, characters 12-27
-  Called from Interface_lib__Lambda_soup.get_list_items in file "lib/lambda_soup.ml", line 40, characters 19-131
-  Called from Interface_lib__Finviz_parser.get_relevant_info in file "lib/finviz_parser.ml", line 62, characters 24-81
-  Called from Interface_lib__Finviz_parser.(fun) in file "lib/finviz_parser.ml", line 71, characters 7-68
-  Called from Expect_test_collector.Make.Instance_io.exec in file "collector/expect_test_collector.ml", line 234, characters 12-19
-
-  Trailing output
-  ---------------
-  ("Link: " https://finviz.com/quote.ashx?t=GOOGL&p=d)
-  ("Contents: "
-   "This IP address has performed an unusual high number of requests and has been temporarily rate limited. If you believe this to be in error, please contact us at support@finviz.com") |}] 
-;;
+  [%expect {|true|}] 
+;;*)
 
 let create_finviz_parser ticker time = 
   let newlink = get_finviz_link ticker in
