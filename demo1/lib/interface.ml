@@ -38,7 +38,7 @@ let handle_click t (pos : int * int) =
   if (x_pos >= 482 && x_pos <= 582 && y_pos >= 575 && y_pos <= 600) then
     (t.calcBox <- (
       let todayDate = Date.today ~zone:(Timezone.utc) in 
-      Finviz_parser.createFindlJson interface.input_ticker ~startDate:(Finviz_parser.convert_date_tostring (Date.add_days (todayDate) (-1 * interface.input_timeframe)))
+      Finviz_parser.createFindlJson t.input_ticker ~startDate:(Finviz_parser.convert_date_tostring (Date.add_days (todayDate) (-1 * t.input_timeframe)))
         ~endDate:(Finviz_parser.convert_date_tostring (Date.add_days (todayDate) (-1)));
       true);
     t.tickerBox <- false;
