@@ -177,3 +177,16 @@ let render (interface : Interface.t) =
   Graphics.display_mode true;
   Graphics.synchronize ()
 ;;
+
+let get_list_of_widths numPts = 
+  let dist = 400.0 /. (Int.to_float (numPts - 1)) in
+  List.init numPts ~f:(fun num -> (100 + (Int.of_float ((Int.to_float num) *. dist))))
+;;
+
+let plot_datapoints (data : Datapoint.t) = 
+  (* Get length of the data list *)
+  (* Decide how I want to scale the price *)
+  (* The Sentiment Score should just be scaled by 100 *)
+  (* Create a function that takes the number of total points and gets the width between them *)
+
+;;
