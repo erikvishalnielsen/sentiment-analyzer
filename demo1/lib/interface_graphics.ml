@@ -183,10 +183,25 @@ let get_list_of_widths numPts =
   List.init numPts ~f:(fun num -> (100 + (Int.of_float ((Int.to_float num) *. dist))))
 ;;
 
-let plot_datapoints (data : Datapoint.t) = 
+let plot_datapoints (datum : Datapoints.t) = 
   (* Get length of the data list *)
   (* Decide how I want to scale the price *)
   (* The Sentiment Score should just be scaled by 100 *)
   (* Create a function that takes the number of total points and gets the width between them *)
 
+  let numPts = List.length datum.data in
+  let width_list = get_list_of_widths numPts in
+
+  let tickSize = Float.to_int ((datum.price_high - datum.price.low) /. 450.0) in
+  let height_multiplier_price price = (50 + ((price - datum.price_low) * tickSize)) in
+  let height_multiplier_sent sentiment = (275 + (225 * sentiment)) in
+
+  let pointListPrice = Array.init numPts ~f:(fun _f -> (0,0)) in
+  let pointListSentiment = Array.init numPts ~f:(fun _f -> (0,0)) in
+  List.iteri datum.data ~f:(fun ind point -> 
+    Array.set pointListPrice ind ((List.nth_exn width_list ind), (height_multiplier_price point.price));
+    Array.set pointListSentiment ind ((List.nth_exn width_list ind), (height_multiplier_sent point.sentiment));
+  );
+
+  (pointListPrice, pointListSentiment)
 ;;
