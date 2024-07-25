@@ -5,6 +5,7 @@ module Stock_date : sig
     { date : Date.t
     ; days_from_beginning : int
     }
+  [@@deriving compare, sexp_of, equal]
 end
 
 val getStockDate : Stock_date.t -> string

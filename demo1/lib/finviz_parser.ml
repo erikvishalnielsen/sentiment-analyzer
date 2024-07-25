@@ -5,7 +5,7 @@ module Stock_date = struct
     { date : Date.t
     ; days_from_beginning : int
     }
-  [@@deriving sexp_of]
+  [@@deriving sexp_of, compare, equal]
 end
 
 let getStockDate (t : Stock_date.t) : string = Date.to_string t.date
