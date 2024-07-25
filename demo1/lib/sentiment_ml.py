@@ -2,6 +2,24 @@
 import requests
 import json
 import sys
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+from datetime import datetime, timedelta
+
+def previous_business_day(date):
+    # Define the number of days to subtract to go back one day
+    one_day = timedelta(days=1)
+    # Initialize a variable to keep track of the number of days subtracted
+    days_subtracted = 0
+    # Loop until we find a business day (not Saturday or Sunday)
+    while True:
+        # Subtract one day from the current date
+        date -= one_day
+        # Increment the counter
+        days_subtracted += 1
+        # Check if the current date is a weekday (Monday to Friday)
+        if date.weekday() < 5:
+            # Return the date if it's a weekday
+            return date
 
 def my_api(ticker, start, end):
     """
@@ -16,7 +34,7 @@ def my_api(ticker, start, end):
     newsApiToken = "66a11a43014e19.64423066"
 
     # Example:
-    priceData = requests.get("https://api.polygon.io/v2/aggs/ticker/" + ticker + "/range/1/day/" + start + "/" + end + "?adjusted=true&sort=asc&apiKey=SKIoSufYtDsfh8YitV2Ue5ozoWDgERT_") 
+    priceData = requests.get("https://api.polygon.io/v2/aggs/ticker/" + ticker + "/range/1/day/" + start + "/" + end + "?adjusted=true&sort=desc&apiKey=SKIoSufYtDsfh8YitV2Ue5ozoWDgERT_") 
     newsData = requests.get("https://eodhd.com/api/news?s=" + ticker + ".US&offset=0&limit=1000&api_token=" + newsApiToken + "&from=" + start + "&to=" + end + "&fmt=json") 
     print(priceData.status_code)
     print(newsData.status_code)
@@ -48,5 +66,45 @@ except IOError:
 
 
 # FILE OPENING
-#file = open(ticker + "_news.json")
-#data = json.load(file) # returns list of dicts
+
+def get_sentiment_of_article(headline, content):
+    analyzer = SentimentIntensityAnalyzer()
+
+    headline_scores = analyzer.polarity_scores(headline)
+    content_scores = analyzer.polarity_scores(content)
+
+    return (headline_scores.get("compound") + content_scores.get("compound")) / 2
+
+
+def create_news_datapoints(data):
+    for news_dict in data:
+        sentiment = get_sentiment_of_article(news_dict.get("title"), news_dict.get("content"))
+        if news_dict.get("date")[0:10] in news_sentiments.keys():
+            news_sentiments[news_dict.get("date")[0:10]].append(sentiment)
+        else:
+            news_sentiments[news_dict.get("date")[0:10]] = [sentiment]
+
+try: 
+    open("data/" + ticker + "_sentiment_price.json", "r")
+except IOError:
+    # Price info
+    financefile = open("data/" + ticker + "_fundamentals.json")
+    financedata = json.load(financefile) # returns list of dicts
+    financepricedata = financedata["results"]
+    financedict = {}
+
+    for dict in financepricedata:
+        timestamp = dict["t"] / 1000
+        currdate = (datetime.fromtimestamp(timestamp)).strftime("%Y-%m-%d")
+        financedict[currdate] = [dict["o"], dict["c"], dict["v"]]
+
+    # Sentiment info
+    file = open("data/" + ticker + "_news.json")
+    news_data = json.load(file) # returns list of dicts
+    news_sentiments = {}
+
+    # Create json
+    create_news_datapoints(news_data)
+    json_sentiment_price = json.dumps([news_sentiments, financedict], indent = 4)
+    with open("data/" + ticker + "_sentiment_price.json", "w") as outfile:
+        outfile.write(json_sentiment_price)
