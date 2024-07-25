@@ -48,5 +48,5 @@ except IOError:
 
 
 # FILE OPENING
-#file = open(ticker + "_fundamentals.json")
+#file = open(ticker + "_news.json")
 #data = json.load(file) # returns list of dicts
