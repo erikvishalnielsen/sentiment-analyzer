@@ -1,9 +1,8 @@
 open! Core
 
-
 module Curl : sig
-val get_exn : string -> string
-end 
+  val get_exn : string -> string
+end
 
 val get_list_items : string -> (string * string) list
 

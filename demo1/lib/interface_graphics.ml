@@ -26,11 +26,8 @@ let init_exn () =
   then failwith "Can only call init_exn once"
   else only_one := true;
   Graphics.open_graph
-    (Printf.sprintf
-       " %dx%d"
-       (gui_height + header_height)
-       gui_width);
-  Interface.create ();
+    (Printf.sprintf " %dx%d" (gui_height + header_height) gui_width);
+  Interface.create ()
 ;;
 
 let read_key () =
@@ -45,8 +42,8 @@ let draw_header () =
   let header_text = "STOCK SENTIMENT" in
   Graphics.set_color Colors.white;
   Graphics.set_text_size 1000;
-  Graphics.moveto (gui_width / 2 - 45) (gui_height + 25);
-  Graphics.draw_string (Printf.sprintf " %s" header_text);
+  Graphics.moveto ((gui_width / 2) - 45) (gui_height + 25);
+  Graphics.draw_string (Printf.sprintf " %s" header_text)
 ;;
 
 let draw_ticker_box clicked message =
@@ -57,7 +54,7 @@ let draw_ticker_box clicked message =
   Graphics.set_color Colors.black;
   Graphics.set_text_size 200;
   Graphics.moveto 99 581;
-  Graphics.draw_string (Printf.sprintf " %s %s" header_text message);
+  Graphics.draw_string (Printf.sprintf " %s %s" header_text message)
 ;;
 
 let draw_timeline_box clicked message =
@@ -68,7 +65,7 @@ let draw_timeline_box clicked message =
   Graphics.set_color Colors.black;
   Graphics.set_text_size 200;
   Graphics.moveto 293 581;
-  Graphics.draw_string (Printf.sprintf " %s %d" header_text message);
+  Graphics.draw_string (Printf.sprintf " %s %d" header_text message)
 ;;
 
 let draw_calculate_box clicked =
@@ -79,9 +76,8 @@ let draw_calculate_box clicked =
   Graphics.set_color Colors.black;
   Graphics.set_text_size 200;
   Graphics.moveto 499 581;
-  Graphics.draw_string (Printf.sprintf " %s" header_text);
+  Graphics.draw_string (Printf.sprintf " %s" header_text)
 ;;
-
 
 let draw_play_area () =
   let open Constants in
@@ -90,37 +86,49 @@ let draw_play_area () =
 ;;
 
 let toJsonFile (interface : Interface.t) =
-
   (* Convert the list to a JSON value *)
-  let json_value = `List (List.map ~f:(fun s -> `String ((Int.to_string ((fst s).days_from_beginning)) ^ " " ^ (Finviz_parser.getStockDate (fst s)) ^ " " ^ (snd s))) interface.finViz.headlines) in
-
+  let json_value =
+    `List
+      (List.map
+         ~f:(fun s ->
+           `String
+             (Int.to_string (fst s).days_from_beginning
+              ^ " "
+              ^ Finviz_parser.getStockDate (fst s)
+              ^ " "
+              ^ snd s))
+         interface.finViz.headlines)
+  in
   (* Convert the JSON value to a string *)
   let json_string = Yojson.Basic.to_string json_value in
-
-(* Write the JSON string to a file *)
+  (* Write the JSON string to a file *)
   let write_to_file filename content =
     Out_channel.write_all filename ~data:content
   in
-
-(* Specify the output file path *)
-  let output_file = (interface.input_ticker ^ "_finviz.json") in
-
+  (* Specify the output file path *)
+  let output_file = interface.input_ticker ^ "_finviz.json" in
   (* Write the JSON string to the output file *)
   write_to_file output_file json_string;
-
   (* Optional: Print the JSON string to console *)
   print_endline ("JSON content:\n" ^ json_string)
 ;;
 
-let draw_graph (interface : Interface.t) = 
+let draw_graph (interface : Interface.t) =
   (* let open Interface_lib__Finviz_parser in *)
-  if (interface.calcBox) then (
-    (* let finVizData = Finviz_parser.create_finviz_parser interface.input_ticker interface.input_timeframe in
-    interface.finViz <- finVizData; *)
-
-    let edges : (int * int) array = [| (100,interface.graph.height); (100,50); (interface.graph.width, 50) |] in
-    let line : (int * int) array = [| (100,(interface.graph.height + 50) / 2); (interface.graph.width, (interface.graph.height + 50) / 2) |] in
-    let graphPts = (interface.graph).data in
+  if interface.calcBox
+  then (
+    (* let finVizData = Finviz_parser.create_finviz_parser
+       interface.input_ticker interface.input_timeframe in interface.finViz
+       <- finVizData; *)
+    let edges : (int * int) array =
+      [| 100, interface.graph.height; 100, 50; interface.graph.width, 50 |]
+    in
+    let line : (int * int) array =
+      [| 100, (interface.graph.height + 50) / 2
+       ; interface.graph.width, (interface.graph.height + 50) / 2
+      |]
+    in
+    let graphPts = interface.graph.data in
     Graphics.set_line_width 5;
     Graphics.draw_poly_line edges;
     Graphics.draw_poly_line line;
@@ -132,22 +140,23 @@ let draw_graph (interface : Interface.t) =
     Graphics.draw_string "Sentiment";
     Graphics.moveto 90 (((interface.graph.height + 50) / 2) - 5);
     Graphics.draw_string "0";
-    Graphics.moveto 75 (interface.graph.height-5);
+    Graphics.moveto 75 (interface.graph.height - 5);
     Graphics.draw_string "100";
     Graphics.moveto 70 50;
     Graphics.draw_string "-100";
     Graphics.moveto 100 30;
     Graphics.draw_string "0";
-    Graphics.moveto (interface.graph.width-5) 30;
+    Graphics.moveto (interface.graph.width - 5) 30;
     Graphics.draw_string (Int.to_string interface.input_timeframe);
     Graphics.moveto ((interface.graph.width / 2) + 50) 10;
     Graphics.draw_string "Days";
-    Graphics.moveto ((interface.graph.width / 2) + 25) (interface.graph.height);
+    Graphics.moveto ((interface.graph.width / 2) + 25) interface.graph.height;
     Graphics.draw_string (interface.input_ticker ^ " Sentiment Graph");
-
-    let _img_link = ("https://eodhd.com/img/logos/US/" ^ interface.input_ticker ^ ".png") in
-    ()
-  ) else ()
+    let _img_link =
+      "https://eodhd.com/img/logos/US/" ^ interface.input_ticker ^ ".png"
+    in
+    ())
+  else ()
 ;;
 
 let render (interface : Interface.t) =
@@ -168,4 +177,3 @@ let render (interface : Interface.t) =
   Graphics.display_mode true;
   Graphics.synchronize ()
 ;;
-
