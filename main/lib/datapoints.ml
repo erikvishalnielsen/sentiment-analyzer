@@ -16,7 +16,6 @@ type t =
     } [@@deriving sexp_of]
 
 let json_to_tuple (interface : Interface.t) =
-  let open Jsonaf in
   let filename = "date/" ^ interface.input_ticker ^ "_sentiment_price.json" in 
   let in_channel = Core.In_channel.create filename in
   let lines = In_channel.input_all in_channel in 
@@ -59,6 +58,7 @@ let json_to_tuple (interface : Interface.t) =
 ;;
 
 let json_to_datapoints (interface : Interface.t) =
+
   let sentiments, price = json_to_tuple interface in
   
   let lastPrice = ref (List.nth_exn (snd (List.nth_exn price 0)) 1) in 
@@ -80,7 +80,7 @@ let json_to_datapoints (interface : Interface.t) =
       (currData @ [newData]);
     )
   ) in
-  let dataptList : Datapoints.t = {data = dataList ; price_high = (match (List.max_elt dataList ~compare:(fun item1 item2 -> if (Float.(>.) (item1.price) (item2.price)) then 1 else -1)) with | Some item -> item.price | None -> failwith "error")
+  let dataptList = {data = dataList ; price_high = (match (List.max_elt dataList ~compare:(fun item1 item2 -> if (Float.(>.) (item1.price) (item2.price)) then 1 else -1)) with | Some item -> item.price | None -> failwith "error")
   ; price_low = match (List.min_elt dataList ~compare:(fun item1 item2 -> if (Float.(<.) (item1.price) (item2.price)) then 1 else -1)) with | Some item -> item.price | None -> failwith "error"} in
   dataptList
 ;;

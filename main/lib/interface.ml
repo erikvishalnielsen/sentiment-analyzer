@@ -48,7 +48,36 @@ let create () =
   interface
 ;;
 
-let handle_click t (pos : int * int) =
+
+let get_list_of_widths numPts = 
+  let dist = 400.0 /. (Int.to_float (numPts - 1)) in
+  List.init numPts ~f:(fun num -> (100 + (Int.of_float ((Int.to_float num) *. dist))))
+;;
+
+let plot_datapoints (datum : Datapoints.t) = 
+  (* Get length of the data list *)
+  (* Decide how I want to scale the price *)
+  (* The Sentiment Score should just be scaled by 100 *)
+  (* Create a function that takes the number of total points and gets the width between them *)
+
+  let numPts = List.length datum.data in
+  let width_list = get_list_of_widths numPts in
+
+  let tickSize = (datum.price_high -. datum.price_low) /. 450.0 in
+  let height_multiplier_price price = (50 + (Int.of_float ((price -. datum.price_low) *. tickSize))) in
+  let height_multiplier_sent sentiment = (275 + (Int.of_float (225.0 *. sentiment))) in
+
+  let pointListPrice = Array.init numPts ~f:(fun _f -> (0,0)) in
+  let pointListSentiment = Array.init numPts ~f:(fun _f -> (0,0)) in
+  List.iteri datum.data ~f:(fun ind point -> 
+    Array.set pointListPrice ind ((List.nth_exn width_list ind), (height_multiplier_price point.price));
+    Array.set pointListSentiment ind ((List.nth_exn width_list ind), (height_multiplier_sent point.sentiment));
+  );
+
+  (pointListPrice, pointListSentiment)
+;;
+
+let handle_click (t : t) (pos : int * int) =
   let x_pos = fst pos in
   let y_pos = snd pos in
   (* Calculate: 482 575 100 25 *)
@@ -68,8 +97,8 @@ let handle_click t (pos : int * int) =
             (Finviz_parser.convert_date_tostring
                (Date.add_days todayDate (-180)));
         
-        let datapoints : Datapoints.t = Datapoints.json_to_datapoints t in
-        let datapair : ((int * int) array * (int * int) array) = Interface_graphics.plot_datapoints datapoints in 
+        let datapoints = Datapoints.json_to_datapoints t in
+        let datapair : ((int * int) array * (int * int) array) = plot_datapoints datapoints in 
         t.graphFinance <- {height = 500; width = 500; data = fst datapair};
         t.graphSentiment <- {height = 500; width = 500; data = snd datapair};
 
@@ -95,3 +124,5 @@ let handle_click t (pos : int * int) =
     t.timeBox <- false;
     Core.print_s [%message "nothing"])
 ;;
+
+
