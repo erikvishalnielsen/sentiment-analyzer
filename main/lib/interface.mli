@@ -12,7 +12,8 @@ end
 type t =
   { mutable input_ticker : string
   ; mutable input_timeframe : int
-  ; mutable graph : Graph.t
+  ; mutable graphFinance : Graph.t
+  ; mutable graphSentiment : Graph.t
   ; mutable tickerBox : bool
   ; mutable timeBox : bool
   ; mutable calcBox : bool

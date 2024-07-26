@@ -60,6 +60,18 @@ let get_date (date : string) : Stock_date.t =
   { date; days_from_beginning = Date.diff currDate date }
 ;;
 
+let get_date_from_json (date : string) : Stock_date.t =
+  let dateList = String.split ~on:'-' date in
+  let currDate = Date.today ~zone:Timezone.utc in
+  let date : Date.t =
+    Date.create_exn
+      ~y:(Int.of_string (List.nth_exn dateList 0))
+      ~m:(getMonth (List.nth_exn dateList 1))
+      ~d:(Int.of_string (List.nth_exn dateList 2))
+  in
+  { date; days_from_beginning = Date.diff currDate date }
+;;
+
 let convert_date_tostring (date : Date.t) : string =
   let str = Date.to_string date in
   str

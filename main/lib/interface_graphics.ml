@@ -149,15 +149,15 @@ let draw_graph (interface : Interface.t) =
        interface.input_ticker interface.input_timeframe in interface.finViz
        <- finVizData; *)
     let edges : (int * int) array =
-      [| 100, interface.graph.height; 100, 50; interface.graph.width, 50 |]
+      [| 100, interface.graphSentiment.height; 100, 50; interface.graphSentiment.width, 50 |]
     in
     let line : (int * int) array =
-      [| 100, (interface.graph.height + 50) / 2
-       ; interface.graph.width, (interface.graph.height + 50) / 2
+      [| 100, (interface.graphSentiment.height + 50) / 2
+       ; interface.graphSentiment.width, (interface.graphSentiment.height + 50) / 2
       |]
     in
     let graphPtsSent = interface.graphSentiment.data in
-    let graphPtsPrice = interface.graphSentiment.data in
+    let graphPtsPrice = interface.graphFinance.data in
     Graphics.set_line_width 5;
     Graphics.draw_poly_line edges;
     Graphics.draw_poly_line line;
@@ -167,21 +167,21 @@ let draw_graph (interface : Interface.t) =
     Graphics.set_color Colors._red;
     Graphics.draw_poly_line graphPtsSent;
     Graphics.set_color Colors.black;
-    Graphics.moveto 10 (((interface.graph.height + 50) / 2) - 5);
+    Graphics.moveto 10 (((interface.graphSentiment.height + 50) / 2) - 5);
     Graphics.draw_string "Sentiment";
-    Graphics.moveto 90 (((interface.graph.height + 50) / 2) - 5);
+    Graphics.moveto 90 (((interface.graphSentiment.height + 50) / 2) - 5);
     Graphics.draw_string "0";
-    Graphics.moveto 75 (interface.graph.height - 5);
+    Graphics.moveto 75 (interface.graphSentiment.height - 5);
     Graphics.draw_string "100";
     Graphics.moveto 70 50;
     Graphics.draw_string "-100";
     Graphics.moveto 100 30;
     Graphics.draw_string "0";
-    Graphics.moveto (interface.graph.width - 5) 30;
+    Graphics.moveto (interface.graphSentiment.width - 5) 30;
     Graphics.draw_string (Int.to_string interface.input_timeframe);
-    Graphics.moveto ((interface.graph.width / 2) + 50) 10;
+    Graphics.moveto ((interface.graphSentiment.width / 2) + 50) 10;
     Graphics.draw_string "Days";
-    Graphics.moveto ((interface.graph.width / 2) + 25) interface.graph.height;
+    Graphics.moveto ((interface.graphSentiment.width / 2) + 25) interface.graphSentiment.height;
     Graphics.draw_string (interface.input_ticker ^ " Sentiment Graph");
     let _img_link =
       "https://eodhd.com/img/logos/US/" ^ interface.input_ticker ^ ".png"

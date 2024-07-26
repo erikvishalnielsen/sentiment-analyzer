@@ -61,27 +61,28 @@ let json_to_tuple (interface : Interface.t) =
 let json_to_datapoints (interface : Interface.t) =
   let sentiments, price = json_to_tuple interface in
   
-  let ref lastPrice = List.nth_exn (snd (List.nth_exn price 0)) 1 in 
+  let lastPrice = ref (List.nth_exn (snd (List.nth_exn price 0)) 1) in 
 
-  let dataList : Datapoint.t list = List.foldi sentiments ~init:([]) ~f:(fun ind currData currSentiment -> 
+  let emptyList : Datapoint.t list = [] in
+  let dataList : Datapoint.t list = List.foldi sentiments ~init:(emptyList) ~f:(fun ind currData currSentiment -> 
     let date = fst currSentiment in
     let found = List.find price ~f:(fun item -> String.equal (fst item) date) in
-    match found with (
+    match found with
     | Some item -> (
       let newData : Datapoint.t = {date = Finviz_parser.get_date_from_json date ; price = List.nth_exn (snd item) 1 ; 
-      sentiment = (List.sum (snd currSentiment)) /. (Int.to_float (List.length currSentiment)) } in
-      currData @ [newData]
+      sentiment = (List.fold (snd currSentiment) ~init:(0.0) ~f:(fun sum currItem -> sum +. currItem)) /. (Int.to_float (List.length (snd currSentiment))) } in
+      lastPrice := (List.nth_exn (snd item) 1);
+      (currData @ [newData]);
     )
     | None -> (
-
+      let newData : Datapoint.t = {date = Finviz_parser.get_date_from_json date ; price = !lastPrice ; 
+      sentiment = (List.fold (snd currSentiment) ~init:(0.0) ~f:(fun sum currItem -> sum +. currItem)) /. (Int.to_float (List.length (snd currSentiment))) } in
+      (currData @ [newData]);
     )
-    )
-  )
-  
-  List.max_elt
-  List.min_elt
-  List.sum
-  List.length
+  ) in
+  let dataptList : Datapoints.t = {data = dataList ; price_high = (match (List.max_elt dataList ~compare:(fun item1 item2 -> if (Float.(>.) (item1.price) (item2.price)) then 1 else -1)) with | Some item -> item.price | None -> failwith "error")
+  ; price_low = match (List.min_elt dataList ~compare:(fun item1 item2 -> if (Float.(<.) (item1.price) (item2.price)) then 1 else -1)) with | Some item -> item.price | None -> failwith "error"} in
+  dataptList
 ;;
 (* 
 
