@@ -12,7 +12,8 @@ end
 type t =
   { mutable input_ticker : string
   ; mutable input_timeframe : int
-  ; mutable graph : Graph.t
+  ; mutable graphFinance : Graph.t
+  ; mutable graphSentiment : Graph.t
   ; mutable tickerBox : bool
   ; mutable timeBox : bool
   ; mutable calcBox : bool
@@ -31,7 +32,8 @@ let create () =
   let interface =
     { input_ticker = ""
     ; input_timeframe = 0
-    ; graph = create_graph data
+    ; graphFinance = create_graph data
+    ; graphSentiment = create_graph data
     ; tickerBox = false
     ; timeBox = false
     ; calcBox = false
@@ -65,6 +67,12 @@ let handle_click t (pos : int * int) =
           ~max_search:
             (Finviz_parser.convert_date_tostring
                (Date.add_days todayDate (-180)));
+        
+        let datapoints : Datapoints.t = Datapoints.json_to_datapoints t in
+        let datapair : ((int * int) array * (int * int) array) = Interface_graphics.plot_datapoints datapoints in 
+        t.graphFinance <- {height = 500; width = 500; data = fst datapair};
+        t.graphSentiment <- {height = 500; width = 500; data = snd datapair};
+
         true);
     t.tickerBox <- false;
     t.timeBox <- false;

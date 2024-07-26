@@ -113,6 +113,34 @@ let toJsonFile (interface : Interface.t) =
   print_endline ("JSON content:\n" ^ json_string)
 ;;
 
+let get_list_of_widths numPts = 
+  let dist = 400.0 /. (Int.to_float (numPts - 1)) in
+  List.init numPts ~f:(fun num -> (100 + (Int.of_float ((Int.to_float num) *. dist))))
+;;
+
+let plot_datapoints (datum : Datapoints.t) = 
+  (* Get length of the data list *)
+  (* Decide how I want to scale the price *)
+  (* The Sentiment Score should just be scaled by 100 *)
+  (* Create a function that takes the number of total points and gets the width between them *)
+
+  let numPts = List.length datum.data in
+  let width_list = get_list_of_widths numPts in
+
+  let tickSize = (datum.price_high -. datum.price_low) /. 450.0 in
+  let height_multiplier_price price = (50 + (Int.of_float ((price -. datum.price_low) *. tickSize))) in
+  let height_multiplier_sent sentiment = (275 + (Int.of_float (225.0 *. sentiment))) in
+
+  let pointListPrice = Array.init numPts ~f:(fun _f -> (0,0)) in
+  let pointListSentiment = Array.init numPts ~f:(fun _f -> (0,0)) in
+  List.iteri datum.data ~f:(fun ind point -> 
+    Array.set pointListPrice ind ((List.nth_exn width_list ind), (height_multiplier_price point.price));
+    Array.set pointListSentiment ind ((List.nth_exn width_list ind), (height_multiplier_sent point.sentiment));
+  );
+
+  (pointListPrice, pointListSentiment)
+;;
+
 let draw_graph (interface : Interface.t) =
   (* let open Interface_lib__Finviz_parser in *)
   if interface.calcBox
@@ -128,13 +156,16 @@ let draw_graph (interface : Interface.t) =
        ; interface.graph.width, (interface.graph.height + 50) / 2
       |]
     in
-    let graphPts = interface.graph.data in
+    let graphPtsSent = interface.graphSentiment.data in
+    let graphPtsPrice = interface.graphSentiment.data in
     Graphics.set_line_width 5;
     Graphics.draw_poly_line edges;
     Graphics.draw_poly_line line;
     Graphics.set_line_width 3;
     Graphics.set_color Colors._green;
-    Graphics.draw_poly_line graphPts;
+    Graphics.draw_poly_line graphPtsPrice;
+    Graphics.set_color Colors._red;
+    Graphics.draw_poly_line graphPtsSent;
     Graphics.set_color Colors.black;
     Graphics.moveto 10 (((interface.graph.height + 50) / 2) - 5);
     Graphics.draw_string "Sentiment";
@@ -176,32 +207,4 @@ let render (interface : Interface.t) =
   draw_graph interface;
   Graphics.display_mode true;
   Graphics.synchronize ()
-;;
-
-let get_list_of_widths numPts = 
-  let dist = 400.0 /. (Int.to_float (numPts - 1)) in
-  List.init numPts ~f:(fun num -> (100 + (Int.of_float ((Int.to_float num) *. dist))))
-;;
-
-let plot_datapoints (datum : Datapoints.t) = 
-  (* Get length of the data list *)
-  (* Decide how I want to scale the price *)
-  (* The Sentiment Score should just be scaled by 100 *)
-  (* Create a function that takes the number of total points and gets the width between them *)
-
-  let numPts = List.length datum.data in
-  let width_list = get_list_of_widths numPts in
-
-  let tickSize = Float.to_int ((datum.price_high - datum.price.low) /. 450.0) in
-  let height_multiplier_price price = (50 + ((price - datum.price_low) * tickSize)) in
-  let height_multiplier_sent sentiment = (275 + (225 * sentiment)) in
-
-  let pointListPrice = Array.init numPts ~f:(fun _f -> (0,0)) in
-  let pointListSentiment = Array.init numPts ~f:(fun _f -> (0,0)) in
-  List.iteri datum.data ~f:(fun ind point -> 
-    Array.set pointListPrice ind ((List.nth_exn width_list ind), (height_multiplier_price point.price));
-    Array.set pointListSentiment ind ((List.nth_exn width_list ind), (height_multiplier_sent point.sentiment));
-  );
-
-  (pointListPrice, pointListSentiment)
 ;;

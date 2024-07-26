@@ -10,5 +10,7 @@ module Datapoint : sig
 end
 
 type t =
-    { mutable data : Datapoint.t list
+    { mutable data : Datapoint.t list;
+      mutable price_high : float;
+      mutable price_low : float
     } [@@deriving sexp_of]
