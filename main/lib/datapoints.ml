@@ -15,8 +15,8 @@ type t =
       mutable price_low : float
     } [@@deriving sexp_of]
 
-let json_to_tuple (interface : Interface.t) =
-  let filename = "date/" ^ interface.input_ticker ^ "_sentiment_price.json" in 
+let json_to_tuple ticker =
+  let filename = "data/" ^ ticker ^ "_sentiment_price.json" in 
   let in_channel = Core.In_channel.create filename in
   let lines = In_channel.input_all in_channel in 
   In_channel.close in_channel;
@@ -57,9 +57,11 @@ let json_to_tuple (interface : Interface.t) =
   | _ -> failwith "Expected an array with two elements"
 ;;
 
-let json_to_datapoints (interface : Interface.t) =
+let json_to_datapoints ticker days =
 
-  let sentiments, price = json_to_tuple interface in
+  let sentimentsinit, priceinit = json_to_tuple ticker in
+  let sentiments = List.rev (List.slice sentimentsinit 0 days) in
+  let price = List.rev (List.slice priceinit 0 days) in
   
   let lastPrice = ref (List.nth_exn (snd (List.nth_exn price 0)) 1) in 
 
@@ -81,29 +83,6 @@ let json_to_datapoints (interface : Interface.t) =
     )
   ) in
   let dataptList = {data = dataList ; price_high = (match (List.max_elt dataList ~compare:(fun item1 item2 -> if (Float.(>.) (item1.price) (item2.price)) then 1 else -1)) with | Some item -> item.price | None -> failwith "error")
-  ; price_low = match (List.min_elt dataList ~compare:(fun item1 item2 -> if (Float.(<.) (item1.price) (item2.price)) then 1 else -1)) with | Some item -> item.price | None -> failwith "error"} in
+  ; price_low = match (List.min_elt dataList ~compare:(fun item1 item2 -> if (Float.(>.) (item1.price) (item2.price)) then 1 else -1)) with | Some item -> item.price | None -> failwith "error"} in
   dataptList
 ;;
-(* 
-
-(* Open the JSON file and read its contents *)
-let read_json_file filename =
-  let ic = open_in filename in
-  let json_content = really_input_string ic (in_channel_length ic) in
-  close_in ic;
-  json_content
-
-(* Parse JSON content *)
-let parse_json json_string =
-  let json = Jsonaf.of_string json_string in
-  json
-
-(* Example usage *)
-let () =
-  (* Replace "data.json" with the path to your JSON file *)
-  let json_string = read_json_file "data.json" in
-  let json = parse_json json_string in
-  (* Do something with the parsed JSON *)
-  (* For example, printing the JSON *)
-  Printf.printf "Parsed JSON: %s\n" (Jsonaf.to_string json)
-*)

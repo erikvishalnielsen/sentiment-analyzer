@@ -25,3 +25,20 @@ module Total_book : sig
     ; stockTable : (string, Finviz_parser.t) Hashtbl.t
     }
 end
+
+module Datapoint : sig
+  type t =
+  { date : Stock_date.t
+  ; price : float
+  ; sentiment : float
+  }
+[@@deriving compare, equal, sexp_of]
+end
+
+module Datapoints : sig
+  type t = 
+    { mutable data : Datapoint.t list;
+      mutable price_high : float;
+      mutable price_low : float
+    } [@@deriving sexp_of]
+end

@@ -15,4 +15,4 @@ type t =
       mutable price_low : float
     } [@@deriving sexp_of]
 
-val json_to_datapoints : Interface.t -> t
+val json_to_datapoints : string -> int -> t

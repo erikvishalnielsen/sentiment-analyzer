@@ -128,8 +128,8 @@ let draw_graph (interface : Interface.t) =
        ; interface.graphSentiment.width, (interface.graphSentiment.height + 50) / 2
       |]
     in
-    let graphPtsSent = interface.graphSentiment.data in
-    let graphPtsPrice = interface.graphFinance.data in
+    let graphPtsSent = Array.of_list (List.rev (Array.to_list interface.graphSentiment.data)) in
+    let graphPtsPrice = Array.of_list (List.rev (Array.to_list interface.graphFinance.data)) in
     Graphics.set_line_width 5;
     Graphics.draw_poly_line edges;
     Graphics.draw_poly_line line;
@@ -140,13 +140,13 @@ let draw_graph (interface : Interface.t) =
     Graphics.draw_poly_line graphPtsSent;
     Graphics.set_color Colors.black;
     Graphics.moveto 10 (((interface.graphSentiment.height + 50) / 2) - 5);
-    Graphics.draw_string "Sentiment";
-    Graphics.moveto 90 (((interface.graphSentiment.height + 50) / 2) - 5);
-    Graphics.draw_string "0";
-    Graphics.moveto 75 (interface.graphSentiment.height - 5);
-    Graphics.draw_string "100";
-    Graphics.moveto 70 50;
-    Graphics.draw_string "-100";
+    Graphics.draw_string "Price";
+    (* Graphics.moveto 90 (((interface.graphSentiment.height + 50) / 2) - 5);
+    Graphics.draw_string "0"; *)
+    Graphics.moveto 55 (interface.graphSentiment.height - 5);
+    Graphics.draw_string (Float.to_string (snd interface.graphHiLo));
+    Graphics.moveto 55 50;
+    Graphics.draw_string (Float.to_string (fst interface.graphHiLo));
     Graphics.moveto 100 30;
     Graphics.draw_string "0";
     Graphics.moveto (interface.graphSentiment.width - 5) 30;

@@ -13,6 +13,7 @@ type t =
   { mutable input_ticker : string
   ; mutable input_timeframe : int
   ; mutable graphFinance : Graph.t
+  ; mutable graphHiLo : (float * float)
   ; mutable graphSentiment : Graph.t
   ; mutable tickerBox : bool
   ; mutable timeBox : bool

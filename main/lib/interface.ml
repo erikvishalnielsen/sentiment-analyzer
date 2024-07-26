@@ -13,6 +13,7 @@ type t =
   { mutable input_ticker : string
   ; mutable input_timeframe : int
   ; mutable graphFinance : Graph.t
+  ; mutable graphHiLo : (float * float)
   ; mutable graphSentiment : Graph.t
   ; mutable tickerBox : bool
   ; mutable timeBox : bool
@@ -33,6 +34,7 @@ let create () =
     { input_ticker = ""
     ; input_timeframe = 0
     ; graphFinance = create_graph data
+    ; graphHiLo = (0.0,0.0)
     ; graphSentiment = create_graph data
     ; tickerBox = false
     ; timeBox = false
@@ -63,7 +65,9 @@ let plot_datapoints (datum : Datapoints.t) =
   let numPts = List.length datum.data in
   let width_list = get_list_of_widths numPts in
 
-  let tickSize = (datum.price_high -. datum.price_low) /. 450.0 in
+
+  Core.print_s [%message "highs/lows: " (Float.to_string datum.price_high) (Float.to_string datum.price_low)];
+  let tickSize = 450.0 /. (datum.price_high -. datum.price_low) in
   let height_multiplier_price price = (50 + (Int.of_float ((price -. datum.price_low) *. tickSize))) in
   let height_multiplier_sent sentiment = (275 + (Int.of_float (225.0 *. sentiment))) in
 
@@ -97,7 +101,8 @@ let handle_click (t : t) (pos : int * int) =
             (Finviz_parser.convert_date_tostring
                (Date.add_days todayDate (-180)));
         
-        let datapoints = Datapoints.json_to_datapoints t in
+        let datapoints = Datapoints.json_to_datapoints (t.input_ticker) (t.input_timeframe) in
+        t.graphHiLo <- (datapoints.price_low, datapoints.price_high);
         let datapair : ((int * int) array * (int * int) array) = plot_datapoints datapoints in 
         t.graphFinance <- {height = 500; width = 500; data = fst datapair};
         t.graphSentiment <- {height = 500; width = 500; data = snd datapair};

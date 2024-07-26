@@ -51,25 +51,25 @@ let getMonth (month : string) : Month.t =
 let get_date (date : string) : Stock_date.t =
   let dateList = String.split ~on:'-' date in
   let currDate = Date.today ~zone:Timezone.utc in
-  let date : Date.t =
+  let newdate : Date.t =
     Date.create_exn
       ~y:(Int.of_string ("20" ^ List.nth_exn dateList 2))
       ~m:(getMonth (List.nth_exn dateList 0))
       ~d:(Int.of_string (List.nth_exn dateList 1))
   in
-  { date; days_from_beginning = Date.diff currDate date }
+  { date = newdate; days_from_beginning = Date.diff currDate newdate }
 ;;
 
 let get_date_from_json (date : string) : Stock_date.t =
-  let dateList = String.split ~on:'-' date in
+  let dateList = String.split ~on:'-' (List.nth_exn (String.split ~on:' ' date) 0) in
   let currDate = Date.today ~zone:Timezone.utc in
-  let date : Date.t =
+  let newdate : Date.t =
     Date.create_exn
       ~y:(Int.of_string (List.nth_exn dateList 0))
-      ~m:(getMonth (List.nth_exn dateList 1))
+      ~m:(Month.of_int_exn (Int.of_string (List.nth_exn dateList 1)))
       ~d:(Int.of_string (List.nth_exn dateList 2))
   in
-  { date; days_from_beginning = Date.diff currDate date }
+  { date = newdate; days_from_beginning = Date.diff currDate newdate }
 ;;
 
 let convert_date_tostring (date : Date.t) : string =
@@ -133,7 +133,7 @@ let createFindlJson
   let command =
     Printf.sprintf
       "/bin/python3 \
-       /home/ubuntu/sentiment-analyzer/demo1/lib/sentiment_ml.py %s %s %s \
+       /home/ubuntu/sentiment-analyzer/main/lib/sentiment_ml.py %s %s %s \
        %s"
       ticker
       startDate
@@ -146,10 +146,3 @@ let createFindlJson
     (Core_unix.Exit_or_signal.to_string_hum status)
 ;;
 
-(* let create_json (ticker : string) days = let api_token =
-   "66a11a43014e19.64423066" in let today = convert_date_tostring (Date.today
-   ~zone:Timezone.utc) in let last_date = convert_date_tostring
-   (Date.add_days (Date.today ~zone:Timezone.utc) days) in let url =
-   String.concat [ "https://eodhd.com/api/news?s=" ; ticker ;
-   ".US&offset=0&limit=1000&api_token=" ; api_token ; "&from=" ; today ;
-   "&to=" ; last_date ; "&fmt=json" ] in url ;; *)
