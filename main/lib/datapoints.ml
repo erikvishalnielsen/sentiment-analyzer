@@ -56,13 +56,13 @@ let json_to_tuple ticker =
       (sentiments, prices)
     )
     | _ -> failwith "Expected an array with two elements"
-with Sys_error _ -> ([("", [0.])], [("", [0.])])
+with Sys_error _ -> ([("", [-1.])], [("", [-1.])])
 ;;
 
 let json_to_datapoints ticker days =
 
   let sentimentsinit, priceinit = json_to_tuple ticker in
-  (* if (Float.equal (List.hd_exn (snd (List.hd_exn priceinit))) 0.) then ( *)
+  if (not (Float.equal (List.hd_exn (snd (List.hd_exn priceinit))) (-1.))) then (
   let sentiments = List.rev (List.slice sentimentsinit 0 days) in
   let price = List.rev (List.slice priceinit 0 days) in
   
@@ -87,8 +87,8 @@ let json_to_datapoints ticker days =
   ) in
   let dataptList = {data = dataList ; price_high = (match (List.max_elt dataList ~compare:(fun item1 item2 -> if (Float.(>.) (item1.price) (item2.price)) then 1 else -1)) with | Some item -> item.price | None -> failwith "error")
   ; price_low = match (List.min_elt dataList ~compare:(fun item1 item2 -> if (Float.(>.) (item1.price) (item2.price)) then 1 else -1)) with | Some item -> item.price | None -> failwith "error"} in
-  dataptList
-  (* else (
+  dataptList)
+  else (
     {data = [] ; price_high = 0.; price_low = 0.}
-  ) *)
+  )
 ;;

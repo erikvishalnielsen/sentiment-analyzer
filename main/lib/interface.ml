@@ -108,6 +108,7 @@ let handle_click (t : t) (pos : int * int) =
                (Date.add_days todayDate (-180)));
         
         let datapoints = Datapoints.json_to_datapoints (t.input_ticker) (t.input_timeframe) in
+        if (Float.equal datapoints.price_low 0.) then false else (
         t.correlations <- Regression.regressionCorrelation datapoints;
         t.graphHiLo <- (datapoints.price_low, datapoints.price_high);
         let datapair : ((int * int) array * (int * int) array) = plot_datapoints datapoints in 
@@ -116,7 +117,7 @@ let handle_click (t : t) (pos : int * int) =
         Graphics.set_color (Graphics.rgb 255 255 255);
         Graphics.moveto ((t.graphSentiment.width / 2) + 50) (300);
         Graphics.draw_string "Loading";
-        true);
+        true));
     t.tickerBox <- false;
     t.timeBox <- false;
     Core.print_s [%message "calcbox"] (* Ticker: 94 575 100 25 *))

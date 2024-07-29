@@ -32,16 +32,12 @@ def my_api(ticker, start, end):
     # You can perform operations, calculations, etc.
 
     newsApiToken = "66a11a43014e19.64423066"
-
     # Example:
-    try:
-        priceData = requests.get("https://api.polygon.io/v2/aggs/ticker/" + ticker + "/range/1/day/" + start + "/" + end + "?adjusted=true&sort=desc&apiKey=SKIoSufYtDsfh8YitV2Ue5ozoWDgERT_") 
-        newsData = requests.get("https://eodhd.com/api/news?s=" + ticker + ".US&offset=0&limit=1000&api_token=" + newsApiToken + "&from=" + start + "&to=" + end + "&fmt=json") 
-        print(priceData.status_code)
-        print(newsData.status_code)
-        return(priceData.json(),newsData.json())
-    except: 
-        return(0, 0)
+    priceData = requests.get("https://api.polygon.io/v2/aggs/ticker/" + ticker + "/range/1/day/" + start + "/" + end + "?adjusted=true&sort=desc&apiKey=SKIoSufYtDsfh8YitV2Ue5ozoWDgERT_") 
+    newsData = requests.get("https://eodhd.com/api/news?s=" + ticker + ".US&offset=0&limit=1000&api_token=" + newsApiToken + "&from=" + start + "&to=" + end + "&fmt=json") 
+    print(priceData.status_code)
+    print(newsData.status_code)
+    return(priceData.json(),newsData.json())
 
 if len(sys.argv) != 5:
     print("Usage: python sentiment_ml.py [ticker] [starting_date] [ending_date] [max_search]")
@@ -56,17 +52,17 @@ try:
     open("data/" + ticker + "_fundamentals.json", "r")
 except IOError:
     jsonFileFund, jsonFileNews = my_api(ticker, max_search, end)
-    # if jsonFileFund != 0:
-    file_pathFUND = "data/" + ticker + '_fundamentals.json'  # specify your file path here
-    file_pathNEWS = "data/" + ticker + '_news.json'
+    if jsonFileFund["resultsCount"] != 0:
+        file_pathFUND = "data/" + ticker + '_fundamentals.json'  # specify your file path here
+        file_pathNEWS = "data/" + ticker + '_news.json'
 
-    with open(file_pathFUND, 'w') as file:
-        json.dump(jsonFileFund, file, indent=4)
-    print(f'JSON data has been written to {file_pathFUND}')
+        with open(file_pathFUND, 'w') as file:
+            json.dump(jsonFileFund, file, indent=4)
+        print(f'JSON data has been written to {file_pathFUND}')
 
-    with open(file_pathNEWS, 'w') as file:
-        json.dump(jsonFileNews, file, indent=4)
-    print(f'JSON data has been written to {file_pathNEWS}')
+        with open(file_pathNEWS, 'w') as file:
+            json.dump(jsonFileNews, file, indent=4)
+        print(f'JSON data has been written to {file_pathNEWS}')
 
 
 # FILE OPENING
@@ -92,7 +88,7 @@ try:
     open("data/" + ticker + "_sentiment_price.json", "r")
 except IOError:
     jsonFileFund, jsonFileNews = my_api(ticker, max_search, end)
-    if jsonFileFund != 0:
+    if jsonFileFund["resultsCount"] != 0:
         # Price info
         financefile = open("data/" + ticker + "_fundamentals.json")
         financedata = json.load(financefile) # returns list of dicts
@@ -114,3 +110,4 @@ except IOError:
         json_sentiment_price = json.dumps([news_sentiments, financedict], indent = 4)
         with open("data/" + ticker + "_sentiment_price.json", "w") as outfile:
             outfile.write(json_sentiment_price)
+    
