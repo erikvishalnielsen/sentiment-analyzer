@@ -117,6 +117,10 @@ let draw_graph (interface : Interface.t) =
   (* let open Interface_lib__Finviz_parser in *)
   if interface.calcBox
   then (
+    let open Constants in
+    (* Graphics.set_color Colors.black; *)
+    Graphics.moveto ((interface.graphSentiment.width / 2) + 50) (gui_height / 2 );
+    Graphics.draw_string "Loading";
     (* let finVizData = Finviz_parser.create_finviz_parser
        interface.input_ticker interface.input_timeframe in interface.finViz
        <- finVizData; *)
@@ -155,6 +159,11 @@ let draw_graph (interface : Interface.t) =
     Graphics.draw_string "Days";
     Graphics.moveto ((interface.graphSentiment.width / 2) + 25) interface.graphSentiment.height;
     Graphics.draw_string (interface.input_ticker ^ " Sentiment Graph");
+    (*  *)
+    Graphics.set_color Colors.white;
+    Graphics.moveto ((interface.graphSentiment.width / 2) + 50) (gui_height / 2 );
+    Graphics.draw_string "Loading";
+    (*  *)
     let _img_link =
       "https://eodhd.com/img/logos/US/" ^ interface.input_ticker ^ ".png"
     in
@@ -176,6 +185,9 @@ let render (interface : Interface.t) =
   draw_ticker_box interface.tickerBox interface.input_ticker;
   draw_timeline_box interface.timeBox interface.input_timeframe;
   draw_calculate_box interface.calcBox;
+  Graphics.set_window_title "S&E Trading";
+  Graphics.auto_synchronize true;
+  
   draw_graph interface;
   Graphics.display_mode true;
   Graphics.synchronize ()

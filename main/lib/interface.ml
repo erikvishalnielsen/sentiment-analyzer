@@ -87,8 +87,12 @@ let handle_click (t : t) (pos : int * int) =
   (* Calculate: 482 575 100 25 *)
   if x_pos >= 482 && x_pos <= 582 && y_pos >= 575 && y_pos <= 600
   then (
+    Graphics.set_color (Graphics.rgb 0 0 0);
+    Graphics.moveto ((t.graphSentiment.width / 2) + 50) (300);
+    Graphics.draw_string "Loading...";
     t.calcBox
-    <- (let todayDate = Date.today ~zone:Timezone.utc in
+    <- 
+    (let todayDate = Date.today ~zone:Timezone.utc in
         Finviz_parser.createFindlJson
           t.input_ticker
           ~startDate:
@@ -106,7 +110,9 @@ let handle_click (t : t) (pos : int * int) =
         let datapair : ((int * int) array * (int * int) array) = plot_datapoints datapoints in 
         t.graphFinance <- {height = 500; width = 500; data = fst datapair};
         t.graphSentiment <- {height = 500; width = 500; data = snd datapair};
-
+        Graphics.set_color (Graphics.rgb 255 255 255);
+        Graphics.moveto ((t.graphSentiment.width / 2) + 50) (300);
+        Graphics.draw_string "Loading";
         true);
     t.tickerBox <- false;
     t.timeBox <- false;
