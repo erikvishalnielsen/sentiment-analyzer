@@ -159,6 +159,28 @@ let draw_graph (interface : Interface.t) =
     Graphics.draw_string "Days";
     Graphics.moveto ((interface.graphSentiment.width / 2) + 25) interface.graphSentiment.height;
     Graphics.draw_string (interface.input_ticker ^ " Sentiment Graph");
+    
+    Graphics.moveto 500 500;
+    Graphics.draw_string ("Green: Price | Red: Sentiment");
+
+    (* CORRELATIONS *)
+    Graphics.set_color Colors._blue;
+    Graphics.moveto 510 475;
+    Graphics.draw_string ("Price move 1 day before");
+    Graphics.moveto 510 455;
+    Graphics.draw_string ("Sentiment: " ^ (Float.to_string (List.nth_exn interface.correlations 0)));
+    Graphics.moveto 510 425;
+    Graphics.draw_string ("Price move same day as");
+    Graphics.moveto 510 405;
+    Graphics.draw_string ("Sentiment: " ^ (Float.to_string (List.nth_exn interface.correlations 1)));
+    Graphics.moveto 510 375;
+    Graphics.draw_string ("Price move 1 day after");
+    Graphics.moveto 510 355;
+    Graphics.draw_string ("Sentiment: " ^ (Float.to_string (List.nth_exn interface.correlations 2)));
+    Graphics.moveto 510 325;
+    Graphics.draw_string ("Price move 2 days after");
+    Graphics.moveto 510 305;
+    Graphics.draw_string ("Sentiment: " ^ (Float.to_string (List.nth_exn interface.correlations 3)));
     (*  *)
     Graphics.set_color Colors.white;
     Graphics.moveto ((interface.graphSentiment.width / 2) + 50) (gui_height / 2 );
@@ -186,7 +208,7 @@ let render (interface : Interface.t) =
   draw_timeline_box interface.timeBox interface.input_timeframe;
   draw_calculate_box interface.calcBox;
   Graphics.set_window_title "S&E Trading";
-  Graphics.auto_synchronize true;
+  (* Graphics.auto_synchronize true; *)
   
   draw_graph interface;
   Graphics.display_mode true;

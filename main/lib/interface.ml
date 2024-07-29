@@ -19,6 +19,7 @@ type t =
   ; mutable timeBox : bool
   ; mutable calcBox : bool
   ; mutable finViz : Finviz_parser.Finviz_parser.t
+  ; mutable correlations : float list
   }
 [@@deriving sexp_of]
 
@@ -45,6 +46,7 @@ let create () =
         ; link = ""
         ; headlines = [ Finviz_parser.get_date "Jan-01-24", "" ]
         }
+    ; correlations = []
     }
   in
   interface
@@ -106,6 +108,7 @@ let handle_click (t : t) (pos : int * int) =
                (Date.add_days todayDate (-180)));
         
         let datapoints = Datapoints.json_to_datapoints (t.input_ticker) (t.input_timeframe) in
+        t.correlations <- Regression.regressionCorrelation datapoints;
         t.graphHiLo <- (datapoints.price_low, datapoints.price_high);
         let datapair : ((int * int) array * (int * int) array) = plot_datapoints datapoints in 
         t.graphFinance <- {height = 500; width = 500; data = fst datapair};

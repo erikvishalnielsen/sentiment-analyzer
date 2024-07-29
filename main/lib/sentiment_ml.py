@@ -34,11 +34,14 @@ def my_api(ticker, start, end):
     newsApiToken = "66a11a43014e19.64423066"
 
     # Example:
-    priceData = requests.get("https://api.polygon.io/v2/aggs/ticker/" + ticker + "/range/1/day/" + start + "/" + end + "?adjusted=true&sort=desc&apiKey=SKIoSufYtDsfh8YitV2Ue5ozoWDgERT_") 
-    newsData = requests.get("https://eodhd.com/api/news?s=" + ticker + ".US&offset=0&limit=1000&api_token=" + newsApiToken + "&from=" + start + "&to=" + end + "&fmt=json") 
-    print(priceData.status_code)
-    print(newsData.status_code)
-    return(priceData.json(),newsData.json())
+    try:
+        priceData = requests.get("https://api.polygon.io/v2/aggs/ticker/" + ticker + "/range/1/day/" + start + "/" + end + "?adjusted=true&sort=desc&apiKey=SKIoSufYtDsfh8YitV2Ue5ozoWDgERT_") 
+        newsData = requests.get("https://eodhd.com/api/news?s=" + ticker + ".US&offset=0&limit=1000&api_token=" + newsApiToken + "&from=" + start + "&to=" + end + "&fmt=json") 
+        print(priceData.status_code)
+        print(newsData.status_code)
+        return(priceData.json(),newsData.json())
+    except: 
+        return(0, 0)
 
 if len(sys.argv) != 5:
     print("Usage: python sentiment_ml.py [ticker] [starting_date] [ending_date] [max_search]")
@@ -53,6 +56,7 @@ try:
     open("data/" + ticker + "_fundamentals.json", "r")
 except IOError:
     jsonFileFund, jsonFileNews = my_api(ticker, max_search, end)
+    # if jsonFileFund != 0:
     file_pathFUND = "data/" + ticker + '_fundamentals.json'  # specify your file path here
     file_pathNEWS = "data/" + ticker + '_news.json'
 
@@ -87,24 +91,26 @@ def create_news_datapoints(data):
 try: 
     open("data/" + ticker + "_sentiment_price.json", "r")
 except IOError:
-    # Price info
-    financefile = open("data/" + ticker + "_fundamentals.json")
-    financedata = json.load(financefile) # returns list of dicts
-    financepricedata = financedata["results"]
-    financedict = {}
+    jsonFileFund, jsonFileNews = my_api(ticker, max_search, end)
+    if jsonFileFund != 0:
+        # Price info
+        financefile = open("data/" + ticker + "_fundamentals.json")
+        financedata = json.load(financefile) # returns list of dicts
+        financepricedata = financedata["results"]
+        financedict = {}
 
-    for dict in financepricedata:
-        timestamp = dict["t"] / 1000
-        currdate = (datetime.fromtimestamp(timestamp)).strftime("%Y-%m-%d")
-        financedict[currdate] = [dict["o"], dict["c"], dict["v"]]
+        for dict in financepricedata:
+            timestamp = dict["t"] / 1000
+            currdate = (datetime.fromtimestamp(timestamp)).strftime("%Y-%m-%d")
+            financedict[currdate] = [dict["o"], dict["c"], dict["v"]]
 
-    # Sentiment info
-    file = open("data/" + ticker + "_news.json")
-    news_data = json.load(file) # returns list of dicts
-    news_sentiments = {}
+        # Sentiment info
+        file = open("data/" + ticker + "_news.json")
+        news_data = json.load(file) # returns list of dicts
+        news_sentiments = {}
 
-    # Create json
-    create_news_datapoints(news_data)
-    json_sentiment_price = json.dumps([news_sentiments, financedict], indent = 4)
-    with open("data/" + ticker + "_sentiment_price.json", "w") as outfile:
-        outfile.write(json_sentiment_price)
+        # Create json
+        create_news_datapoints(news_data)
+        json_sentiment_price = json.dumps([news_sentiments, financedict], indent = 4)
+        with open("data/" + ticker + "_sentiment_price.json", "w") as outfile:
+            outfile.write(json_sentiment_price)

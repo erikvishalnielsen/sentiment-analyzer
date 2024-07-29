@@ -21,8 +21,11 @@ let coefficient (ptList : (float * float) list) : float =
   r
 ;;
 
+
+
 let regressionCorrelation (data : Datapoints.t) : float list = 
   let modifierList = [-1;0;1;2] in
+  (* THE ITEMS IN THE LIST CORRESPOND TO THE DELAYS IN THE MODIFIER LIST! *)
 
   let dataLen = List.length data.data in
   let deltaData = List.foldi data.data ~f:(fun index deltas datapt -> 
@@ -40,6 +43,7 @@ let regressionCorrelation (data : Datapoints.t) : float list =
 
   let correlationList = List.init 4 ~f:(fun num -> (List.map deltaData ~f:(fun delt -> List.nth_exn delt num))) in
   let correlations = List.fold correlationList ~f:(fun corrs floatList -> corrs @ [coefficient floatList]) ~init:([]) in
+  Core.print_s [%message "Correlations: " (List.to_string ~f:(Float.to_string) correlations)];
 
   correlations
 ;;

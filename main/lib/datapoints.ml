@@ -17,49 +17,52 @@ type t =
 
 let json_to_tuple ticker =
   let filename = "data/" ^ ticker ^ "_sentiment_price.json" in 
-  let in_channel = Core.In_channel.create filename in
-  let lines = In_channel.input_all in_channel in 
-  In_channel.close in_channel;
-  print_s [%message lines];
-  let json = match Jsonaf.parse lines with
-  | Ok json -> json
-  | Error _ -> failwith "something wrong" in
+  try
+    let in_channel = Core.In_channel.create filename in
+    let lines = In_channel.input_all in_channel in 
+    In_channel.close in_channel;
+    print_s [%message lines];
+    let json = match Jsonaf.parse lines with
+    | Ok json -> json
+    | Error _ -> failwith "something wrong" in
 
-  match json with
-  | `Array [sentiment_dict; price_dict] -> (
-    let sentiments =
-      match sentiment_dict with
-      | `Object sentiments_list -> 
-        List.map sentiments_list ~f:(fun (date, sentiments_array) ->
-          match sentiments_array with
-          | `Array sentiments_list ->
-            (date, List.map sentiments_list ~f:(function
-              | `Number x -> Float.of_string x
-              | _ -> failwith "Expected a float in sentiments_list"))
-          | _ -> failwith "Expected an array for date in sentiment_dict")
-      | _ -> failwith "Expected an object for sentiment_dict"
-    in
-    let prices = 
-      match price_dict with
-      | `Object price_list -> 
-        List.map price_list ~f:(fun (date, price_array) ->
-          match price_array with
-          | `Array price_list ->
-            (date, List.map price_list ~f:(function
-              | `Number x -> Float.of_string x
-              | _ -> failwith "Expected a float in price_list"))
-          | _ -> failwith "Expected an array for date in price_dict")
-      | _ -> failwith "Expected an object for price_dict"
-          in
-    (* Process price_dict if needed *)
-    (sentiments, prices)
-  )
-  | _ -> failwith "Expected an array with two elements"
+    match json with
+    | `Array [sentiment_dict; price_dict] -> (
+      let sentiments =
+        match sentiment_dict with
+        | `Object sentiments_list -> 
+          List.map sentiments_list ~f:(fun (date, sentiments_array) ->
+            match sentiments_array with
+            | `Array sentiments_list ->
+              (date, List.map sentiments_list ~f:(function
+                | `Number x -> Float.of_string x
+                | _ -> failwith "Expected a float in sentiments_list"))
+            | _ -> failwith "Expected an array for date in sentiment_dict")
+        | _ -> failwith "Expected an object for sentiment_dict"
+      in
+      let prices = 
+        match price_dict with
+        | `Object price_list -> 
+          List.map price_list ~f:(fun (date, price_array) ->
+            match price_array with
+            | `Array price_list ->
+              (date, List.map price_list ~f:(function
+                | `Number x -> Float.of_string x
+                | _ -> failwith "Expected a float in price_list"))
+            | _ -> failwith "Expected an array for date in price_dict")
+        | _ -> failwith "Expected an object for price_dict"
+            in
+      (* Process price_dict if needed *)
+      (sentiments, prices)
+    )
+    | _ -> failwith "Expected an array with two elements"
+with Sys_error _ -> ([("", [0.])], [("", [0.])])
 ;;
 
 let json_to_datapoints ticker days =
 
   let sentimentsinit, priceinit = json_to_tuple ticker in
+  (* if (Float.equal (List.hd_exn (snd (List.hd_exn priceinit))) 0.) then ( *)
   let sentiments = List.rev (List.slice sentimentsinit 0 days) in
   let price = List.rev (List.slice priceinit 0 days) in
   
@@ -85,4 +88,7 @@ let json_to_datapoints ticker days =
   let dataptList = {data = dataList ; price_high = (match (List.max_elt dataList ~compare:(fun item1 item2 -> if (Float.(>.) (item1.price) (item2.price)) then 1 else -1)) with | Some item -> item.price | None -> failwith "error")
   ; price_low = match (List.min_elt dataList ~compare:(fun item1 item2 -> if (Float.(>.) (item1.price) (item2.price)) then 1 else -1)) with | Some item -> item.price | None -> failwith "error"} in
   dataptList
+  (* else (
+    {data = [] ; price_high = 0.; price_low = 0.}
+  ) *)
 ;;

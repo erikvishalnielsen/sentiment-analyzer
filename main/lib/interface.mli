@@ -19,6 +19,7 @@ type t =
   ; mutable timeBox : bool
   ; mutable calcBox : bool
   ; mutable finViz : Finviz_parser.Finviz_parser.t
+  ; mutable correlations : float list
   }
 [@@deriving sexp_of]
 
