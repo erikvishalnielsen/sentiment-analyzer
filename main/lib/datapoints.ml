@@ -16,7 +16,8 @@ type t =
     } [@@deriving sexp_of]
 
 let json_to_tuple ticker =
-  let filename = "data/" ^ ticker ^ "_sentiment_price.json" in 
+  let filename = "data/" ^ ticker ^ "_" ^ (Date.to_string (Date.today ~zone:Timezone.utc)) ^ "_sentiment_price.json" in 
+  Core.print_s [%message "filename: " filename];
   try
     let in_channel = Core.In_channel.create filename in
     let lines = In_channel.input_all in_channel in 
