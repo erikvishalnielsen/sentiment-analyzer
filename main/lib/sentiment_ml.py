@@ -126,4 +126,3 @@ except IOError:
         json_sentiment_price = json.dumps([news_sentiments, financedict], indent = 4)
         with open("data/" + ticker +  '_' + end + "_sentiment_price.json", "w") as outfile:
             outfile.write(json_sentiment_price)
-    
