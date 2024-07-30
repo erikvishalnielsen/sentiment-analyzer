@@ -51,7 +51,7 @@ end = sys.argv[3]
 max_search = sys.argv[4]
 
 try: 
-    open("data/" + ticker + '_' + start + '_fundamentals.json', "r")
+    open("data/" + ticker + '_' + end + '_fundamentals.json', "r")
 except IOError:
         directory_path = 'data/'
         # Iterate through all files and directories in the specified directory
@@ -69,8 +69,8 @@ except IOError:
         jsonFileFund, jsonFileNews = my_api(ticker, max_search, end)
 
         if jsonFileFund["resultsCount"] != 0:
-            file_pathFUND = "data/" + ticker + '_' + start + '_fundamentals.json'  # specify your file path here
-            file_pathNEWS = "data/" + ticker + '_' + start + '_news.json'
+            file_pathFUND = "data/" + ticker + '_' + end + '_fundamentals.json'  # specify your file path here
+            file_pathNEWS = "data/" + ticker + '_' + end + '_news.json'
 
         with open(file_pathFUND, 'w') as file:
             json.dump(jsonFileFund, file, indent=4)
@@ -101,12 +101,12 @@ def create_news_datapoints(data):
             news_sentiments[news_dict.get("date")[0:10]] = [sentiment]
 
 try: 
-    open("data/" + ticker +  '_' + start + "_sentiment_price.json", "r")
+    open("data/" + ticker +  '_' + end + "_sentiment_price.json", "r")
 except IOError:
     jsonFileFund, jsonFileNews = my_api(ticker, max_search, end)
     if jsonFileFund["resultsCount"] != 0:
         # Price info
-        financefile = open("data/" + ticker + '_' + start + "_fundamentals.json")
+        financefile = open("data/" + ticker + '_' + end + "_fundamentals.json")
         financedata = json.load(financefile) # returns list of dicts
         financepricedata = financedata["results"]
         financedict = {}
@@ -117,13 +117,13 @@ except IOError:
             financedict[currdate] = [dict["o"], dict["c"], dict["v"]]
 
         # Sentiment info
-        file = open("data/" + ticker + '_' + start + "_news.json")
+        file = open("data/" + ticker + '_' + end + "_news.json")
         news_data = json.load(file) # returns list of dicts
         news_sentiments = {}
 
         # Create json
         create_news_datapoints(news_data)
         json_sentiment_price = json.dumps([news_sentiments, financedict], indent = 4)
-        with open("data/" + ticker +  '_' + start + "_sentiment_price.json", "w") as outfile:
+        with open("data/" + ticker +  '_' + end + "_sentiment_price.json", "w") as outfile:
             outfile.write(json_sentiment_price)
     
