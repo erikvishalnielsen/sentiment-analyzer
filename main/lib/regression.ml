@@ -1,11 +1,21 @@
 open! Core
 
+type t =
+    { a : float;
+      b : float;
+    } [@@deriving sexp_of]
+
 let getSlopePrice (datapt1 : Datapoints.Datapoint.t) (datapt2 : Datapoints.Datapoint.t) = 
   (datapt2.price -. datapt1.price)
 ;;
 
 let getSlopeSentiment (datapt1 : Datapoints.Datapoint.t) (datapt2 : Datapoints.Datapoint.t) = 
   (datapt2.sentiment -. datapt1.sentiment)
+;;
+
+let eqtnToString (t : t) = 
+  let str = "Y = " ^ Float.to_string (Float.round_significant ~significant_digits:3 t.a) ^ " + " ^ Float.to_string (Float.round_significant ~significant_digits:3 t.b) ^ "(X)" in
+  str
 ;;
 
 let coefficient (ptList : (float * float) list) : float =
@@ -21,9 +31,32 @@ let coefficient (ptList : (float * float) list) : float =
   r
 ;;
 
+let regressionEqtn (ptList : (float * float) list list) (corrs : float list) : t option = 
+  let maxCorr = ref (-2.0) in
+  let maxInd = List.foldi corrs ~f:(fun maxInd index cor -> if Float.(<.) cor !maxCorr then (
+    maxCorr := cor;
+    index) else maxInd
+  ) ~init:(-1) in
 
+  match (maxInd) with 
+  | 0 | 1 -> None
+  | _ -> (
+    (* GET REGRESSION EQUATION HERE *)
+    let bestList = List.nth_exn ptList maxInd in
+    let meanX = (List.fold bestList ~init:(0.0) ~f:(fun sum pt -> (sum +. (fst pt)))) /. (Float.of_int (List.length bestList)) in
+    let meanY = (List.fold bestList ~init:(0.0) ~f:(fun sum pt -> (sum +. (snd pt)))) /. (Float.of_int (List.length bestList)) in
+    let numerator = List.fold bestList ~init:(0.0) ~f:(fun sum pt -> sum +. (((fst pt) -. meanX) *. ((snd pt) -. meanY))) in
+    let denaminator = List.fold bestList ~init:(0.0) ~f:(fun sum pt -> sum +. (((fst pt) -. meanX) *. ((fst pt) -. meanX))) in
+    let b_init = numerator /. denaminator in
+    let a_init = meanY -. (b_init *. meanX) in
 
-let regressionCorrelation (data : Datapoints.t) : float list = 
+    let regression : t = { a = a_init ; b = b_init } in
+    Some regression
+  )
+
+;;
+
+let regressionCorrelation (data : Datapoints.t) : (float list * t option) = 
   let modifierList = [-1;0;1;2] in
   (* THE ITEMS IN THE LIST CORRESPOND TO THE DELAYS IN THE MODIFIER LIST! *)
 
@@ -43,7 +76,8 @@ let regressionCorrelation (data : Datapoints.t) : float list =
 
   let correlationList = List.init 4 ~f:(fun num -> (List.map deltaData ~f:(fun delt -> List.nth_exn delt num))) in
   let correlations = List.fold correlationList ~f:(fun corrs floatList -> corrs @ [coefficient floatList]) ~init:([]) in
+  let bestFitEtqn = regressionEqtn correlationList correlations in
   Core.print_s [%message "Correlations: " (List.to_string ~f:(Float.to_string) correlations)];
 
-  correlations
+  correlations, bestFitEtqn
 ;;
