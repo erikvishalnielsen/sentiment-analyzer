@@ -6,6 +6,6 @@ type t =
       days : int
     } [@@deriving sexp_of]
 
-val eqtnToString : t option -> string
+val eqtnToString : t -> (string * string)
 
 val regressionCorrelation : Datapoints.t -> (float list * t option)

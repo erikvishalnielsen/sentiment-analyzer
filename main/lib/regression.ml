@@ -14,13 +14,10 @@ let getSlopeSentiment (datapt1 : Datapoints.Datapoint.t) (datapt2 : Datapoints.D
   (datapt2.sentiment -. datapt1.sentiment)
 ;;
 
-let eqtnToString (t : t option) = 
-  match t with 
-  | Some eqtn -> (
-    let str = "+" ^ (Int.to_string eqtn.days) ^ " Days: Y = " ^ Float.to_string (Float.round_significant ~significant_digits:3 eqtn.a) ^ " + " 
-      ^ Float.to_string (Float.round_significant ~significant_digits:3 eqtn.b) ^ "(X)" in
-  str)
-  | None -> ": Price Leading Useless"
+let eqtnToString (t : t) : (string * string) = 
+  let str = ("+" ^ (Int.to_string t.days) ^ " Days:", "Y = " ^ Float.to_string (Float.round_significant ~significant_digits:3 t.a) ^ " + " 
+      ^ Float.to_string (Float.round_significant ~significant_digits:3 t.b) ^ "(X)") in
+  str
 ;;
 
 let coefficient (ptList : (float * float) list) : float =

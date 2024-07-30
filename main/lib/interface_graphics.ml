@@ -2,6 +2,7 @@ open! Core
 
 module Colors = struct
   let black = Graphics.rgb 000 000 000
+  let bronze = Graphics.rgb 255 87 51
   let white = Graphics.rgb 255 255 255
   let _green = Graphics.rgb 000 255 000
   let _red = Graphics.rgb 255 000 000
@@ -188,9 +189,16 @@ let draw_graph (interface : Interface.t) =
     Graphics.moveto 510 305;
     Graphics.draw_string ("Sentiment: " ^ (Float.to_string (Float.round_significant (List.nth_exn (Interface.correlations interface) 3) ~significant_digits:(3))));
     Graphics.moveto 510 250;
-    Graphics.draw_string ("Best Linear Eqtn @");
+
+    let regStr = (match (Interface.regressionEqtn interface) with
+    | Some eqtn -> Regression.eqtnToString eqtn 
+    | None -> ("-1 Days:", "Price Leading Useless")) in
+    Graphics.set_color Colors.bronze;
+    Graphics.draw_string ("Best Linear Eqtn @ " ^ (fst regStr));
     Graphics.moveto 510 230;
-    Graphics.draw_string (Regression.eqtnToString (Interface.regressionEqtn interface));
+
+    Graphics.draw_string (snd regStr);
+
     (*  *)
     Graphics.set_color Colors.white;
     Graphics.moveto ((width / 2) + 50) (gui_height / 2 );
