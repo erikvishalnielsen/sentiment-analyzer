@@ -18,6 +18,7 @@ type t =
   ; mutable tickerBox : bool
   ; mutable timeBox : bool
   ; mutable calcBox : bool
+  ; mutable displayError : string
   ; mutable finViz : Finviz_parser.Finviz_parser.t
   ; mutable correlations : float list
   }
@@ -26,3 +27,4 @@ type t =
 val create : unit -> t
 val create_graph : (int * int) array -> Graph.t
 val handle_click : t -> int * int -> unit
+val check_error : t -> unit

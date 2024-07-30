@@ -18,6 +18,7 @@ type t =
   ; mutable tickerBox : bool
   ; mutable timeBox : bool
   ; mutable calcBox : bool
+  ; mutable displayError : string
   ; mutable finViz : Finviz_parser.Finviz_parser.t
   ; mutable correlations : float list
   }
@@ -40,6 +41,7 @@ let create () =
     ; tickerBox = false
     ; timeBox = false
     ; calcBox = false
+    ; displayError = ""
     ; finViz =
         { stock_ticker = ""
         ; time_period = 0
@@ -119,7 +121,8 @@ let handle_click (t : t) (pos : int * int) =
         Graphics.moveto ((t.graphSentiment.width / 2) + 50) (300);
         Graphics.draw_string "Loading";
         true
-        | Error _ -> false);
+        | Error error -> t.displayError <- "Some error";
+          false);
     t.tickerBox <- false;
     t.timeBox <- false;
     Core.print_s [%message "calcbox"] (* Ticker: 94 575 100 25 *))
@@ -128,12 +131,14 @@ let handle_click (t : t) (pos : int * int) =
     t.calcBox <- false;
     t.tickerBox <- true;
     t.timeBox <- false;
+    t.displayError <- "";
     Core.print_s [%message "tickerbox"] (* Timeline: 288 575 100 25 *))
   else if x_pos >= 288 && x_pos <= 384 && y_pos >= 575 && y_pos <= 600
   then (
     t.calcBox <- false;
     t.tickerBox <- false;
     t.timeBox <- true;
+    t.displayError <- "";
     Core.print_s [%message "timebox"])
   else (
     t.calcBox <- t.calcBox;
@@ -142,4 +147,13 @@ let handle_click (t : t) (pos : int * int) =
     Core.print_s [%message "nothing"])
 ;;
 
+let check_error t =
+  if (String.equal t.displayError "") then 
+    (Graphics.set_color (Graphics.rgb 255 255 255);
+  Graphics.moveto ((t.graphSentiment.width / 2) + 50) (300);
+  Graphics.draw_string "Invalid input")
+else (
+  Graphics.set_color (Graphics.rgb 0 0 0);
+        Graphics.moveto ((t.graphSentiment.width / 2) + 50) (300);
+        Graphics.draw_string "Invalid input");
 

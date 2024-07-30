@@ -215,6 +215,7 @@ let render (interface : Interface.t) =
   (* Graphics.auto_synchronize true; *)
   
   draw_graph interface;
+  Interface.check_error interface;
   Graphics.display_mode true;
   Graphics.synchronize ()
 ;;
