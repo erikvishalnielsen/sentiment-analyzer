@@ -57,7 +57,7 @@ let json_to_tuple ticker =
       Ok (sentiments, prices)
     )
     | _ -> failwith "Expected an array with two elements"
-with Sys_error error_type -> Error (Error.of_string error_type)
+with Sys_error error_type -> Error (Error.of_string "Invalid ticker")
 ;;
 
 let json_to_datapoints ticker days =
@@ -65,7 +65,7 @@ let json_to_datapoints ticker days =
   match (json_to_tuple ticker) with 
   | Ok (sentimentsinit, priceinit) ->
     if days < 5 || days > (List.length sentimentsinit) - 1 || days > (List.length priceinit) - 1 then
-      Error (Error.of_string "invalid number of days")
+      Error (Error.of_string "Invalid number of days")
     else ( 
     let sentiments = List.rev (List.slice sentimentsinit 0 days) in
     let price = List.rev (List.slice priceinit 0 days) in

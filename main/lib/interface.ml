@@ -125,7 +125,7 @@ let handle_click (t : t) (pos : int * int) =
         Graphics.moveto ((t.graphSentiment.width / 2) + 50) (300);
         Graphics.draw_string "Loading";
         true
-        | Error error -> t.displayError <- "Some error";
+        | Error error -> t.displayError <- Error.to_string_hum error;
           false);
     t.tickerBox <- false;
     t.timeBox <- false;
@@ -135,6 +135,10 @@ let handle_click (t : t) (pos : int * int) =
     t.calcBox <- false;
     t.tickerBox <- true;
     t.timeBox <- false;
+    if (not (String.equal t.displayError "")) then 
+      (Graphics.set_color (Graphics.rgb 255 255 255);
+      Graphics.moveto ((t.graphSentiment.width / 2) + 50) 300;
+      Graphics.draw_string t.displayError);
     t.displayError <- "";
     Core.print_s [%message "tickerbox"] (* Timeline: 288 575 100 25 *))
   else if x_pos >= 288 && x_pos <= 384 && y_pos >= 575 && y_pos <= 600
@@ -142,6 +146,10 @@ let handle_click (t : t) (pos : int * int) =
     t.calcBox <- false;
     t.tickerBox <- false;
     t.timeBox <- true;
+    if (not (String.equal t.displayError "")) then 
+      (Graphics.set_color (Graphics.rgb 255 255 255);
+      Graphics.moveto ((t.graphSentiment.width / 2) + 50) 300;
+      Graphics.draw_string t.displayError);
     t.displayError <- "";
     Core.print_s [%message "timebox"])
   else (
@@ -152,12 +160,8 @@ let handle_click (t : t) (pos : int * int) =
 ;;
 
 let check_error t =
-  if (String.equal t.displayError "") then 
-    (Graphics.set_color (Graphics.rgb 255 255 255);
-  Graphics.moveto ((t.graphSentiment.width / 2) + 50) (300);
-  Graphics.draw_string "Invalid input")
-else (
-  Graphics.set_color (Graphics.rgb 0 0 0);
+  if (not (String.equal t.displayError "")) then 
+  Graphics.set_color (Graphics.rgb 220 20 60);
         Graphics.moveto ((t.graphSentiment.width / 2) + 50) (300);
-        Graphics.draw_string "Invalid input");
+        Graphics.draw_string t.displayError;
 
