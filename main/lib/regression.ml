@@ -3,6 +3,7 @@ open! Core
 type t =
     { a : float;
       b : float;
+      days : int
     } [@@deriving sexp_of]
 
 let getSlopePrice (datapt1 : Datapoints.Datapoint.t) (datapt2 : Datapoints.Datapoint.t) = 
@@ -13,9 +14,13 @@ let getSlopeSentiment (datapt1 : Datapoints.Datapoint.t) (datapt2 : Datapoints.D
   (datapt2.sentiment -. datapt1.sentiment)
 ;;
 
-let eqtnToString (t : t) = 
-  let str = "Y = " ^ Float.to_string (Float.round_significant ~significant_digits:3 t.a) ^ " + " ^ Float.to_string (Float.round_significant ~significant_digits:3 t.b) ^ "(X)" in
-  str
+let eqtnToString (t : t option) = 
+  match t with 
+  | Some eqtn -> (
+    let str = "+" ^ (Int.to_string eqtn.days) ^ " Days: Y = " ^ Float.to_string (Float.round_significant ~significant_digits:3 eqtn.a) ^ " + " 
+      ^ Float.to_string (Float.round_significant ~significant_digits:3 eqtn.b) ^ "(X)" in
+  str)
+  | None -> ": Price Leading Useless"
 ;;
 
 let coefficient (ptList : (float * float) list) : float =
@@ -39,9 +44,10 @@ let regressionEqtn (ptList : (float * float) list list) (corrs : float list) : t
   ) ~init:(-1) in
 
   match (maxInd) with 
-  | 0 | 1 -> None
+  | 0 -> None
   | _ -> (
     (* GET REGRESSION EQUATION HERE *)
+    let dayList = [-1;0;1;2] in
     let bestList = List.nth_exn ptList maxInd in
     let meanX = (List.fold bestList ~init:(0.0) ~f:(fun sum pt -> (sum +. (fst pt)))) /. (Float.of_int (List.length bestList)) in
     let meanY = (List.fold bestList ~init:(0.0) ~f:(fun sum pt -> (sum +. (snd pt)))) /. (Float.of_int (List.length bestList)) in
@@ -50,7 +56,7 @@ let regressionEqtn (ptList : (float * float) list list) (corrs : float list) : t
     let b_init = numerator /. denaminator in
     let a_init = meanY -. (b_init *. meanX) in
 
-    let regression : t = { a = a_init ; b = b_init } in
+    let regression : t = { a = a_init ; b = b_init ; days = (List.nth_exn dayList maxInd) } in
     Some regression
   )
 

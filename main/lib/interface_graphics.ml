@@ -185,6 +185,10 @@ let draw_graph (interface : Interface.t) =
     Graphics.draw_string ("Price move 2 days after");
     Graphics.moveto 510 305;
     Graphics.draw_string ("Sentiment: " ^ (Float.to_string (Float.round_significant (List.nth_exn interface.correlations 3) ~significant_digits:(3))));
+    Graphics.moveto 510 250;
+    Graphics.draw_string ("Best Linear Eqtn");
+    Graphics.moveto 510 230;
+    Graphics.draw_string ("@ " ^ (Regression.eqtnToString interface.regressionEqtn));
     (*  *)
     Graphics.set_color Colors.white;
     Graphics.moveto ((interface.graphSentiment.width / 2) + 50) (gui_height / 2 );
