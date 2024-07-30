@@ -23,49 +23,45 @@ let handle_keys (interface : Interface.t) =
     match Interface_graphics.read_key () with
     | None -> ()
     | Some key ->
-      if interface.timeBox
+      if (Interface.timeBox interface)
       then (
-        match Char.is_digit key && interface.input_timeframe < 100 with
+        match Char.is_digit key && (Interface.input_timeframe interface) < 100 with
         | true ->
-          interface.input_timeframe
-          <- Int.of_string
+          Interface.set_input_timeframe interface (Int.of_string
                (String.concat
-                  [ Int.to_string interface.input_timeframe
+                  [ Int.to_string (Interface.input_timeframe interface)
                   ; String.of_char key
-                  ])
+                  ]))
         | false ->
           (match Char.to_int key with
            | 8 ->
              let len =
-               String.length (Int.to_string interface.input_timeframe)
+               String.length (Int.to_string (Interface.input_timeframe interface))
              in
              if not (len = 1 || len = 0)
              then
-               interface.input_timeframe
-               <- Int.of_string
+              Interface.set_input_timeframe interface (Int.of_string
                     (String.slice
-                       (Int.to_string interface.input_timeframe)
+                       (Int.to_string (Interface.input_timeframe interface))
                        0
-                       (len - 1))
-             else interface.input_timeframe <- 0
+                       (len - 1)))
+             else Interface.set_input_timeframe interface 0
            | _ -> ()));
-      if interface.tickerBox
+      if (Interface.tickerBox interface)
       then (
         match
-          Char.is_alpha key && String.length interface.input_ticker < 6
+          Char.is_alpha key && String.length (Interface.input_ticker interface) < 6
         with
         | true ->
-          interface.input_ticker
-          <- String.concat [ interface.input_ticker; String.of_char key ]
+          Interface.set_input_ticker interface (String.concat [ (Interface.input_ticker interface); String.of_char key ])
         | false ->
           (match Char.to_int key with
            | 8 ->
-             let len = String.length interface.input_ticker in
+             let len = String.length (Interface.input_ticker interface) in
              if not (len = 1 || len = 0)
              then
-               interface.input_ticker
-               <- String.slice interface.input_ticker 0 (len - 1)
-             else interface.input_ticker <- ""
+              Interface.set_input_ticker interface (String.slice (Interface.input_ticker interface) 0 (len - 1))
+             else Interface.set_input_ticker interface ""
            | _ -> ())))
 ;;
 

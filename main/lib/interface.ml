@@ -23,7 +23,7 @@ type t =
   ; mutable correlations : float list
   ; mutable regressionEqtn : Regression.t option
   }
-[@@deriving sexp_of]
+[@@deriving sexp_of, fields]
 
 let create_graph (data : (int * int) array) : Graph.t =
   { height = 500; width = 500; data }
@@ -164,4 +164,14 @@ let check_error t =
   Graphics.set_color (Graphics.rgb 220 20 60);
         Graphics.moveto ((t.graphSentiment.width / 2) + 50) (300);
         Graphics.draw_string t.displayError;
+;;
+
+let set_input_timeframe t timeframe = 
+  t.input_timeframe <- timeframe
+;;
+
+let set_input_ticker t ticker = 
+  t.input_ticker <- ticker
+;;
+
 

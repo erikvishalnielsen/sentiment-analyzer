@@ -85,7 +85,7 @@ let draw_play_area () =
   Graphics.fill_rect 0 0 gui_width gui_height
 ;;
 
-let toJsonFile (interface : Interface.t) =
+(* let toJsonFile (interface : Interface.t) =
   (* Convert the list to a JSON value *)
   let json_value =
     `List
@@ -111,29 +111,31 @@ let toJsonFile (interface : Interface.t) =
   write_to_file output_file json_string;
   (* Optional: Print the JSON string to console *)
   print_endline ("JSON content:\n" ^ json_string)
-;;
+;; *)
 
 let draw_graph (interface : Interface.t) =
   (* let open Interface_lib__Finviz_parser in *)
-  if interface.calcBox
+  if Interface.calcBox interface
   then (
     let open Constants in
     (* Graphics.set_color Colors.black; *)
-    Graphics.moveto ((interface.graphSentiment.width / 2) + 50) (gui_height / 2 );
+    let width = (Interface.graphSentiment interface).width in
+    let height = (Interface.graphSentiment interface).height in
+    Graphics.moveto (width / 2 + 50) (gui_height / 2 );
     Graphics.draw_string "Loading";
     (* let finVizData = Finviz_parser.create_finviz_parser
        interface.input_ticker interface.input_timeframe in interface.finViz
        <- finVizData; *)
     let edges : (int * int) array =
-      [| 100, interface.graphSentiment.height; 100, 50; interface.graphSentiment.width, 50 |]
+      [| 100, height; 100, 50; width, 50 |]
     in
     let line : (int * int) array =
-      [| 100, (interface.graphSentiment.height + 50) / 2
-       ; interface.graphSentiment.width, (interface.graphSentiment.height + 50) / 2
+      [| 100, (height + 50) / 2
+       ; width, (height + 50) / 2
       |]
     in
-    let graphPtsSent = Array.of_list (List.rev (Array.to_list interface.graphSentiment.data)) in
-    let graphPtsPrice = Array.of_list (List.rev (Array.to_list interface.graphFinance.data)) in
+    let graphPtsSent = Array.of_list (List.rev (Array.to_list (Interface.graphSentiment interface).data)) in
+    let graphPtsPrice = Array.of_list (List.rev (Array.to_list (Interface.graphFinance interface).data)) in
     Graphics.set_line_width 5;
     Graphics.draw_poly_line edges;
     Graphics.draw_poly_line line;
@@ -143,22 +145,22 @@ let draw_graph (interface : Interface.t) =
     Graphics.set_color Colors._red;
     Graphics.draw_poly_line graphPtsSent;
     Graphics.set_color Colors.black;
-    Graphics.moveto 10 (((interface.graphSentiment.height + 50) / 2) - 5);
+    Graphics.moveto 10 (((height + 50) / 2) - 5);
     Graphics.draw_string "Price";
     (* Graphics.moveto 90 (((interface.graphSentiment.height + 50) / 2) - 5);
     Graphics.draw_string "0"; *)
-    Graphics.moveto 55 (interface.graphSentiment.height - 5);
-    Graphics.draw_string (Float.to_string (snd interface.graphHiLo));
+    Graphics.moveto 55 (height - 5);
+    Graphics.draw_string (Float.to_string (snd (Interface.graphHiLo interface)));
     Graphics.moveto 55 50;
-    Graphics.draw_string (Float.to_string (fst interface.graphHiLo));
+    Graphics.draw_string (Float.to_string (fst (Interface.graphHiLo interface)));
     Graphics.moveto 100 30;
     Graphics.draw_string "0";
-    Graphics.moveto (interface.graphSentiment.width - 5) 30;
-    Graphics.draw_string (Int.to_string interface.input_timeframe);
-    Graphics.moveto ((interface.graphSentiment.width / 2) + 50) 10;
+    Graphics.moveto (width - 5) 30;
+    Graphics.draw_string (Int.to_string (Interface.input_timeframe interface));
+    Graphics.moveto ((width / 2) + 50) 10;
     Graphics.draw_string "Days";
-    Graphics.moveto ((interface.graphSentiment.width / 2) + 25) (interface.graphSentiment.height + 5);
-    Graphics.draw_string (interface.input_ticker ^ " Sentiment Graph");
+    Graphics.moveto ((width / 2) + 25) (height + 5);
+    Graphics.draw_string ((Interface.input_ticker interface) ^ " Sentiment Graph");
     
     Graphics.moveto 480 520;
     Graphics.set_color Colors._green;
@@ -172,30 +174,30 @@ let draw_graph (interface : Interface.t) =
     Graphics.moveto 510 475;
     Graphics.draw_string ("Price move 1 day before");
     Graphics.moveto 510 455;
-    Graphics.draw_string ("Sentiment: " ^ (Float.to_string (Float.round_significant (List.nth_exn interface.correlations 0) ~significant_digits:(3))));
+    Graphics.draw_string ("Sentiment: " ^ (Float.to_string (Float.round_significant (List.nth_exn( Interface.correlations interface) 0) ~significant_digits:(3))));
     Graphics.moveto 510 425;
     Graphics.draw_string ("Price move same day as");
     Graphics.moveto 510 405;
-    Graphics.draw_string ("Sentiment: " ^ (Float.to_string (Float.round_significant (List.nth_exn interface.correlations 1) ~significant_digits:(3))));
+    Graphics.draw_string ("Sentiment: " ^ (Float.to_string (Float.round_significant (List.nth_exn (Interface.correlations interface) 1) ~significant_digits:(3))));
     Graphics.moveto 510 375;
     Graphics.draw_string ("Price move 1 day after");
     Graphics.moveto 510 355;
-    Graphics.draw_string ("Sentiment: " ^ (Float.to_string (Float.round_significant (List.nth_exn interface.correlations 2) ~significant_digits:(3))));
+    Graphics.draw_string ("Sentiment: " ^ (Float.to_string (Float.round_significant (List.nth_exn (Interface.correlations interface) 2) ~significant_digits:(3))));
     Graphics.moveto 510 325;
     Graphics.draw_string ("Price move 2 days after");
     Graphics.moveto 510 305;
-    Graphics.draw_string ("Sentiment: " ^ (Float.to_string (Float.round_significant (List.nth_exn interface.correlations 3) ~significant_digits:(3))));
+    Graphics.draw_string ("Sentiment: " ^ (Float.to_string (Float.round_significant (List.nth_exn (Interface.correlations interface) 3) ~significant_digits:(3))));
     Graphics.moveto 510 250;
     Graphics.draw_string ("Best Linear Eqtn @");
     Graphics.moveto 510 230;
-    Graphics.draw_string (Regression.eqtnToString interface.regressionEqtn);
+    Graphics.draw_string (Regression.eqtnToString (Interface.regressionEqtn interface));
     (*  *)
     Graphics.set_color Colors.white;
-    Graphics.moveto ((interface.graphSentiment.width / 2) + 50) (gui_height / 2 );
+    Graphics.moveto ((width / 2) + 50) (gui_height / 2 );
     Graphics.draw_string "Loading";
     (*  *)
     let _img_link =
-      "https://eodhd.com/img/logos/US/" ^ interface.input_ticker ^ ".png"
+      "https://eodhd.com/img/logos/US/" ^ (Interface.input_ticker interface) ^ ".png"
     in
     ())
   else ()
@@ -212,9 +214,9 @@ let render (interface : Interface.t) =
   Graphics.display_mode false;
   draw_header ();
   draw_play_area ();
-  draw_ticker_box interface.tickerBox interface.input_ticker;
-  draw_timeline_box interface.timeBox interface.input_timeframe;
-  draw_calculate_box interface.calcBox;
+  draw_ticker_box (Interface.tickerBox interface) (Interface.input_ticker interface);
+  draw_timeline_box (Interface.timeBox interface) (Interface.input_timeframe interface);
+  draw_calculate_box (Interface.calcBox interface);
   Graphics.set_window_title "S&E Trading";
   (* Graphics.auto_synchronize true; *)
   
