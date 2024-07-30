@@ -38,7 +38,7 @@ let coefficient (ptList : (float * float) list) : float =
 
 let regressionEqtn (ptList : (float * float) list list) (corrs : float list) : t option = 
   let maxCorr = ref (-2.0) in
-  let maxInd = List.foldi corrs ~f:(fun maxInd index cor -> if Float.(<.) cor !maxCorr then (
+  let maxInd = List.foldi corrs ~f:(fun index maxInd cor -> if (Float.(>.) cor !maxCorr) then (
     maxCorr := cor;
     index) else maxInd
   ) ~init:(-1) in
