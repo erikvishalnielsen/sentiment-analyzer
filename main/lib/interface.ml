@@ -70,6 +70,7 @@ let plot_datapoints (datum : Datapoints.t) =
 
   Core.print_s [%message "highs/lows: " (Float.to_string datum.price_high) (Float.to_string datum.price_low)];
   let tickSize = 450.0 /. (datum.price_high -. datum.price_low) in
+  Core.print_s [%message "data: " (Float.to_string tickSize) (Float.to_string datum.price_low)];
   let height_multiplier_price price = (50 + (Int.of_float ((price -. datum.price_low) *. tickSize))) in
   let height_multiplier_sent sentiment = (275 + (Int.of_float (225.0 *. sentiment))) in
 

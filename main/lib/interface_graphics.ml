@@ -157,7 +157,7 @@ let draw_graph (interface : Interface.t) =
     Graphics.draw_string (Int.to_string interface.input_timeframe);
     Graphics.moveto ((interface.graphSentiment.width / 2) + 50) 10;
     Graphics.draw_string "Days";
-    Graphics.moveto ((interface.graphSentiment.width / 2) + 25) interface.graphSentiment.height;
+    Graphics.moveto ((interface.graphSentiment.width / 2) + 25) (interface.graphSentiment.height + 5);
     Graphics.draw_string (interface.input_ticker ^ " Sentiment Graph");
     
     Graphics.moveto 480 520;
