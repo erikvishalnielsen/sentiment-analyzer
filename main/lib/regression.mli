@@ -5,4 +5,4 @@ type t =
       b : float;
     } [@@deriving sexp_of]
 
-val regressionCorrelation : Datapoints.t -> float list
+val regressionCorrelation : Datapoints.t -> (float list * t option)
