@@ -61,18 +61,6 @@ let draw_button (button : Interface.Button.t) message =
   else
     Graphics.draw_string (Printf.sprintf " %s %s" header_text message)
 ;;
-(* 
-let draw_timeline_box (button : Interface.Button.t) message =
-  let open Constants in
-  let text_color = if button.on then Graphics.cyan else 0x058BBD in
-  Graphics.set_color text_color;
-  Graphics.fill_rect 288 (gui_height - 25) 100 25;
-  let header_text = "Days:" in
-  Graphics.set_color Colors.black;
-  Graphics.set_text_size 200;
-  Graphics.moveto 293 (gui_height - 19);
-  Graphics.draw_string (Printf.sprintf " %s %d" header_text message)
-;; *)
 
 let draw_calculate_box (button : Interface.Button.t) =
   let open Constants in
@@ -91,34 +79,6 @@ let draw_play_area () =
   Graphics.set_color Colors.white;
   Graphics.fill_rect 0 0 (gui_width) gui_height
 ;;
-
-(* let toJsonFile (interface : Interface.t) =
-  (* Convert the list to a JSON value *)
-  let json_value =
-    `List
-      (List.map
-         ~f:(fun s ->
-           `String
-             (Int.to_string (fst s).days_from_beginning
-              ^ " "
-              ^ Finviz_parser.getStockDate (fst s)
-              ^ " "
-              ^ snd s))
-         interface.finViz.headlines)
-  in
-  (* Convert the JSON value to a string *)
-  let json_string = Yojson.Basic.to_string json_value in
-  (* Write the JSON string to a file *)
-  let write_to_file filename content =
-    Out_channel.write_all filename ~data:content
-  in
-  (* Specify the output file path *)
-  let output_file = interface.input_ticker ^ "_finviz.json" in
-  (* Write the JSON string to the output file *)
-  write_to_file output_file json_string;
-  (* Optional: Print the JSON string to console *)
-  print_endline ("JSON content:\n" ^ json_string)
-;; *)
 
 let draw_graph (interface : Interface.t) =
   (* let open Interface_lib__Finviz_parser in *)
@@ -236,7 +196,7 @@ let render (interface : Interface.t) =
   draw_play_area ();
   draw_button (Interface.tickerBox interface) (Interface.input_ticker interface);
   draw_button (Interface.timeBox interface) (Int.to_string (Interface.input_timeframe interface));
-  draw_calculate_box (Interface.calcBox interface);
+  draw_button (Interface.calcBox interface) "";
   Graphics.set_window_title "S&E Trading";
   (* Graphics.auto_synchronize true; *)
   

@@ -70,7 +70,7 @@ end = sys.argv[3]
 max_search = sys.argv[4]
 
 try: 
-    open("data/" + ticker + '_' + end + '_fundamentals.json', "r")
+    open(f"data/{ticker}_{end}_fundamentals.json", "r")
 except IOError:
         directory_path = 'data/'
         # Iterate through all files and directories in the specified directory
