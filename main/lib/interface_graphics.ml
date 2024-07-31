@@ -131,11 +131,11 @@ let draw_graph (interface : Interface.t) =
        interface.input_ticker interface.input_timeframe in interface.finViz
        <- finVizData; *)
     let edges : (int * int) array =
-      [| 100, height; 100, 50; width, 50 |]
+      [| 100, height + 300; 100, 300 + 50; width, 300 + 50 |]
     in
     let line : (int * int) array =
-      [| 100, (height + 50) / 2
-       ; width, (height + 50) / 2
+      [| 100, (height + 650) / 2
+       ; width, (height + 650) / 2
       |]
     in
     let graphPtsSent = Array.of_list (List.rev (Array.to_list (Interface.graphSentiment interface).data)) in
@@ -149,11 +149,11 @@ let draw_graph (interface : Interface.t) =
     Graphics.set_color Colors._red;
     Graphics.draw_poly_line graphPtsSent;
     Graphics.set_color Colors.black;
-    Graphics.moveto 10 (((height + 50) / 2) - 5);
+    Graphics.moveto 10 (((height + 650) / 2) - 5);
     Graphics.draw_string "Price";
     (* Graphics.moveto 90 (((interface.graphSentiment.height + 50) / 2) - 5);
     Graphics.draw_string "0"; *)
-    Graphics.moveto 55 (height - 5);
+    Graphics.moveto 55 (height + 595);
     Graphics.draw_string (Float.to_string (snd (Interface.graphHiLo interface)));
     Graphics.moveto 55 (50 + 300);
     Graphics.draw_string (Float.to_string (fst (Interface.graphHiLo interface)));
@@ -163,7 +163,7 @@ let draw_graph (interface : Interface.t) =
     Graphics.draw_string (Int.to_string (Interface.input_timeframe interface));
     Graphics.moveto ((width / 2) + 50) (10 + 300);
     Graphics.draw_string "Days";
-    Graphics.moveto ((width / 2) + 25) (height + 5);
+    Graphics.moveto ((width / 2) + 25) (height + 305);
     Graphics.draw_string ((Interface.input_ticker interface) ^ " Sentiment Graph");
     
     Graphics.moveto 480 820;
