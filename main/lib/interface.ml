@@ -92,10 +92,10 @@ let handle_click (t : t) (pos : int * int) =
   let x_pos = fst pos in
   let y_pos = snd pos in
   (* Calculate: 482 575 100 25 *)
-  if x_pos >= 482 && x_pos <= 582 && y_pos >= 575 && y_pos <= 600
+  if x_pos >= 482 && x_pos <= 582 && y_pos >= 875 && y_pos <= 900
   then (
     Graphics.set_color (Graphics.rgb 0 0 0);
-    Graphics.moveto ((t.graphSentiment.width / 2) + 50) (300);
+    Graphics.moveto ((t.graphSentiment.width / 2) + 50) (600);
     Graphics.draw_string "Loading...";
     t.calcBox
     <- 
@@ -122,7 +122,7 @@ let handle_click (t : t) (pos : int * int) =
         t.graphFinance <- {height = 500; width = 500; data = fst datapair};
         t.graphSentiment <- {height = 500; width = 500; data = snd datapair};
         Graphics.set_color (Graphics.rgb 255 255 255);
-        Graphics.moveto ((t.graphSentiment.width / 2) + 50) (300);
+        Graphics.moveto ((t.graphSentiment.width / 2) + 50) (600);
         Graphics.draw_string "Loading";
         true
         | Error error -> t.displayError <- Error.to_string_hum error;
@@ -130,7 +130,7 @@ let handle_click (t : t) (pos : int * int) =
     t.tickerBox <- false;
     t.timeBox <- false;
     Core.print_s [%message "calcbox"] (* Ticker: 94 575 100 25 *))
-  else if x_pos >= 94 && x_pos <= 194 && y_pos >= 575 && y_pos <= 600
+  else if x_pos >= 94 && x_pos <= 194 && y_pos >= 875 && y_pos <= 900
   then (
     t.calcBox <- false;
     t.tickerBox <- true;
@@ -141,7 +141,7 @@ let handle_click (t : t) (pos : int * int) =
       Graphics.draw_string t.displayError);
     t.displayError <- "";
     Core.print_s [%message "tickerbox"] (* Timeline: 288 575 100 25 *))
-  else if x_pos >= 288 && x_pos <= 384 && y_pos >= 575 && y_pos <= 600
+  else if x_pos >= 288 && x_pos <= 384 && y_pos >= 875 && y_pos <= 900
   then (
     t.calcBox <- false;
     t.tickerBox <- false;
@@ -162,7 +162,7 @@ let handle_click (t : t) (pos : int * int) =
 let check_error t =
   if (not (String.equal t.displayError "")) then 
   Graphics.set_color (Graphics.rgb 220 20 60);
-        Graphics.moveto ((t.graphSentiment.width / 2) + 50) (300);
+        Graphics.moveto ((t.graphSentiment.width / 2) + 50) (600);
         Graphics.draw_string t.displayError;
 ;;
 

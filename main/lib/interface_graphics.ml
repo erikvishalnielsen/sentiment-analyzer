@@ -13,7 +13,7 @@ end
    free to increase the scaling factor to tweak! *)
 module Constants = struct
   let scaling_factor = 1.
-  let gui_height = 600. *. scaling_factor |> Float.iround_down_exn
+  let gui_height = 900. *. scaling_factor |> Float.iround_down_exn
   let header_height = 75. *. scaling_factor |> Float.iround_down_exn
   let gui_width = 675. *. scaling_factor |> Float.iround_down_exn
 end
@@ -27,7 +27,7 @@ let init_exn () =
   then failwith "Can only call init_exn once"
   else only_one := true;
   Graphics.open_graph
-    (Printf.sprintf " %dx%d" (gui_height + header_height) gui_width);
+    (Printf.sprintf " %dx%d" gui_width (gui_height + header_height));
   Interface.create ()
 ;;
 
@@ -48,42 +48,45 @@ let draw_header () =
 ;;
 
 let draw_ticker_box clicked message =
+  let open Constants in
   let text_color = if clicked then Graphics.cyan else 0x058BBD in
   Graphics.set_color text_color;
-  Graphics.fill_rect 94 575 100 25;
+  Graphics.fill_rect 94 (gui_height - 25) 100 25;
   let header_text = "Stock:" in
   Graphics.set_color Colors.black;
   Graphics.set_text_size 200;
-  Graphics.moveto 99 581;
+  Graphics.moveto 99 (gui_height - 19);
   Graphics.draw_string (Printf.sprintf " %s %s" header_text message)
 ;;
 
 let draw_timeline_box clicked message =
+  let open Constants in
   let text_color = if clicked then Graphics.cyan else 0x058BBD in
   Graphics.set_color text_color;
-  Graphics.fill_rect 288 575 100 25;
+  Graphics.fill_rect 288 (gui_height - 25) 100 25;
   let header_text = "Days:" in
   Graphics.set_color Colors.black;
   Graphics.set_text_size 200;
-  Graphics.moveto 293 581;
+  Graphics.moveto 293 (gui_height - 19);
   Graphics.draw_string (Printf.sprintf " %s %d" header_text message)
 ;;
 
 let draw_calculate_box clicked =
+  let open Constants in
   let text_color = if clicked then Graphics.green else 0x06A217 in
   Graphics.set_color text_color;
-  Graphics.fill_rect 482 575 100 25;
+  Graphics.fill_rect 482 (gui_height - 25) 100 25;
   let header_text = "Calculate" in
   Graphics.set_color Colors.black;
   Graphics.set_text_size 200;
-  Graphics.moveto 499 581;
+  Graphics.moveto 499 (gui_height - 19);
   Graphics.draw_string (Printf.sprintf " %s" header_text)
 ;;
 
 let draw_play_area () =
   let open Constants in
   Graphics.set_color Colors.white;
-  Graphics.fill_rect 0 0 gui_width gui_height
+  Graphics.fill_rect 0 0 (gui_width) gui_height
 ;;
 
 (* let toJsonFile (interface : Interface.t) =
@@ -152,57 +155,57 @@ let draw_graph (interface : Interface.t) =
     Graphics.draw_string "0"; *)
     Graphics.moveto 55 (height - 5);
     Graphics.draw_string (Float.to_string (snd (Interface.graphHiLo interface)));
-    Graphics.moveto 55 50;
+    Graphics.moveto 55 (50 + 300);
     Graphics.draw_string (Float.to_string (fst (Interface.graphHiLo interface)));
-    Graphics.moveto 100 30;
+    Graphics.moveto 100 (30 + 300);
     Graphics.draw_string "0";
-    Graphics.moveto (width - 5) 30;
+    Graphics.moveto (width - 5) (30 + 300);
     Graphics.draw_string (Int.to_string (Interface.input_timeframe interface));
-    Graphics.moveto ((width / 2) + 50) 10;
+    Graphics.moveto ((width / 2) + 50) (10 + 300);
     Graphics.draw_string "Days";
     Graphics.moveto ((width / 2) + 25) (height + 5);
     Graphics.draw_string ((Interface.input_ticker interface) ^ " Sentiment Graph");
     
-    Graphics.moveto 480 520;
+    Graphics.moveto 480 820;
     Graphics.set_color Colors._green;
     Graphics.draw_string ("Green: Price ");
-    Graphics.moveto 575 520;
+    Graphics.moveto 575 820;
     Graphics.set_color Colors._red;
     Graphics.draw_string(" Red: Sentiment");
 
     (* CORRELATIONS *)
     Graphics.set_color Colors._blue;
-    Graphics.moveto 510 475;
+    Graphics.moveto 510 775;
     Graphics.draw_string ("Price move 1 day before");
-    Graphics.moveto 510 455;
+    Graphics.moveto 510 755;
     Graphics.draw_string ("Sentiment: " ^ (Float.to_string (Float.round_significant (List.nth_exn( Interface.correlations interface) 0) ~significant_digits:(3))));
-    Graphics.moveto 510 425;
+    Graphics.moveto 510 725;
     Graphics.draw_string ("Price move same day as");
-    Graphics.moveto 510 405;
+    Graphics.moveto 510 705;
     Graphics.draw_string ("Sentiment: " ^ (Float.to_string (Float.round_significant (List.nth_exn (Interface.correlations interface) 1) ~significant_digits:(3))));
-    Graphics.moveto 510 375;
+    Graphics.moveto 510 675;
     Graphics.draw_string ("Price move 1 day after");
-    Graphics.moveto 510 355;
+    Graphics.moveto 510 655;
     Graphics.draw_string ("Sentiment: " ^ (Float.to_string (Float.round_significant (List.nth_exn (Interface.correlations interface) 2) ~significant_digits:(3))));
-    Graphics.moveto 510 325;
+    Graphics.moveto 510 625;
     Graphics.draw_string ("Price move 2 days after");
-    Graphics.moveto 510 305;
+    Graphics.moveto 510 605;
     Graphics.draw_string ("Sentiment: " ^ (Float.to_string (Float.round_significant (List.nth_exn (Interface.correlations interface) 3) ~significant_digits:(3))));
     
-    Graphics.moveto 510 250;
+    Graphics.moveto 510 550;
     let regStr = (match (Interface.regressionEqtn interface) with
     | Some eqtn -> Regression.eqtnToString eqtn 
     | None -> ("-1/0 Days:", "Price Leading Useless")) in
     Graphics.set_color Colors.bronze;
     Graphics.draw_string ("Best Linear Eqtn @ " ^ (fst regStr));
-    Graphics.moveto 510 230;
+    Graphics.moveto 510 530;
     Graphics.draw_string (snd regStr);
     let predStr = (match (Interface.regressionEqtn interface) with
     | Some eqtn -> (Regression.predictionToString eqtn)
     | None -> ("Prediction Not Possible", "When Price is Leading")) in 
-    Graphics.moveto 510 200;
+    Graphics.moveto 510 500;
     Graphics.draw_string (fst predStr);
-    Graphics.moveto 510 180;
+    Graphics.moveto 510 480;
     Graphics.draw_string (snd predStr);
 
     (*  *)
