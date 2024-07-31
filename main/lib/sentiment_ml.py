@@ -6,6 +6,9 @@ import os
 import re
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from datetime import datetime, timedelta
+import openai 
+  
+messages = [ {"role": "system", "content": "You are a financial advisor for equities."} ] # TELLING THE AI ITS ROLE IN THE UI
 
 def previous_business_day(date):
     # Define the number of days to subtract to go back one day
@@ -127,3 +130,12 @@ except IOError:
         json_sentiment_price = json.dumps([news_sentiments, financedict], indent = 4)
         with open("data/" + ticker +  '_' + end + "_sentiment_price.json", "w") as outfile:
             outfile.write(json_sentiment_price)
+
+["Give me a 1 sentence summary of " + ticker, "Give me a 1 sentence summary of where " + ticker + " makes its money", "Give me a short sentence of companies related to " + ticker]
+for message in messages:
+    if message: 
+        messages.append({"role": "user", "content": message}, ) 
+        chat = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=messages) 
+    reply = chat.choices[0].message.content 
+    print(f"ChatGPT: {reply}") 
+    messages.append({"role": "assistant", "content": reply}) 
