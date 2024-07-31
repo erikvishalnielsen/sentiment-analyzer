@@ -4,11 +4,26 @@ import json
 import sys
 import os
 import re
+from dotenv import load_dotenv, dotenv_values
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from datetime import datetime, timedelta
-import openai 
+import pathlib
+import textwrap
+
+import google.generativeai as genai
+
+from IPython.display import display
+from IPython.display import Markdown
+
+
+def to_markdown(text):
+  text = text.replace('•', '  *')
+  return Markdown(textwrap.indent(text, '> ', predicate=lambda _: True))
   
-messages = [ {"role": "system", "content": "You are a financial advisor for equities."} ] # TELLING THE AI ITS ROLE IN THE UI
+load_dotenv()
+apiKey = os.getenv("GOOGLE_API_KEY")
+genai.configure(api_key=apiKey)
+model = genai.GenerativeModel('gemini-1.5-flash')
 
 def previous_business_day(date):
     # Define the number of days to subtract to go back one day
@@ -104,6 +119,14 @@ def create_news_datapoints(data):
         else:
             news_sentiments[news_dict.get("date")[0:10]] = [sentiment]
 
+questionList = ["Give me a 1 sentence summary of " + ticker + " (stock ticker) stock", "Give me a 1 sentence summary of where " + ticker + " (stock ticker) company makes its money", "Give me a short list of companies who compete with " + ticker + " (stock ticker) stock in one sentence"]
+answerList = []
+for question in questionList:
+    answerList.append((model.generate_content(question)).text)
+
+for answer in answerList:
+    print(answer)
+
 try: 
     open("data/" + ticker +  '_' + end + "_sentiment_price.json", "r")
 except IOError:
@@ -127,15 +150,8 @@ except IOError:
 
         # Create json
         create_news_datapoints(news_data)
-        json_sentiment_price = json.dumps([news_sentiments, financedict], indent = 4)
+        json_sentiment_price = json.dumps([news_sentiments, financedict, answerList], indent = 4)
         with open("data/" + ticker +  '_' + end + "_sentiment_price.json", "w") as outfile:
             outfile.write(json_sentiment_price)
 
-["Give me a 1 sentence summary of " + ticker, "Give me a 1 sentence summary of where " + ticker + " makes its money", "Give me a short sentence of companies related to " + ticker]
-for message in messages:
-    if message: 
-        messages.append({"role": "user", "content": message}, ) 
-        chat = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=messages) 
-    reply = chat.choices[0].message.content 
-    print(f"ChatGPT: {reply}") 
-    messages.append({"role": "assistant", "content": reply}) 
+
