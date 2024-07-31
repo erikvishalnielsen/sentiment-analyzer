@@ -33,10 +33,11 @@ def my_api(ticker, start, end):
     # Function body goes here
     # You can perform operations, calculations, etc.
 
-    newsApiToken = "66a11a43014e19.64423066"
+    newsApiTokenErik = "66aa4b2f971169.77002381"
+    newsApiTokenSam = "66a11a43014e19.64423066"
     # Example:
     priceData = requests.get("https://api.polygon.io/v2/aggs/ticker/" + ticker + "/range/1/day/" + start + "/" + end + "?adjusted=true&sort=desc&apiKey=SKIoSufYtDsfh8YitV2Ue5ozoWDgERT_") 
-    newsData = requests.get("https://eodhd.com/api/news?s=" + ticker + ".US&offset=0&limit=1000&api_token=" + newsApiToken + "&from=" + start + "&to=" + end + "&fmt=json") 
+    newsData = requests.get("https://eodhd.com/api/news?s=" + ticker + ".US&offset=0&limit=1000&api_token=" + newsApiTokenErik + "&from=" + start + "&to=" + end + "&fmt=json") 
     print(priceData.status_code)
     print(newsData.status_code)
     return(priceData.json(),newsData.json())

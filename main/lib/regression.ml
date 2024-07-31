@@ -3,7 +3,10 @@ open! Core
 type t =
     { a : float;
       b : float;
-      days : int
+      days : int;
+      delta_price : float;
+      one_day_prediction : float;
+      today_price : float
     } [@@deriving sexp_of]
 
 let getSlopePrice (datapt1 : Datapoints.Datapoint.t) (datapt2 : Datapoints.Datapoint.t) = 
@@ -20,6 +23,12 @@ let eqtnToString (t : t) : (string * string) =
   str
 ;;
 
+let predictionToString (t : t) = 
+  let str1 = "Next closing price: " ^ (Float.to_string (Float.round_decimal t.one_day_prediction ~decimal_digits:2)) in
+  let str2 = "Price Delta of: " ^ (Float.to_string (Float.round_decimal t.delta_price ~decimal_digits:2)) in
+  (str1, str2) 
+;;
+
 let coefficient (ptList : (float * float) list) : float =
   let n = Int.to_float (List.length ptList) in
   let sumX = List.fold ptList ~init:(0.0) ~f:(fun sum pt -> (sum +. (fst pt))) in
@@ -33,7 +42,7 @@ let coefficient (ptList : (float * float) list) : float =
   r
 ;;
 
-let regressionEqtn (ptList : (float * float) list list) (corrs : float list) : t option = 
+let regressionEqtn (ptList : (float * float) list list) (corrs : float list) latestPrice : t option = 
   let maxCorr = ref (-2.0) in
   let maxInd = List.foldi corrs ~f:(fun index maxInd cor -> if (Float.(>.) cor !maxCorr) then (
     maxCorr := cor;
@@ -41,7 +50,7 @@ let regressionEqtn (ptList : (float * float) list list) (corrs : float list) : t
   ) ~init:(-1) in
 
   match (maxInd) with 
-  | 0 -> None
+  | -1 | 0 -> None
   | _ -> (
     (* GET REGRESSION EQUATION HERE *)
     let dayList = [-1;0;1;2] in
@@ -52,8 +61,12 @@ let regressionEqtn (ptList : (float * float) list list) (corrs : float list) : t
     let denaminator = List.fold bestList ~init:(0.0) ~f:(fun sum pt -> sum +. (((fst pt) -. meanX) *. ((fst pt) -. meanX))) in
     let b_init = numerator /. denaminator in
     let a_init = meanY -. (b_init *. meanX) in
+    let days_init = (List.nth_exn dayList maxInd) in
 
-    let regression : t = { a = a_init ; b = b_init ; days = (List.nth_exn dayList maxInd) } in
+    let deltaSentiment : float = (fst (List.nth_exn bestList ((List.length bestList) - 1 - days_init))) in
+    let deltaPrice = a_init +. (b_init *. deltaSentiment) in
+    let newPrice = latestPrice +. deltaPrice in
+    let regression : t = { a = a_init ; b = b_init ; days = (List.nth_exn dayList maxInd) ; delta_price = deltaPrice ; one_day_prediction = newPrice ; today_price = latestPrice } in
     Some regression
   )
 
@@ -79,7 +92,8 @@ let regressionCorrelation (data : Datapoints.t) : (float list * t option) =
 
   let correlationList = List.init 4 ~f:(fun num -> (List.map deltaData ~f:(fun delt -> List.nth_exn delt num))) in
   let correlations = List.fold correlationList ~f:(fun corrs floatList -> corrs @ [coefficient floatList]) ~init:([]) in
-  let bestFitEtqn = regressionEqtn correlationList correlations in
+  let latestPrice = (List.nth_exn data.data ((List.length data.data) - 1)).price in
+  let bestFitEtqn = regressionEqtn correlationList correlations latestPrice in
   Core.print_s [%message "Correlations: " (List.to_string ~f:(Float.to_string) correlations)];
 
   correlations, bestFitEtqn

@@ -188,16 +188,22 @@ let draw_graph (interface : Interface.t) =
     Graphics.draw_string ("Price move 2 days after");
     Graphics.moveto 510 305;
     Graphics.draw_string ("Sentiment: " ^ (Float.to_string (Float.round_significant (List.nth_exn (Interface.correlations interface) 3) ~significant_digits:(3))));
+    
     Graphics.moveto 510 250;
-
     let regStr = (match (Interface.regressionEqtn interface) with
     | Some eqtn -> Regression.eqtnToString eqtn 
-    | None -> ("-1 Days:", "Price Leading Useless")) in
+    | None -> ("-1/0 Days:", "Price Leading Useless")) in
     Graphics.set_color Colors.bronze;
     Graphics.draw_string ("Best Linear Eqtn @ " ^ (fst regStr));
     Graphics.moveto 510 230;
-
     Graphics.draw_string (snd regStr);
+    let predStr = (match (Interface.regressionEqtn interface) with
+    | Some eqtn -> (Regression.predictionToString eqtn)
+    | None -> ("Prediction Not Possible", "When Price is Leading")) in 
+    Graphics.moveto 510 200;
+    Graphics.draw_string (fst predStr);
+    Graphics.moveto 510 180;
+    Graphics.draw_string (snd predStr);
 
     (*  *)
     Graphics.set_color Colors.white;
