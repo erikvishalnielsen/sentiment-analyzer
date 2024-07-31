@@ -47,21 +47,24 @@ let draw_header () =
   Graphics.draw_string (Printf.sprintf " %s" header_text)
 ;;
 
-let draw_ticker_box clicked message =
+let draw_button (button : Interface.Button.t) message =
   let open Constants in
-  let text_color = if clicked then Graphics.cyan else 0x058BBD in
+  let text_color = if button.on then button.clicked_color else button.reg_color in
   Graphics.set_color text_color;
-  Graphics.fill_rect 94 (gui_height - 25) 100 25;
-  let header_text = "Stock:" in
+  Graphics.fill_rect button.x button.y button.width button.height;
+  let header_text = button.message in
   Graphics.set_color Colors.black;
   Graphics.set_text_size 200;
-  Graphics.moveto 99 (gui_height - 19);
-  Graphics.draw_string (Printf.sprintf " %s %s" header_text message)
+  Graphics.moveto (button.x + 5) (gui_height - 19);
+  if String.equal message "" then 
+    Graphics.draw_string (Printf.sprintf " %s" header_text) 
+  else
+    Graphics.draw_string (Printf.sprintf " %s %s" header_text message)
 ;;
-
-let draw_timeline_box clicked message =
+(* 
+let draw_timeline_box (button : Interface.Button.t) message =
   let open Constants in
-  let text_color = if clicked then Graphics.cyan else 0x058BBD in
+  let text_color = if button.on then Graphics.cyan else 0x058BBD in
   Graphics.set_color text_color;
   Graphics.fill_rect 288 (gui_height - 25) 100 25;
   let header_text = "Days:" in
@@ -69,11 +72,11 @@ let draw_timeline_box clicked message =
   Graphics.set_text_size 200;
   Graphics.moveto 293 (gui_height - 19);
   Graphics.draw_string (Printf.sprintf " %s %d" header_text message)
-;;
+;; *)
 
-let draw_calculate_box clicked =
+let draw_calculate_box (button : Interface.Button.t) =
   let open Constants in
-  let text_color = if clicked then Graphics.green else 0x06A217 in
+  let text_color = if button.on then Graphics.green else 0x06A217 in
   Graphics.set_color text_color;
   Graphics.fill_rect 482 (gui_height - 25) 100 25;
   let header_text = "Calculate" in
@@ -81,7 +84,7 @@ let draw_calculate_box clicked =
   Graphics.set_text_size 200;
   Graphics.moveto 499 (gui_height - 19);
   Graphics.draw_string (Printf.sprintf " %s" header_text)
-;;
+;; 
 
 let draw_play_area () =
   let open Constants in
@@ -119,7 +122,7 @@ let draw_play_area () =
 
 let draw_graph (interface : Interface.t) =
   (* let open Interface_lib__Finviz_parser in *)
-  if Interface.calcBox interface
+  if (Interface.calcBox interface).on
   then (
     let open Constants in
     (* Graphics.set_color Colors.black; *)
@@ -231,8 +234,8 @@ let render (interface : Interface.t) =
   Graphics.display_mode false;
   draw_header ();
   draw_play_area ();
-  draw_ticker_box (Interface.tickerBox interface) (Interface.input_ticker interface);
-  draw_timeline_box (Interface.timeBox interface) (Interface.input_timeframe interface);
+  draw_button (Interface.tickerBox interface) (Interface.input_ticker interface);
+  draw_button (Interface.timeBox interface) (Int.to_string (Interface.input_timeframe interface));
   draw_calculate_box (Interface.calcBox interface);
   Graphics.set_window_title "S&E Trading";
   (* Graphics.auto_synchronize true; *)

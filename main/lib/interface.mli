@@ -9,6 +9,19 @@ module Graph : sig
   [@@deriving sexp_of]
 end
 
+module Button : sig
+  type t = 
+  { x : int
+  ; y : int
+  ; width : int
+  ; height : int
+  ; mutable on : bool
+  ; message : string
+  ; reg_color : int
+  ; clicked_color : int 
+  } [@@deriving sexp_of]
+end
+
 type t [@@deriving sexp_of]
 
 val create : unit -> t
@@ -21,9 +34,9 @@ val input_timeframe : t -> int
 val graphFinance : t -> Graph.t
 val graphHiLo : t -> (float * float)
 val graphSentiment : t -> Graph.t
-val tickerBox : t -> bool
-val timeBox : t -> bool
-val calcBox : t -> bool
+val tickerBox : t -> Button.t
+val timeBox : t -> Button.t
+val calcBox : t -> Button.t
 val displayError : t -> string
   (* ; mutable finViz : Finviz_parser.Finviz_parser.t *)
 val correlations : t -> float list

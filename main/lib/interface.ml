@@ -9,15 +9,28 @@ module Graph = struct
   [@@deriving sexp_of]
 end
 
+module Button = struct
+  type t = 
+  { x : int
+  ; y : int
+  ; width : int
+  ; height : int
+  ; mutable on : bool
+  ; message : string
+  ; reg_color : int
+  ; clicked_color : int 
+  } [@@deriving sexp_of]
+end
+
 type t =
   { mutable input_ticker : string
   ; mutable input_timeframe : int
   ; mutable graphFinance : Graph.t
   ; mutable graphHiLo : (float * float)
   ; mutable graphSentiment : Graph.t
-  ; mutable tickerBox : bool
-  ; mutable timeBox : bool
-  ; mutable calcBox : bool
+  ; mutable tickerBox : Button.t
+  ; mutable timeBox : Button.t
+  ; mutable calcBox : Button.t
   ; mutable displayError : string
   ; mutable finViz : Finviz_parser.Finviz_parser.t
   ; mutable correlations : float list
@@ -39,9 +52,9 @@ let create () =
     ; graphFinance = create_graph data
     ; graphHiLo = (0.0,0.0)
     ; graphSentiment = create_graph data
-    ; tickerBox = false
-    ; timeBox = false
-    ; calcBox = false
+    ; tickerBox = {x = 94 ; y = 875 ; width = 100; height = 25; on=false; message="Ticker:"; reg_color = 0x058BBD; clicked_color = 0x00FFFF}
+    ; timeBox = {x = 288 ; y = 875 ; width = 100; height = 25; on=false; message="Days:"; reg_color = 0x058BBD; clicked_color = 0x00FFFF}
+    ; calcBox = {x = 482 ; y = 875 ; width = 100; height = 25; on=false; message="Calculate"; reg_color = 0x06A217; clicked_color = 0x00FF00}
     ; displayError = ""
     ; finViz =
         { stock_ticker = ""
@@ -97,7 +110,7 @@ let handle_click (t : t) (pos : int * int) =
     Graphics.set_color (Graphics.rgb 0 0 0);
     Graphics.moveto ((t.graphSentiment.width / 2) + 50) (600);
     Graphics.draw_string "Loading...";
-    t.calcBox
+    t.calcBox.on
     <- 
     (let todayDate = Date.today ~zone:Timezone.utc in
         Finviz_parser.createFindlJson
@@ -127,14 +140,14 @@ let handle_click (t : t) (pos : int * int) =
         true
         | Error error -> t.displayError <- Error.to_string_hum error;
           false);
-    t.tickerBox <- false;
-    t.timeBox <- false;
+    t.tickerBox.on <- false;
+    t.timeBox.on <- false;
     Core.print_s [%message "calcbox"] (* Ticker: 94 575 100 25 *))
   else if x_pos >= 94 && x_pos <= 194 && y_pos >= 875 && y_pos <= 900
   then (
-    t.calcBox <- false;
-    t.tickerBox <- true;
-    t.timeBox <- false;
+    t.calcBox.on <- false;
+    t.tickerBox.on <- true;
+    t.timeBox.on <- false;
     if (not (String.equal t.displayError "")) then 
       (Graphics.set_color (Graphics.rgb 255 255 255);
       Graphics.moveto ((t.graphSentiment.width / 2) + 50) 300;
@@ -143,9 +156,9 @@ let handle_click (t : t) (pos : int * int) =
     Core.print_s [%message "tickerbox"] (* Timeline: 288 575 100 25 *))
   else if x_pos >= 288 && x_pos <= 384 && y_pos >= 875 && y_pos <= 900
   then (
-    t.calcBox <- false;
-    t.tickerBox <- false;
-    t.timeBox <- true;
+    t.calcBox.on <- false;
+    t.tickerBox.on <- false;
+    t.timeBox.on <- true;
     if (not (String.equal t.displayError "")) then 
       (Graphics.set_color (Graphics.rgb 255 255 255);
       Graphics.moveto ((t.graphSentiment.width / 2) + 50) 300;
@@ -154,8 +167,8 @@ let handle_click (t : t) (pos : int * int) =
     Core.print_s [%message "timebox"])
   else (
     t.calcBox <- t.calcBox;
-    t.tickerBox <- false;
-    t.timeBox <- false;
+    t.tickerBox.on <- false;
+    t.timeBox.on <- false;
     Core.print_s [%message "nothing"])
 ;;
 
