@@ -22,7 +22,6 @@ let json_to_tuple ticker =
     let in_channel = Core.In_channel.create filename in
     let lines = In_channel.input_all in_channel in 
     In_channel.close in_channel;
-    print_s [%message lines];
     let json = match Jsonaf.parse lines with
     | Ok json -> json
     | Error _ -> failwith "something wrong" in
