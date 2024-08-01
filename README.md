@@ -1,4 +1,5 @@
 PUBLIC STOCK SENTIMENT ANALYZER
+
 By Erik Nielsen and Sam Meddin
 
 LANGUAGES USED
