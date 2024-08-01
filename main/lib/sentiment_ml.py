@@ -41,7 +41,7 @@ def previous_business_day(date):
             # Return the date if it's a weekday
             return date
 
-def my_api(ticker, start, end):
+def my_api(initTicker, start, end):
     """
     Description of what the function does.
 
@@ -50,7 +50,7 @@ def my_api(ticker, start, end):
     """
     # Function body goes here
     # You can perform operations, calculations, etc.
-    ticker = ticker.upper()
+    ticker = initTicker.upper()
 
     newsApiTokenErik = "66aa4b2f971169.77002381"
     newsApiTokenSam = "66a11a43014e19.64423066"
