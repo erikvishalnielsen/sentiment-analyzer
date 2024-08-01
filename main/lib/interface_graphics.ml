@@ -171,6 +171,16 @@ let draw_graph (interface : Interface.t) =
     Graphics.moveto 510 480;
     Graphics.draw_string (snd predStr);
 
+    (* AI INFORMATION *)
+    let ai_answers = Interface.graphInfo interface in
+    let height_start = 280 in
+    let _x = List.init (List.length ai_answers) ~f:(fun num ->
+      let minus = num * 20 in
+      Graphics.moveto 10 (height_start-minus);
+      Graphics.draw_string (List.nth_exn ai_answers num);
+    ) in
+
+
     (*  *)
     Graphics.set_color Colors.white;
     Graphics.moveto ((width / 2) + 50) (gui_height / 2 );

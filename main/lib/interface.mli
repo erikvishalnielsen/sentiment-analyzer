@@ -38,6 +38,7 @@ val tickerBox : t -> Button.t
 val timeBox : t -> Button.t
 val calcBox : t -> Button.t
 val displayError : t -> string
+val graphInfo : t -> string list
   (* ; mutable finViz : Finviz_parser.Finviz_parser.t *)
 val correlations : t -> float list
 val regressionEqtn : t -> Regression.t option

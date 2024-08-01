@@ -12,7 +12,8 @@ end
 type t =
     { mutable data : Datapoint.t list;
       mutable price_high : float;
-      mutable price_low : float
+      mutable price_low : float;
+      gemini_ans : string list
     } [@@deriving sexp_of]
 
 let json_to_tuple ticker =
@@ -27,7 +28,7 @@ let json_to_tuple ticker =
     | Error _ -> failwith "something wrong" in
 
     match json with
-    | `Array [sentiment_dict; price_dict] -> (
+    | `Array [sentiment_dict; price_dict; gemini_ans] -> (
       let sentiments =
         match sentiment_dict with
         | `Object sentiments_list -> 
@@ -51,18 +52,26 @@ let json_to_tuple ticker =
                 | _ -> failwith "Expected a float in price_list"))
             | _ -> failwith "Expected an array for date in price_dict")
         | _ -> failwith "Expected an object for price_dict"
-            in
+      in
+      let gemini = 
+        match gemini_ans with 
+        | `Array gem_list ->
+          List.map gem_list ~f:(function
+            | `String x -> x
+            | _ -> failwith "Expected a string in gemini_list")
+        | _ -> failwith "Expected an array of answers in gemini_dict"
+      in
       (* Process price_dict if needed *)
-      Ok (sentiments, prices)
+      Ok (sentiments, prices, gemini)
     )
-    | _ -> failwith "Expected an array with two elements"
+    | _ -> failwith "Expected an array with three elements"
 with Sys_error error_type -> Error (Error.of_string "Invalid ticker")
 ;;
 
 let json_to_datapoints ticker days =
 
   match (json_to_tuple ticker) with 
-  | Ok (sentimentsinit, priceinit) ->
+  | Ok (sentimentsinit, priceinit, gemini) ->
     if days < 5 || days > (List.length sentimentsinit) - 1 || days > (List.length priceinit) - 1 then
       Error (Error.of_string "Invalid number of days")
     else ( 
@@ -89,7 +98,7 @@ let json_to_datapoints ticker days =
       )
     ) in
     let dataptList = {data = dataList ; price_high = (match (List.max_elt dataList ~compare:(fun item1 item2 -> if (Float.(>.) (item1.price) (item2.price)) then 1 else -1)) with | Some item -> item.price | None -> failwith "error")
-    ; price_low = match (List.min_elt dataList ~compare:(fun item1 item2 -> if (Float.(>.) (item1.price) (item2.price)) then 1 else -1)) with | Some item -> item.price | None -> failwith "error"} in
+    ; price_low = (match (List.min_elt dataList ~compare:(fun item1 item2 -> if (Float.(>.) (item1.price) (item2.price)) then 1 else -1)) with | Some item -> item.price | None -> failwith "error") ; gemini_ans = gemini } in
     Ok dataptList)
   | Error error_type -> Error error_type
 ;;

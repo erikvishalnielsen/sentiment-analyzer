@@ -35,6 +35,7 @@ type t =
   ; mutable finViz : Finviz_parser.Finviz_parser.t
   ; mutable correlations : float list
   ; mutable regressionEqtn : Regression.t option
+  ; mutable graphInfo : string list
   }
 [@@deriving sexp_of, fields]
 
@@ -64,6 +65,7 @@ let create () =
         }
     ; correlations = []
     ; regressionEqtn = None
+    ; graphInfo = []
     }
   in
   interface
@@ -130,6 +132,7 @@ let handle_click (t : t) (pos : int * int) =
         let (correlations, regressionEqtn) = (Regression.regressionCorrelation datapoints) in
         t.correlations <- correlations;
         t.regressionEqtn <- regressionEqtn;
+        t.graphInfo <- datapoints.gemini_ans;
         t.graphHiLo <- (datapoints.price_low, datapoints.price_high);
         let datapair : ((int * int) array * (int * int) array) = plot_datapoints datapoints in 
         t.graphFinance <- {height = 500; width = 500; data = fst datapair};
