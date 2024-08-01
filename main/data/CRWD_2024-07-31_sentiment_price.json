@@ -1,5 +1,20 @@
 [
     {
+        "2024-07-31": [
+            -0.2783,
+            0.2023,
+            0.064,
+            0.0,
+            0.0,
+            0.0,
+            -0.4637,
+            -0.2294,
+            0.0,
+            -0.24695,
+            0.3452,
+            -0.7528,
+            -0.07220000000000001
+        ],
         "2024-07-30": [
             0.125,
             0.0,
@@ -21,7 +36,8 @@
             -0.27115,
             -0.27155,
             0.51085,
-            0.0
+            0.0,
+            -0.17
         ],
         "2024-07-29": [
             0.0,
@@ -50,6 +66,7 @@
             -0.66505,
             0.4999,
             0.061100000000000015,
+            0.4952,
             0.4779,
             -0.47855,
             0.3243,
@@ -59,6 +76,7 @@
         "2024-07-25": [
             -0.4063,
             -0.6261,
+            -0.73535,
             -0.3592,
             0.51925,
             0.63615,
@@ -1164,14 +1182,14 @@
         "2024-02-04": [
             0.7315,
             0.0
-        ],
-        "2024-02-02": [
-            0.8027,
-            0.4989,
-            0.49935
         ]
     },
     {
+        "2024-07-31": [
+            234.67,
+            231.96,
+            11975894.0
+        ],
         "2024-07-30": [
             247.55,
             233.65,
@@ -1781,11 +1799,11 @@
             305,
             302.49,
             2481279.0
-        ],
-        "2024-02-02": [
-            299.75,
-            303.57,
-            2374546.0
         ]
-    }
+    },
+    [
+        "CrowdStrike Holdings, Inc. (CRWD) is a leading cybersecurity company specializing in endpoint protection and threat intelligence. \n",
+        "CrowdStrike Holdings, Inc. (CRWD) makes money by providing cloud-based cybersecurity solutions to businesses and organizations, protecting them from cyberattacks and data breaches. \n",
+        "CrowdStrike's main competitors include SentinelOne, Palo Alto Networks, and Fortinet, all offering endpoint security and threat intelligence solutions. \n"
+    ]
 ]

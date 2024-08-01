@@ -1,5 +1,306 @@
 [
     {
+        "date": "2024-07-31T21:26:30+00:00",
+        "title": "CrowdStrike is sued by shareholders over huge software outage",
+        "content": "By Jonathan Stempel\n\n(Reuters) - CrowdStrike has been sued by shareholders who said the cybersecurity company defrauded them by concealing how its inadequate software testing could cause the July 19 global outage that crashed more than 8 million computers.\n\nIn a proposed class action filed on Tuesday night in the Austin, Texas federal court, shareholders said they learned that CrowdStrike's assurances about its technology were materially false and misleading when a flawed software update disrupted airlines, banks, hospitals and emergency lines around the world.\n\nThey said CrowdStrike's share price fell 32% over the next 12 days, wiping out $25 billion of market value, as the outage's effects became known, Chief Executive George Kurtz was called to testify to the U.S. Congress, and Delta Air Lines reportedly hired prominent lawyer David Boies to seek damages.\n\nThe complaint cites statements including from a March 5 conference call where Kurtz characterized CrowdStrike's software as \"validated, tested and certified.\"\n\nIn a statement on Wednesday, Austin-based CrowdStrike said: \"We believe this case lacks merit and we will vigorously defend the company,\" Kurtz and Chief Financial Officer Burt Podbere are also defendants.\n\nThe lawsuit led by the Plymouth County Retirement Association of Plymouth, Massachusetts, seeks unspecified damages for holders of CrowdStrike Class A shares between Nov. 29, 2023 and July 29, 2024.\n\nShareholders often sue companies after unexpected negative news causes stock prices to fall, and CrowdStrike could face more lawsuits.\n\nDelta Chief Executive Ed Bastian told CNBC on Wednesday that the outage cost his airline $500 million, including lost revenue and compensation and hotels for stranded fliers.\n\nCrowdStrike shares closed on Wednesday down $1.69 at $231.96. They closed at $343.05 on the day before the outage.\n\nThe case is Plymouth County Retirement Association v CrowdStrike Inc et al, U.S. District Court, Western District of Texas, No. 24-00857.\n\n(Reporting by Jonathan Stempel in New York; Editing by Sandra Maler)\n\nView comments",
+        "link": "https://finance.yahoo.com/news/crowdstrike-sued-shareholders-over-huge-212630476.html",
+        "symbols": [
+            "45C.F",
+            "CRWD.US"
+        ],
+        "tags": [],
+        "sentiment": {
+            "polarity": -0.92,
+            "neg": 0.093,
+            "neu": 0.854,
+            "pos": 0.054
+        }
+    },
+    {
+        "date": "2024-07-31T16:35:29+00:00",
+        "title": "Top Midday Stories: Microsoft, AMD, Mastercard, T Mobile and Boeing Report Earnings; Uber and BYD Form Partnership; CrowdStrike Hit with First Class Action Over Outage",
+        "content": "Top Midday Stories: Microsoft, AMD, Mastercard, T Mobile and Boeing Report Earnings; Uber and BYD Form Partnership; CrowdStrike Hit with",
+        "link": "https://finance.yahoo.com/news/top-midday-stories-microsoft-amd-163529475.html",
+        "symbols": [
+            "0A1U.IL",
+            "0BOE.LSE",
+            "0R2L.LSE",
+            "45C.F",
+            "AMD.BE",
+            "AMD.DU",
+            "AMD.HM",
+            "AMD.MU",
+            "AMD.STU",
+            "BA.MX",
+            "BA.NEO",
+            "BA.US",
+            "BCO.BE",
+            "BCO.DU",
+            "BCO.F",
+            "BCO.HA",
+            "BCO.HM",
+            "BCO.MU",
+            "BCO.STU",
+            "BCO.XETRA"
+        ],
+        "tags": [],
+        "sentiment": {
+            "polarity": 0.202,
+            "neg": 0,
+            "neu": 0.909,
+            "pos": 0.091
+        }
+    },
+    {
+        "date": "2024-07-31T16:23:12+00:00",
+        "title": "Airfreight shows resiliency post-CrowdStrike, Xeneta data shows",
+        "content": "Airfreight proved resilient post-CrowdStrike. (Photo: Jim Allen/FreightWaves)\n\nNew data from Xeneta shows airfreight returned to normal levels just nine days after the July 19 CrowdStrike Windows outage.\n\nThousands of flights were canceled at a time when airfreight demand is soaring, creating concern among logistics managers.\n\nWenwen Zhang, airfreight analyst at Xeneta, tells American Shipper that the cargo backlogs caused by the IT failure increased the cargo load factor (Xeneta\u2019s measurement of available capacity against volume/weight of goods flown) of some airlines by up to 4 percentage points compared to the previous week. Cargo load factors mostly returned to pre-IT failure levels on July 28.\n\n\u201cMost flight cancellations were quickly reversed and air cargo once again showed resilience,\u201d said Zhang. \u201cThis was helped in the fact there are currently more passenger flights due to summer travels, which provides more belly capacity.\u201d\n\nXeneta data shows the cargo load factor for July increased by 5 percentage points year on year to reach 59%. Compared to low demand in July 2023, airlines are now seeing strong demand from e-commerce.\n\n\u201cThe summer should be a quieter time of year for airfreight, but July saw the sixth consecutive month of general cargo spot rate increases,\u201d said Zhang. \u201cShippers and freight forwarders have real concerns ahead of the traditional peak season later in the year because there is going to be a scramble to secure capacity, which means increasing rates.\u201d\n\nThe increase in demand has throttled July spot prices by 13% year on year.\n\nXeneta data shows the global average air cargo spot rate for the last week of July reached its highest level of the year at $2.70 per kilogram. July marks the sixth consecutive month of growth.\n\n\u201cThe increasing global demand for air cargo in 2024 is driven largely by the phenomenal rise of e-commerce from China,\u201d said Zhang. \u201cThere is also the knock-on impact of disruption to ocean container services due to conflict in the Red Sea, which has seen some shippers turn to airfreight to protect supply chains.\u201d\n\nGlobal air cargo supply grew at a much lower pace of 2% year on year in July.\n\n\u201cGlobal air cargo supply chains are under huge pressure in 2024, with increasing demand far outstripping supply growth,\u201d warned \u00a0Zhang. \u201cThe last thing shippers needed was the global IT failure on July 19th, which saw thousands of flights delayed and canceled at major airports worldwide.\u201d\n\nZhang added: \u201cThere is also a balancing act for carriers in managing different customer groups. They want to benefit from the huge volumes of goods being shipped by e-commerce giants like Temu and Shein. But they also have their wider customer base to think about \u2013 if there is limited capacity available later in the year, then who will they prioritize?\u201d\n\nThe post Airfreight shows resiliency post-CrowdStrike, Xeneta data shows appeared first on FreightWaves.\n\nView comments",
+        "link": "https://finance.yahoo.com/news/airfreight-shows-resiliency-post-crowdstrike-162312029.html",
+        "symbols": [
+            "45C.F",
+            "CRWD.US"
+        ],
+        "tags": [],
+        "sentiment": {
+            "polarity": 0.128,
+            "neg": 0.075,
+            "neu": 0.852,
+            "pos": 0.073
+        }
+    },
+    {
+        "date": "2024-07-31T15:45:13+00:00",
+        "title": "Update: CrowdStrike Hit With First Class Action Suit Over Global Outage",
+        "content": "Update: CrowdStrike Hit With First Class Action Suit Over Global Outage",
+        "link": "https://finance.yahoo.com/news/crowdstrike-hit-first-class-action-154513980.html",
+        "symbols": [
+            "45C.F",
+            "CRWD.US"
+        ],
+        "tags": [],
+        "sentiment": {
+            "polarity": 0,
+            "neg": 0,
+            "neu": 1,
+            "pos": 0
+        }
+    },
+    {
+        "date": "2024-07-31T15:14:30+00:00",
+        "title": "CrowdStrike Hit With First Class Suit Over Global Outage",
+        "content": "CrowdStrike Hit With First Class Suit Over Global Outage",
+        "link": "https://finance.yahoo.com/news/crowdstrike-hit-first-class-suit-151430861.html",
+        "symbols": [
+            "45C.F",
+            "CRWD.US"
+        ],
+        "tags": [],
+        "sentiment": {
+            "polarity": 0,
+            "neg": 0,
+            "neu": 1,
+            "pos": 0
+        }
+    },
+    {
+        "date": "2024-07-31T15:08:32+00:00",
+        "title": "Delta says CrowdStrike IT outage will cost airline $500mn",
+        "content": "Delta Air Lines chief executive Ed Bastian has said the IT outage caused by a botched CrowdStrike update earlier in July, which grounded",
+        "link": "https://finance.yahoo.com/news/delta-says-crowdstrike-outage-cost-131127794.html",
+        "symbols": [
+            "0QZ4.LSE",
+            "45C.F",
+            "CRWD.US",
+            "DAL.MX",
+            "DAL.US",
+            "DEAI34.SA",
+            "OYC.BE",
+            "OYC.F",
+            "OYC.MU",
+            "OYC.STU"
+        ],
+        "tags": [],
+        "sentiment": {
+            "polarity": 0,
+            "neg": 0,
+            "neu": 1,
+            "pos": 0
+        }
+    },
+    {
+        "date": "2024-07-31T13:32:59+00:00",
+        "title": "Delta CEO says airline is facing $500 million in costs from global tech outage",
+        "content": "Delta Air Lines CEO Ed Bastian says the airline is facing $500 million in costs related to a global tech outage this month that disrupted emergency services, communications and thousands of businesses.\n\nSpeaking on CNBC, Bastian said Wednesday that the monetary amount represents lost revenue as well as \u201cthe tens of millions of dollars per day in compensation and hotels\u201d for the five-day period.\n\nA week ago, CrowdStrike blamed a bug in an update that allowed its cybersecurity systems to push bad data out to millions of customer computers, setting off the global tech outage that grounded flights, took TV broadcasts off air and disrupted banks, hospitals and retailers.\n\nCybersecurity company CrowdStrike also outlined measures it will take to prevent the problem from recurring, including staggering the rollout of updates, giving customers more control over when and where they occur, and providing more details about the updates that it plans.\n\nAmong airlines, Delta was by far the hardest hit hard by the outage, having to cancel thousands of flights, because key systems were crippled by the incident.\n\nThe U.S. Department of Transportation is investigating why Delta failed to recover as quickly as other airlines. Transportation Secretary Pete Buttigieg said last week that the department would also examine Delta\u2019s customer service, including \u201cunacceptable\u201d lines for assistance and reports that unaccompanied minors were stranded at airports.\n\nBastian said on CNBC that Delta will be seeking damages from the disruptions. CrowdStrike has not made any offers to help Delta financially so far, he added. It has offered free consulting advice.\n\nView comments",
+        "link": "https://finance.yahoo.com/news/delta-ceo-says-airline-facing-133259863.html",
+        "symbols": [
+            "0QZ4.LSE",
+            "45C.F",
+            "CRWD.US",
+            "DAL.MX",
+            "DAL.US",
+            "DEAI34.SA",
+            "OYC.BE",
+            "OYC.F",
+            "OYC.MU",
+            "OYC.STU"
+        ],
+        "tags": [],
+        "sentiment": {
+            "polarity": -0.927,
+            "neg": 0.094,
+            "neu": 0.864,
+            "pos": 0.042
+        }
+    },
+    {
+        "date": "2024-07-31T12:24:00+00:00",
+        "title": "Delta CEO Says CrowdStrike Tech Outage Cost It $500 Million",
+        "content": "The airline faced deeper disruption and took days longer than rivals to get back on track after the outage knocked key systems offline.\n\nContinue reading\n\nView comments",
+        "link": "https://finance.yahoo.com/m/dfe19926-1580-3607-bbab-86052c3f1590/delta-ceo-says-crowdstrike.html",
+        "symbols": [
+            "0QYP.IL",
+            "0QZ4.LSE",
+            "1MSFT.MI",
+            "45C.F",
+            "45C.STU",
+            "CRWD.US",
+            "DAL.MX",
+            "DAL.US",
+            "DEAI34.SA",
+            "MSF.BE",
+            "MSF.DU",
+            "MSF.F",
+            "MSF.HM",
+            "MSF.MU",
+            "MSF.STU",
+            "MSF.XETRA",
+            "MSF0.F",
+            "MSFT.BA",
+            "MSFT.MX",
+            "MSFT.NEO"
+        ],
+        "tags": [],
+        "sentiment": {
+            "polarity": -0.459,
+            "neg": 0.138,
+            "neu": 0.862,
+            "pos": 0
+        }
+    },
+    {
+        "date": "2024-07-31T11:30:01+00:00",
+        "title": "Delta Air Lines CEO says CrowdStrike outage to cost carrier $500 million, CNBC reports",
+        "content": "(Reuters) - Delta Air Lines CEO Ed Bastian said the carrier would take a $500 million hit related to the CrowdStrike outage, CNBC reported on Wednesday.\n\n(Reporting by Nathan Gomes in Bengaluru; Editing by Arun Koyyur)\n\nView comments",
+        "link": "https://finance.yahoo.com/news/delta-air-lines-ceo-says-113001333.html",
+        "symbols": [
+            "0QZ4.LSE",
+            "45C.F",
+            "CRWD.US",
+            "DAL.MX",
+            "DAL.US",
+            "DEAI34.SA",
+            "OYC.BE",
+            "OYC.F",
+            "OYC.MU",
+            "OYC.STU"
+        ],
+        "tags": [],
+        "sentiment": {
+            "polarity": 0,
+            "neg": 0,
+            "neu": 1,
+            "pos": 0
+        }
+    },
+    {
+        "date": "2024-07-31T07:20:49+00:00",
+        "title": "Heard on the Street Tuesday Recap: Fed Purgatory",
+        "content": "While investors wait for the Fed, the market was all over the place. Federal Reserve officials began deliberating on Tuesday, with a decision due Wednesday afternoon. A rate cut isn't expected, but the Fed is widely expected to cut rates at its next meeting, in September.\n\nContinue reading\n\nView comments",
+        "link": "https://finance.yahoo.com/m/59b2b521-dfce-31db-8e65-04b196da1512/heard-on-the-street-tuesday.html",
+        "symbols": [
+            "0NOF.IL",
+            "0NOF.LSE",
+            "0QAH.IL",
+            "45C.F",
+            "45C.STU",
+            "6MK.BE",
+            "6MK.DU",
+            "6MK.F",
+            "6MK.HM",
+            "6MK.STU",
+            "6MK.XETRA",
+            "CRWD.US",
+            "MRCK34.SA",
+            "MRK.BA",
+            "MRK.MX",
+            "MRK.US",
+            "MRK.VI",
+            "PG.BA",
+            "PG.MX",
+            "PG.NEO"
+        ],
+        "tags": [],
+        "sentiment": {
+            "polarity": -0.494,
+            "neg": 0.084,
+            "neu": 0.916,
+            "pos": 0
+        }
+    },
+    {
+        "date": "2024-07-31T00:00:00+00:00",
+        "title": "Forget CrowdStrike: These 3 Cybersecurity Stocks Could Be Much Better Picks",
+        "content": "Here are three cybersecurity stocks that could be better picks for long-term investors to consider than CrowdStrike, following its issue.",
+        "link": "https://investorplace.com/2024/07/forget-crowdstrike-these-3-cybersecurity-stocks-could-be-much-better-picks/",
+        "symbols": [
+            "CRWD.US",
+            "FTNT.US",
+            "PANW.US",
+            "ZS.US"
+        ],
+        "tags": [],
+        "sentiment": {
+            "polarity": 0.44,
+            "neg": 0,
+            "neu": 0.868,
+            "pos": 0.132
+        }
+    },
+    {
+        "date": "2024-07-31T00:00:00+00:00",
+        "title": "Why CrowdStrike Stock Is Likely to Suffer More Pain in the Medium Term",
+        "content": "CrowdStrike is likely to lose many customers and have to cut its prices, which may cause CrowdStrike stock to likely drop.\u00a0",
+        "link": "https://investorplace.com/2024/07/why-crowdstrike-stock-is-likely-to-suffer-more-pain-in-the-medium-term/",
+        "symbols": [
+            "CRWD.US"
+        ],
+        "tags": [],
+        "sentiment": {
+            "polarity": -0.586,
+            "neg": 0.202,
+            "neu": 0.798,
+            "pos": 0
+        }
+    },
+    {
+        "date": "2024-07-31T00:00:00+00:00",
+        "title": "DAL Stock Alert: Delta Braces for $500 Million Hit From CrowdStrike Outage",
+        "content": "DAL stock is in focus after CEO Ed Bastian disclosed that the CrowdStrike outage resulted in $500 million of damages for Delta.",
+        "link": "https://investorplace.com/2024/07/dal-stock-alert-delta-braces-for-500-million-hit-from-crowdstrike-outage/",
+        "symbols": [
+            "CRWD.US",
+            "DAL.US",
+            "MSFT.US"
+        ],
+        "tags": [],
+        "sentiment": {
+            "polarity": -0.44,
+            "neg": 0.121,
+            "neu": 0.879,
+            "pos": 0
+        }
+    },
+    {
         "date": "2024-07-30T20:39:00+00:00",
         "title": "These Stocks Moved the Most Today: Merck, CrowdStrike, Microsoft, Nvidia, P&amp;G, PayPal, Pfizer, Corning, JetBlue, Howmet, and More",
         "content": "Merck issues a disappointing profit forecast, Pfizer beats earnings and sales estimates, and PayPal boosts guidance. Microsoft is scheduled to post fiscal fourth-quarter earnings after the closing bell Tuesday.\n\nContinue reading\n\nView comments",
@@ -461,6 +762,22 @@
         }
     },
     {
+        "date": "2024-07-30T00:00:00+00:00",
+        "title": "\nJon Quast\u00a0\u00a0|\u00a0\u00a0Jul 30, 2024\n",
+        "content": "How much is its mistake going to cost before all is said and done?",
+        "link": "https://www.fool.com/investing/2024/07/30/why-crowdstrike-stock-continues-to-drop-today/",
+        "symbols": [
+            "CRWD.US"
+        ],
+        "tags": [],
+        "sentiment": {
+            "polarity": -0.34,
+            "neg": 0.156,
+            "neu": 0.844,
+            "pos": 0
+        }
+    },
+    {
         "date": "2024-07-29T22:53:17+00:00",
         "title": "Delta Air Seeks Compensation From CrowdStrike, Microsoft Over IT Outage: CNBC",
         "content": "Delta Air Lines will seek compensation from CrowdStrike and Microsoft over the July 19 global IT outage that disrupted thousands of flights, CNBC reported Monday night.\n\nContinue reading\n\nView comments",
@@ -892,6 +1209,34 @@
         }
     },
     {
+        "date": "2024-07-26T12:53:34+00:00",
+        "title": "3 Semiconductor Stocks to Bet On for Market-Crushing Returns",
+        "content": "Just as the ancient Roman Empire was powered by human labor deployed in agriculture, the modern era relies on semiconductors to power the digital age. This makes investing in semiconductor stocks an easy proposition, as it is investing in the civilization itself.\n\nGlobally, the semiconductor stocks market is headed for a 10% CAGR by 2029 at $980.80 billion, according to Statista Market Insights. In the meantime, investors should put these stocks on a watchlist, if they haven\u2019t already.\n\nLet\u2019s explore three top semiconductor stocks to consider for massive portfolio returns.\n\nInvestorPlace - Stock Market News, Stock Advice & Trading Tips\n\nNvidia (NVDA) In this photo The logo of Nvidia AI displayed on smartphone screen. NVDA stock\n\nSource: Muhammad Alimaki / Shutterstock.com\n\nWidely viewed as overweight at a 72.29 price-to-earnings (P/E) ratio, the psychological effect of the Nvidia (NASDAQ:NVDA) 10-for-1 stock split is not to be underestimated. Compared to its competitor AMD (NASDAQ:AMD), NVDA stock is priced cheaper. Simultaneously, it holds 88% dominance in the GPU market, per Jon Peddie Research as of Q1 of fiscal year 2024.\n\nWith equal cornering of the artificial intelligence (AI) generative demand market by providing both GPUs and a full-stack software suite for early large language model (LLM) trainers, much is also expected of Nvidia\u2019s Blackwell architecture. This new lineup of B100 and B200 GPUs purportedly offer up to 15x performance while drastically lowering power consumption.\n\nMoreover, according to a recent report, the B200 series AI chips are on their way to be repackaged as \u201cB20\u201d, a somewhat hobbled version intended for China due to US export control restrictions. Although China is busy building its own semiconductor foundries to counteract US pressure, the reliance of Chinese AI companies on Nvidia\u2019s CUDA platform is still in effect.\n\nAt the same time, the US could hit China with another block. If this happens to the H20 chip, the one Nvidia specifically designed to go around the export control license, the company could lose up to $12 billion revenue, according to Jeffries\u2019 latest notes to investors.\n\nWith that in mind, Piper Sandler (NYSE:PIPR) upped NVDA stock target from $120 to $140. UBS is even more optimistic, citing robust Blackwell demand, having raised their price target from $120 to $150.\n\nAccording to 39 analyst inputs aggregated by Nasdaq, the average NVDA price target is $142.67 per share. At present $112.28 price, NVDA shares are below the 52-week high of $140.76. In the last three months, NVDA stock is up 53%.\n\nArista Networks (ANET) Image of Arista Networks (ANET) logo on the side of a building\n\nSource: Sundry Photography / Shutterstock.com\n\nStory continues\n\nIn the computer networking category, key player Arista Networks (NYSE:ANET) caters to growing data center needs. The firm sells both multilayer network switches and software solutions to large enterprises. Those include cloud computing to high-performance computing (HPC) used in the training of AI models.\n\nIn light of the CrowdStrike (NASDAQ:CRWD) debacle, it should also be noted that ANET uses a Linux-derived Extensible Operating System (EOS). The open standard OS is exceedingly customizable. It defines Arista Network\u2019s suite of products to scale data centers and connect multiple clouds.\n\nThe multi-purpose architecture of EOS separates protocol processing from state information. In other words, an in-service software upgrade with EOS wouldn\u2019t have disrupted the global economy as CrowdStrike with Microsoft (NASDAQ:MSFT) Windows did.\n\nOn July 30th, Arista is scheduled to announce its Q2 FY24 earnings. In the prior quarter, the company reported 16.3% year-over-year (YOY) revenue growth to $1.57 billion. Net income was even better, having increased by 46% to $637.7 million. In Q2, the company expects $1.62 to $1.65 billion revenue range.\n\nAnd, subsequent quarters may exceed that range. At the present price of $314.12, ANET stock is close to its 52-week high of 376.50, up 40% in the last three months. The average ANET price target is $324.5 with the high target of $385 per share.\n\nNXP Semiconductors (NXPI) A sign on a brick well for NXP Semiconductor. NXPI stock.\n\nSource: Lukassek / Shutterstock.com\n\nNXP Semiconductors (NASDASQ:NXPI) provides automakers with integrated circuits that make vehicles easier to drive and connect to digital platforms. Those include Ford (NYSE:F), Hyundai (OTCMKTS:HYMTF), BMW (OTCMKTS:BMWYY) and Volkswagen (OTCMKTS:VLKAF). Further, Tesla (NASDAQ:TSLA) was among the first to push this concept known as software-defined vehicles (SDVs).\n\nHowever, Tesla preferred to partner with Nvidia as NXP\u2019s direct competitor in the automotive solutions arena. Additionally, NXPI offers ultra-low-power microcontrollers alongside high-performance processors for the broad application in IoT and mobile\u2019s near-field communication (NFC) embedded systems.\n\nIn Q2 earnings delivered on Monday, the Dutch company reported $3.13 billion revenue, down 5% YOY. Likewise, the company\u2019s net income dropped 5.7%, at $658 million. This means that, although NXP beat earnings estimates for three consecutive quarters up until Q2, the surprise was only -0.71%, at $2.82 estimated versus $2.8 earnings per share reported.\n\nHowever, as a cyclical company, investors should expect to see tailwinds ahead, riding on NXPs S32 CoreRide platform for the next generation of SDVs. This makes NXPI as one of top semiconductor stocks in this exciting new market.\n\nPresently priced at $247.51, NXPI shares are up 20% over the last three months. Expected average price target is $294.52 per share. The high estimate is $370 based on Nasdaq data.\n\nOn the date of publication, Shane Neagle did not hold (either directly or indirectly) any positions in the securities mentioned in this article. The opinions expressed in this article are those of the writer, subject to the InvestorPlace.com\u00a0Publishing Guidelines.\n\nOn the date of publication, the responsible editor did not have (either directly or indirectly) any positions in the securities mentioned in this article.\n\nShane Neagle is fascinated by the ways in which technology is poised to disrupt investing. He specializes in fundamental analysis and growth investing.\n\nMore From InvestorPlace\n\nLegendary Investor Predicts: \u201cForget AI... THIS Technology Is the Future\u201d\n\nThe post 3 Semiconductor Stocks to Bet On for Market-Crushing Returns appeared first on InvestorPlace.\n\nView comments",
+        "link": "https://finance.yahoo.com/news/3-semiconductor-stocks-bet-market-125334665.html",
+        "symbols": [
+            "AMD.US",
+            "ANET.US",
+            "CRWD.US",
+            "F.US",
+            "MSFT.US",
+            "N1XP34.SA",
+            "NVDA.US",
+            "NXPI.US",
+            "PIPR.US",
+            "TSLA.US",
+            "VNX.F",
+            "VNX.MU",
+            "VNX.STU"
+        ],
+        "tags": [],
+        "sentiment": {
+            "polarity": 0.991,
+            "neg": 0.015,
+            "neu": 0.921,
+            "pos": 0.064
+        }
+    },
+    {
         "date": "2024-07-26T10:30:00+00:00",
         "title": "Buy, Sell, or Hold CrowdStrike Stock",
         "content": "If you're a CrowdStrike (NASDAQ: CRWD) investor like myself, you've had a rough few days. After approaching nearly $400 at the beginning of July, it tumbled significantly after an automatic update rendered some Windows-powered devices unable to run.\n\nUnfortunately, the stock took a hit after the news broke as investors headed for the exits due to fears that the company could lose a significant portion of its customer base. I have some of those same concerns, but I'm still working through exactly what I should do, as CrowdStrike's platform is still far superior to anything else.\n\nAs a shareholder, I have three options: Sell my shares, buy more stock, or wait and see what happens.\n\nSell: CrowdStrike has a long road ahead\n\nIf you're a prospective CrowdStrike customer and were going to sign a contract to use its software, would you still do it now, days after the failure? Perhaps not. The same goes for any clients looking to renew their contracts. While this business isn't necessarily lost forever, these clients will take their time and thoroughly review to determine if CrowdStrike is still their ideal cybersecurity provider.\n\nUndoubtedly, there will be a few who say \"no\" that would have said \"yes\" if not for the events on July 19. So, regardless of the outcome, a CrowdStrike sell-off was certainly warranted.\n\nAdditionally, CrowdStrike's stock was trading at a very high valuation before this failure, so a pullback was likely inevitable. CRWD PS Ratio Chart\n\nHowever, I don't think panic selling is the right move here. CrowdStrike still has best-in-class software and is likely implementing systems to ensure this never happens again. But the damage is still done.\n\nBuy: CrowdStrike's stock hasn't been this cheap in a while\n\nAnother thought that crossed my mind was to load up on CrowdStrike stock. I'm still a believer in the company, thanks to its best-in-class solution. Furthermore, CrowdStrike's Falcon platform is so woven into the fabric of how many companies protect from cyber threats that switching away would be incredibly painful.\n\nWith high switching costs plus no other company offering the full functionality of the Falcon platform, it's hard to imagine a situation where customers are in a position to switch away from CrowdStrike. Furthermore, many of CrowdStrike's clients signed multiyear deals already, so the chance for them to switch to a competitor's product is still years away. By then, many will have forgotten about this issue, as less than 1% of Windows devices were affected by this issue.\n\nStory continues\n\nA prime example of this is Chipotle's various health scares from 2015 to 2018. Eventually, customers forgot, and the stock continued its massive run. I think this story is one that CrowdStrike investors can latch onto as hope in this trying time.\n\nThis pullback allows investors to buy the stock for about the same price as in December 2023, but I don't think there's any reason to be a hero and buy now. There could be more pain to come, and while I think I will be a long-term buyer of the stock, now isn't the right time to rush in.\n\nHold: We don't know everything right now\n\nAfter considering both the buy and sell camps, I've arrived at what I will do: Hold the stock. I don't like losing a significant chunk of my gains in CrowdStrike stock, but I think the long-term opportunity exists. Additionally, I want to hear what management says during its second-quarter conference call, which should occur sometime in late August or early September.\n\nManagement will offer insight into how this is impacting contracts, which could cause my opinion to sway toward the buy or sell side. However, I have no way of obtaining that information besides staying patient. If I could travel into the future and know exactly what I should do with my CrowdStrike shares, then this would be a mistake 100% of the time.\n\nHowever, I don't have that ability, and I know I've been burned more by making rash decisions than by being patient while investing.\n\nI'll decide after I know more about how this is truly affecting CrowdStrike's business. But for now, I think it's best to hold onto CrowdStrike stock and see the impact.\n\nShould you invest $1,000 in CrowdStrike right now?\n\nBefore you buy stock in CrowdStrike, consider this:\n\nThe Motley Fool Stock Advisor analyst team just identified what they believe are the 10 best stocks for investors to buy now\u2026 and CrowdStrike wasn\u2019t one of them. The 10 stocks that made the cut could produce monster returns in the coming years.\n\nConsider when\u00a0Nvidia made this list on April 15, 2005... if you invested $1,000 at the time of our recommendation, you\u2019d have $700,076!*\n\nStock Advisor provides investors with an easy-to-follow blueprint for success, including guidance on building a portfolio, regular updates from analysts, and two new stock picks each month. TheStock Advisorservice has more than quadrupled the return of S&P 500 since 2002*.\n\nSee the 10 stocks \u00bb\n\n*Stock Advisor returns as of July 22, 2024\n\nKeithen Drury has positions in CrowdStrike. The Motley Fool has positions in and recommends Chipotle Mexican Grill and CrowdStrike. The Motley Fool has a disclosure policy.\n\nBuy, Sell, or Hold CrowdStrike Stock was originally published by The Motley Fool\n\nView comments",
@@ -1026,6 +1371,40 @@
         }
     },
     {
+        "date": "2024-07-25T19:19:00+00:00",
+        "title": "3 Stocks Reeling From Ruined Reputations: Can They Recover?",
+        "content": "When your reputation is in tatters, being able to pull your company up out of the ashes takes a Herculean effort.\u00a0Certainlyit is not easy.\u00a0As\u00a0Warren Buffett once said, \u201cIt takes 20 years to build a reputation and five minutes to ruin it. If you think about that, you will do things differently.\u201d Some companies\u00a0apparently\u00a0never thought about it.\n\nArthur Anderson had been a respected accounting firm with decades of service but its complicity in the Enron and Worldcom scandals damaged it beyond repair. Its conviction on obstruction of justice charges (eventually overturned) eventually caused it to cease operations.\n\nOn the other hand,\u00a0Johnson & Johnson (NYSE:JNJ) showed that it can be done. The consumer health giant\u2019s reputation was in tatters after cyanide-laced Tylenol caused the death of several people in Chicago in the 1980s. Although it was the work of a psychopath, Johnson & Johnson pulled all Tylenol bottles everywhere from the shelves. It also halted all manufacturing and marketing and offered to replace all bottles already purchased by the public with solid tablets. The incident led to changes in how medicine\u00a0is packaged\u00a0but also showed how a company could respond to save itself and its brand from ruination.\n\nInvestorPlace - Stock Market News, Stock Advice & Trading Tips\n\nSeveral controversial stocks today are dealing with reputational fallout from their actions. Whether they can ever fully recover remains to be seen. With their stocks trading at significant discounts, let\u2019s\u00a0take a closer\u00a0look to see if they are worth investing in.\n\nAnheuser-Busch InBev (BUD) Bud Light Beer 36 pack beer cans display at grocery store.\n\nSource: Michael Vi / Shutterstock.com\n\nOn the surface,\u00a0Anheuser-Busch InBev (NYSE:BUD) seems like it should eventually rebound\u00a0but\u00a0there is a deeper problem that could mean it is irrevocably damaged.\n\nAmid a secular decline in beer sales, the brewer\u00a0launched a social media campaign last year to reach a younger audience for its Bud Light brand. At the time, the beer was the biggest-selling brand in the country, a position it held for over two decades.\n\nHowever, by featuring a transgender woman on the can at the height of the culture wars, it ignited a protest by conservatives to boycott Bud Light. In the first month following the controversy, Bud Light sales cratered 26%\u00a0andAnheuser-Busch\u2019s overall sales declined 1%. They are still falling today. In\u00a0the four-week period\u00a0ending July 6, Bud Light had\u00a0fallen to third place with just a 6.5% share of the market, half of what it had been. It cost Anheuser-Busch over $1 billion in sales and some $27 billion in brand value.\n\nStory continues\n\nThis\u00a0does seem like something that will fade in time\u00a0and\u00a0BUD says losses have stabilized. Yet\u00a0with\u00a0liberals also upset with Anheuser-Busch backpedaling away from the promotion, lost Bud Light sales may never return.\n\nBUD stock has recovered from the worst of its losses but remains 9% below where it stood before the controversy erupted.\n\nBoeing (BA) image of a Boeing (BA) 737 max aircraft. stocks to buy and sell related to Boeing\n\nSource: Marco Menezes / Shutterstock.com\n\nArguably one of the biggest stories this year\u00a0has been\u00a0the safety record of\u00a0Boeing (NYSE:BA) airplanes.\u00a0Followinga hatch door popping off mid-flight on a Boeing 737 Max 9 aircraft,\u00a0a series of\u00a0additional mishaps followed.\u00a0A tire fell off the landing gear, an engine caught fire, an external panel fell off and\u00a0there have been\u00a0hydraulic system problems.\u00a0They all occurred in the span of a few weeks.\n\nSince then, whistleblowers have\u00a0come forward to say\u00a0Boeing and its parts supplier\u00a0Spirit AeroSystems (NYSE:SPR) play fast and loose with safety. It got so bad that Boeing will acquire Spirit in a $4.7 billion deal to have greater oversight. Airlines are now looking elsewhere for planes to buy. Boeing also\u00a0just\u00a0agreed to pay a $244 million fine and spend at least $455 million over the next three years to boost safety and compliance programs.\n\nYet\u00a0as\u00a0I noted earlier this month, commercial aircraft is only half of Boeing\u2019s business. It is also a\u00a0major\u00a0defense contractor responsible for some of the most important military aircraft, including the President\u2019s Air Force One. Because it is one of only two major commercial aircraft manufacturers along with the U.K.\u2019s BAE Systems(OTCMKTS:BAESY), and it is so critical to military aviation, it cannot be allowed to fail. I wrote, \u201cIts low point now represents an opportunity to buy an undervalued defense contractor.\u201d\n\nBoeing stock is down 30% in 2024 and is cheap enough to buy into now.\n\nCrowdstrike Holdings (CRWD) Person holding smartphone with logo of US software company CrowdStrike Holdings Inc. (CRWD) on screen in front of website. Focus on phone display. Unmodified photo.\n\nSource: T. Schneider / Shutterstock.com\n\nThe last of the controversial stocks is\u00a0Crowdstrike Holdings (NASDAQ:CRWD).\u00a0Its \u201cscandal\u201d just occurred on July 18 when the independent cybersecurity outfit accidentally uploaded a bug into a software patch. The cascading series of events\u00a0that followed\u00a0caused IT systems globally to crash.\n\nMultinational corporations, major\u00a0tech stocks and\u00a0government agencies worldwide saw their computer operations bricked. For a company tasked with cybersecurity responsibilities, causing such mass outages is not a good look. Crowdstrike stock collapsed 25% in the aftermath. It traded north of $343 the day before the crash and now goes for $258.\n\nYet\u00a0Wall Street remains upbeat on Crowdstrike. It believes this is just a passing issue for the controversial stock. Because it didn\u2019t involve a hack of the company\u2019s systems and a loss of data but was\u00a0rather\u00a0a human error issue, analysts believe Crowdstrike can recover.\n\nIt is likely rivals will\u00a0use the problem to take some\u00a0market share from Crowdstrike.\u00a0Its stock may also languish for some time to see what the financial hit will be to its business. But companies have bounced back from such \u201cfat finger\u201d disasters before and CRWD stock should\u00a0as well.\n\nOn\u00a0the date of publication, Rich Duprey held a LONG position in JNJ stock. The opinions expressed in this article are those of the writer, subject to the InvestorPlace.com\u00a0Publishing Guidelines.\n\nOn the\u00a0date of publication, the responsible editor held a long position in CRWD.\n\nRich Duprey has written about stocks and investing for the past 20 years. His articles have appeared on Nasdaq.com, The Motley Fool, and Yahoo! Finance, and he has been referenced by U.S. and international publications, including MarketWatch, Financial Times, Forbes, Fast Company, USA Today, Milwaukee Journal Sentinel, Cheddar News, The Boston Globe, L\u2019Express, and numerous other news outlets.\n\nMore From InvestorPlace\n\nLegendary Investor Predicts: \u201cForget AI... THIS Technology Is the Future\u201d\n\nThe post 3 Stocks Reeling From Ruined Reputations: Can They Recover? appeared first on InvestorPlace.\n\nView comments",
+        "link": "https://finance.yahoo.com/news/3-stocks-reeling-ruined-reputations-191900840.html",
+        "symbols": [
+            "1ABI.MI",
+            "1NBA.BE",
+            "1NBA.F",
+            "1NBA.MU",
+            "1NBA.STU",
+            "1NBA.XETRA",
+            "ABI.BR",
+            "ABIN.VI",
+            "ABUD34.SA",
+            "ANH.JSE",
+            "BA.US",
+            "BUD.US",
+            "BUDFF.US",
+            "CRWD.US",
+            "ITKA.F",
+            "ITKA.STU",
+            "JNJ.BA",
+            "JNJ.BE",
+            "JNJ.DU"
+        ],
+        "tags": [],
+        "sentiment": {
+            "polarity": -0.992,
+            "neg": 0.107,
+            "neu": 0.82,
+            "pos": 0.073
+        }
+    },
+    {
         "date": "2024-07-25T16:49:40+00:00",
         "title": "Cyberattacks on Olympics are inevitable, says French Prime Minister",
         "content": "PARIS (Reuters) - Cyberattacks on the Paris Olympics are inevitable and France will do everything in its power to limit the impact they may have on the event, French Prime Minister Gabriel Attal said on Thursday.\n\n\"We are a target. There will be cyberattacks. The key thing is to limit their impact,\" Attal told reporters at the headquarters of France's ANSSI software security agency.\n\nThe technology risks faced by the Paris Olympics were highlighted earlier this month by a global tech outage involving the company CrowdStrike.\n\nCrowdStrike's problems last week forced broadcasters off air and left customers without access to services such as healthcare or banking, and it also affected some operations of the organisers of the Paris Games.\n\n(Reporting by Nicolas Delame, Jean Terzian and Sudip Kar-Gupta, editing by Pritha Sarkar)\n\nView comments",
@@ -1141,10 +1520,14 @@
         "content": "While the cybersecurity industry has generally been a bastion of strength in the tech sector, not all stocks are created equal. Despite the rising threats that drive demand for digital protection, some companies in this space are showing signs of weakness that could lead to significant declines in their stock prices.\n\nInvestors often flock to cybersecurity stocks as they represent a growing need in an increasingly digital world. As of 2023, the market is valued at $222 billion and is expected to grow at a CAGR of 12.3%, reaching approximately $500 billion by 2030. The increasing prevalence of cyber-attacks, driven by the widespread use of e-commerce platforms, smart devices, and cloud technologies, is a key factor fueling this market growth.\n\nAlthough the overall market is expected to continue its robust growth momentum, investors\u2019 enthusiasm can sometimes lead to overvaluation or overlook the fundamental issues that some companies might face.\n\nInvestorPlace - Stock Market News, Stock Advice & Trading Tips\n\nFor those looking to safeguard their investments, stepping back from certain high-risk cybersecurity stocks before the end of July might be wise. Here are three such stocks showing troubling signs that investors should consider divesting to avoid potential losses.\n\nCrowdStrike (CRWD) CrowdStrike sign and logo at headquarters in Silicon Valley. CRWD stock.\n\nSource: Michael Vi / Shutterstock\n\nCrowdStrike (NASDAQ:CRWD) is a leader in cloud-delivered endpoints and cloud workload protection. However, recent events and the company\u2019s current valuation suggest it may be time for investors to consider selling their stakes.\n\nCrowdStrike\u2019s stock has faced significant challenges recently due to a technical glitch that caused a global IT outage. This incident has raised concerns about the company\u2019s software reliability and potential financial liabilities from disrupted businesses worldwide. Despite the company\u2019s rapid response to deploy a fix, the fallout could impact its reputation and financials.\n\nMoreover, despite strong historical performance, CrowdStrike\u2019s valuation raises concerns. The company\u2019s stock trades at a forward PE 346x, significantly higher than the industry average. This premium valuation comes amid a backdrop where other leading cybersecurity firms are trading at much lower multiples.\n\nThe cybersecurity market is highly competitive, with numerous players vying for market share. Companies like Palo Alto Networks and Fortinet continue to expand their offerings, potentially squeezing CrowdStrike\u2019s competitive edge and forcing it to invest heavily in sales and marketing to retain its leadership position.\n\nStory continues\n\nFortinet (FTNT) The Fortinet logo on a wall\n\nSource: Sundry Photography / Shutterstock.com\n\nFortinet (NASDAQ:FTNT) is experiencing significant challenges that are impacting its market performance and operational dynamics. Over the last 12 months, Fortinet\u2019s stock has declined 25%, with flat returns over the past three years, marking a stark underperformance relative to its peers.\n\nThe primary concern for Fortinet has been the declining sales of its firewall products. This trend, which began manifesting in mid-2023, has continued into 2024, adversely affecting the company\u2019s consolidated results and investor sentiment.\n\nFortinet\u2019s financial health has shown signs of strain. The company\u2019s revenue growth has decelerated significantly, with forecasts suggesting a continuation of this trend. Analyst consensus reflects a decline in expected EPS growth. This slowdown is a critical red flag, indicating potential long-term growth issues, particularly as the company faces stiff competition from pure-play cloud providers like CrowdStrike and hybrid competitors like Palo Alto Networks.\n\nMoreover, Fortinet\u2019s current valuation does not adequately reflect the risks associated with its slowing growth and operational challenges. The stock trades at a premium compared to some of its peers, which is hard to justify given the company\u2019s underwhelming revenue growth projections and ongoing strategic misalignments.\n\nCyberArk (CYBR) Cyberark (CYBR) logo on a corporate building\n\nSource: photobyphm / Shutterstock.com\n\nCyberArk (NASDAQ:CYBR) is an identity security company that faces several challenges, including intense competition, market saturation, and high stock valuation.\n\nAs of the latest market close, CyberArk\u2019s shares are trading at a premium, fueled mainly by its past performance and market optimism surrounding its subscription-based revenue model. While the company\u2019s recent growth is commendable, the current valuation has made the forward PE ratio hard to justify, even with the company\u2019s robust growth narrative.\n\nCyberArk faces fierce competition from larger players like Microsoft and Palo Alto Networks, which have deeper pockets and broader product ecosystems. Additionally, while strategically sound, the company\u2019s focus on identity security directly competes with newer market entrants that might offer more innovative solutions or more aggressive pricing strategies. The threat from these disruptive technologies and business models could undermine CyberArk\u2019s competitive position and erode its market share.\n\nOn the date of publication, Mohammed Saqib did not hold (either directly or indirectly) any positions in the securities mentioned in this article. The opinions expressed in this article are those of the writer, subject to the InvestorPlace.com Publishing Guidelines.\n\nOn the date of publication, the responsible editor did not have (either directly or indirectly) any positions in the securities mentioned in this article.\n\nMohammed Saqib is a research analyst with experience in equity research and financial modeling. He has extensively covered stocks listed in the tech sector using fundamental analysis as the cornerstone of his approach. Currently pursuing a master\u2019s degree in finance, Saqib is dedicated to obtaining the CFA charter to augment his expertise in the field further.\n\nMore From InvestorPlace\n\nLegendary Investor Predicts: \u201cForget AI... THIS Technology Is the Future\u201d\n\nThe post Get Your Money Out of These 3 Cybersecurity Stocks Before the End of July appeared first on InvestorPlace.\n\nView comments",
         "link": "https://finance.yahoo.com/news/money-3-cybersecurity-stocks-end-101600063.html",
         "symbols": [
+            "0IR9.LSE",
             "CRWD.US",
+            "CYB.F",
             "CYB.STU",
             "CYBR.US",
+            "F1TN34.SA",
             "FO8.BE",
+            "FO8.F",
             "FO8.STU",
             "FTNT.US"
         ],
@@ -17703,72 +18086,6 @@
             "neg": 0,
             "neu": 1,
             "pos": 0
-        }
-    },
-    {
-        "date": "2024-02-02T21:09:18+00:00",
-        "title": "Best Growth Stocks 2024: Palo Alto Networks Stock vs. CrowdStrike Stock",
-        "content": "Fool.com contributor Parkev Tatevosian compares cybersecurity companies Palo Alto Networks(NASDAQ: PANW) and CrowdStrike(NASDAQ: CRWD) to determine which is the best one to buy for growth stock investors.\n\n*Stock prices used were the afternoon prices of Jan. 31, 2024. The video was published on Feb. 2, 2024.\n\nShould you invest $1,000 in Palo Alto Networks right now?\n\nBefore you buy stock in Palo Alto Networks, consider this:\n\nThe Motley Fool Stock Advisor analyst team just identified what they believe are the 10 best stocks for investors to buy now... and Palo Alto Networks wasn't one of them. The 10 stocks that made the cut could produce monster returns in the coming years.\n\nStock Advisor provides investors with an easy-to-follow blueprint for success, including guidance on building a portfolio, regular updates from analysts, and two new stock picks each month. The Stock Advisor service has more than tripled the return of S&P 500 since 2002*.\n\nSee the 10 stocks\n\n*Stock Advisor returns as of January 29, 2024\n\nParkev Tatevosian, CFA has no position in any of the stocks mentioned. The Motley Fool has positions in and recommends CrowdStrike and Palo Alto Networks. The Motley Fool has a disclosure policy.\n\nParkev Tatevosian is an affiliate of The Motley Fool and may be compensated for promoting its services. If you choose to subscribe through his link, he will earn some extra money that supports his channel. His opinions remain his own and are unaffected by The Motley Fool.\n\nBest Growth Stocks 2024: Palo Alto Networks Stock vs. CrowdStrike Stock was originally published by The Motley Fool",
-        "link": "https://finance.yahoo.com/news/best-growth-stocks-2024-palo-210918984.html",
-        "symbols": [
-            "CRWD.US",
-            "PANW.US"
-        ],
-        "tags": [],
-        "sentiment": {
-            "polarity": 0.827,
-            "neg": 0.074,
-            "neu": 0.829,
-            "pos": 0.097
-        }
-    },
-    {
-        "date": "2024-02-02T14:40:10+00:00",
-        "title": "Is CrowdStrike (CRWD) Stock Outpacing Its Computer and Technology Peers This Year?",
-        "content": "For those looking to find strong Computer and Technology stocks, it is prudent to search for companies in the group that are outperforming their peers. CrowdStrike Holdings (CRWD) is a stock that can certainly grab the attention of many investors, but do its recent returns compare favorably to the sector as a whole? A quick glance at the company's year-to-date performance in comparison to the rest of the Computer and Technology sector should help us answer this question.\n\nCrowdStrike Holdings is a member of our Computer and Technology group, which includes 621 different companies and currently sits at #7 in the Zacks Sector Rank. The Zacks Sector Rank considers 16 different sector groups. The average Zacks Rank of the individual stocks within the groups is measured, and the sectors are listed from best to worst.\n\nThe Zacks Rank emphasizes earnings estimates and estimate revisions to find stocks with improving earnings outlooks. This system has a long record of success, and these stocks tend to be on track to beat the market over the next one to three months. CrowdStrike Holdings is currently sporting a Zacks Rank of #1 (Strong Buy).\n\nOver the past three months, the Zacks Consensus Estimate for CRWD's full-year earnings has moved 46.7% higher. This is a sign of improving analyst sentiment and a positive earnings outlook trend.\n\nBased on the latest available data, CRWD has gained about 17.3% so far this year. Meanwhile, stocks in the Computer and Technology group have gained about 4.8% on average. This means that CrowdStrike Holdings is performing better than its sector in terms of year-to-date returns.\n\nIBM (IBM) is another Computer and Technology stock that has outperformed the sector so far this year. Since the beginning of the year, the stock has returned 14.3%.\n\nThe consensus estimate for IBM's current year EPS has increased 2.7% over the past three months. The stock currently has a Zacks Rank #2 (Buy).\n\nLooking more specifically, CrowdStrike Holdings belongs to the Internet - Software industry, a group that includes 146 individual stocks and currently sits at #78 in the Zacks Industry Rank. On average, this group has gained an average of 7.2% so far this year, meaning that CRWD is performing better in terms of year-to-date returns.\n\nStory continues\n\nIn contrast, IBM falls under the Computer - Integrated Systems industry. Currently, this industry has 9 stocks and is ranked #88. Since the beginning of the year, the industry has moved +9.4%.\n\nCrowdStrike Holdings and IBM could continue their solid performance, so investors interested in Computer and Technology stocks should continue to pay close attention to these stocks.\n\nWant the latest recommendations from Zacks Investment Research? Today, you can download 7 Best Stocks for the Next 30 Days. Click to get this free report\n\nCrowdStrike (CRWD) : Free Stock Analysis Report\n\nInternational Business Machines Corporation (IBM) : Free Stock Analysis Report\n\nTo read this article on Zacks.com click here.\n\nZacks Investment Research",
-        "link": "https://finance.yahoo.com/news/crowdstrike-crwd-stock-outpacing-computer-144010421.html",
-        "symbols": [
-            "45C.F",
-            "CRWD.US",
-            "IBM.BA",
-            "IBM.BE",
-            "IBM.DU",
-            "IBM.F",
-            "IBM.HA",
-            "IBM.HM",
-            "IBM.LSE",
-            "IBM.MU",
-            "IBM.MX",
-            "IBM.NEO",
-            "IBM.STU",
-            "IBM.US",
-            "IBM.XETRA",
-            "IBM0.F",
-            "IBMB34.SA"
-        ],
-        "tags": [],
-        "sentiment": {
-            "polarity": 0.997,
-            "neg": 0.014,
-            "neu": 0.849,
-            "pos": 0.138
-        }
-    },
-    {
-        "date": "2024-02-02T14:00:11+00:00",
-        "title": "CrowdStrike (CRWD) Is a Trending Stock: Facts to Know Before Betting on It",
-        "content": "CrowdStrike Holdings (CRWD) has recently been on Zacks.com's list of the most searched stocks. Therefore, you might want to consider some of the key factors that could influence the stock's performance in the near future.\n\nOver the past month, shares of this cloud-based security company have returned +21.9%, compared to the Zacks S&P 500 composite's +2.9% change. During this period, the Zacks Internet - Software industry, which CrowdStrike falls in, has gained 7.2%. The key question now is: What could be the stock's future direction?\n\nWhile media releases or rumors about a substantial change in a company's business prospects usually make its stock 'trending' and lead to an immediate price change, there are always some fundamental facts that eventually dominate the buy-and-hold decision-making.\n\nEarnings Estimate Revisions\n\nRather than focusing on anything else, we at Zacks prioritize evaluating the change in a company's earnings projection. This is because we believe the fair value for its stock is determined by the present value of its future stream of earnings.\n\nWe essentially look at how sell-side analysts covering the stock are revising their earnings estimates to reflect the impact of the latest business trends. And if earnings estimates go up for a company, the fair value for its stock goes up. A higher fair value than the current market price drives investors' interest in buying the stock, leading to its price moving higher. This is why empirical research shows a strong correlation between trends in earnings estimate revisions and near-term stock price movements.\n\nCrowdStrike is expected to post earnings of $0.82 per share for the current quarter, representing a year-over-year change of +74.5%. Over the last 30 days, the Zacks Consensus Estimate has changed +7.8%.\n\nFor the current fiscal year, the consensus earnings estimate of $2.95 points to a change of +91.6% from the prior year. Over the last 30 days, this estimate has changed +1.2%.\n\nStory continues\n\nFor the next fiscal year, the consensus earnings estimate of $3.65 indicates a change of +23.8% from what CrowdStrike is expected to report a year ago. Over the past month, the estimate has changed +0.3%.\n\nWith an impressive externally audited track record, our proprietary stock rating tool -- the Zacks Rank -- is a more conclusive indicator of a stock's near-term price performance, as it effectively harnesses the power of earnings estimate revisions. The size of the recent change in the consensus estimate, along with three other factors related to earnings estimates, has resulted in a Zacks Rank #1 (Strong Buy) for CrowdStrike.\n\nThe chart below shows the evolution of the company's forward 12-month consensus EPS estimate:\n\n12 Month EPS\n\nRevenue Growth Forecast\n\nWhile earnings growth is arguably the most superior indicator of a company's financial health, nothing happens as such if a business isn't able to grow its revenues. After all, it's nearly impossible for a company to increase its earnings for an extended period without increasing its revenues. So, it's important to know a company's potential revenue growth.\n\nFor CrowdStrike, the consensus sales estimate for the current quarter of $839.08 million indicates a year-over-year change of +31.7%. For the current and next fiscal years, $3.05 billion and $3.91 billion estimates indicate +36.1% and +28.3% changes, respectively.\n\nLast Reported Results and Surprise History\n\nCrowdStrike reported revenues of $786.01 million in the last reported quarter, representing a year-over-year change of +35.3%. EPS of $0.82 for the same period compares with $0.40 a year ago.\n\nCompared to the Zacks Consensus Estimate of $777.2 million, the reported revenues represent a surprise of +1.13%. The EPS surprise was +10.81%.\n\nThe company beat consensus EPS estimates in each of the trailing four quarters. The company topped consensus revenue estimates each time over this period.\n\nValuation\n\nWithout considering a stock's valuation, no investment decision can be efficient. In predicting a stock's future price performance, it's crucial to determine whether its current price correctly reflects the intrinsic value of the underlying business and the company's growth prospects.\n\nWhile comparing the current values of a company's valuation multiples, such as price-to-earnings (P/E), price-to-sales (P/S) and price-to-cash flow (P/CF), with its own historical values helps determine whether its stock is fairly valued, overvalued, or undervalued, comparing the company relative to its peers on these parameters gives a good sense of the reasonability of the stock's price.\n\nAs part of the Zacks Style Scores system, the Zacks Value Style Score (which evaluates both traditional and unconventional valuation metrics) organizes stocks into five groups ranging from A to F (A is better than B; B is better than C; and so on), making it helpful in identifying whether a stock is overvalued, rightly valued, or temporarily undervalued.\n\nCrowdStrike is graded F on this front, indicating that it is trading at a premium to its peers. Click here to see the values of some of the valuation metrics that have driven this grade.\n\nConclusion\n\nThe facts discussed here and much other information on Zacks.com might help determine whether or not it's worthwhile paying attention to the market buzz about CrowdStrike. However, its Zacks Rank #1 does suggest that it may outperform the broader market in the near term.\n\nWant the latest recommendations from Zacks Investment Research? Today, you can download 7 Best Stocks for the Next 30 Days. Click to get this free report\n\nCrowdStrike (CRWD) : Free Stock Analysis Report\n\nTo read this article on Zacks.com click here.\n\nZacks Investment Research",
-        "link": "https://finance.yahoo.com/news/crowdstrike-crwd-trending-stock-facts-140011413.html",
-        "symbols": [
-            "45C.F",
-            "CRWD.US"
-        ],
-        "tags": [],
-        "sentiment": {
-            "polarity": 0.999,
-            "neg": 0.008,
-            "neu": 0.864,
-            "pos": 0.128
         }
     }
 ]
