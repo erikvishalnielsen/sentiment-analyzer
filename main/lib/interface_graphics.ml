@@ -167,7 +167,7 @@ let draw_graph (interface : Interface.t) =
     let _x = List.init (List.length ai_answers) ~f:(fun num ->
       let minus = num * 40 in
       Graphics.moveto 10 (height_start-minus);
-      let str = List.nth_exn ai_answers num in
+      let str = String.slice (List.nth_exn ai_answers num) 0 ((String.length (List.nth_exn ai_answers num))-1) in
       let spaceInd = String.index_from str 100 (' ') in 
       let str_pair = (match spaceInd with 
       | Some ind -> (String.slice str 0 ind, String.slice str (ind+1) (String.length str))
