@@ -56,8 +56,9 @@ let draw_button (button : Interface.Button.t) message =
   Graphics.set_color Colors.black;
   Graphics.set_text_size 200;
   Graphics.moveto (button.x + 5) (gui_height - 19);
-  if String.equal message "" then 
-    Graphics.draw_string (Printf.sprintf " %s" header_text) 
+  if String.equal message "CALCULATE BUTTON" then 
+    (Graphics.moveto 499 (gui_height - 19);
+    Graphics.draw_string (Printf.sprintf " %s" header_text))
   else
     Graphics.draw_string (Printf.sprintf " %s %s" header_text message)
 ;;
@@ -206,7 +207,7 @@ let render (interface : Interface.t) =
   draw_play_area ();
   draw_button (Interface.tickerBox interface) (Interface.input_ticker interface);
   draw_button (Interface.timeBox interface) (Int.to_string (Interface.input_timeframe interface));
-  draw_button (Interface.calcBox interface) "";
+  draw_button (Interface.calcBox interface) "CALCULATE BUTTON";
   Graphics.set_window_title "S&E Trading";
   (* Graphics.auto_synchronize true; *)
   
