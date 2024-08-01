@@ -92,5 +92,4 @@ let json_to_datapoints ticker days =
     ; price_low = match (List.min_elt dataList ~compare:(fun item1 item2 -> if (Float.(>.) (item1.price) (item2.price)) then 1 else -1)) with | Some item -> item.price | None -> failwith "error"} in
     Ok dataptList)
   | Error error_type -> Error error_type
-  
 ;;
