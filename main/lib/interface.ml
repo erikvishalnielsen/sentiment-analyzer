@@ -28,6 +28,7 @@ type t =
   ; mutable graphFinance : Graph.t
   ; mutable graphHiLo : (float * float)
   ; mutable graphSentiment : Graph.t
+  ; mutable graphVolume : Graph.t
   ; mutable tickerBox : Button.t
   ; mutable timeBox : Button.t
   ; mutable calcBox : Button.t
@@ -53,6 +54,7 @@ let create () =
     ; graphFinance = create_graph data
     ; graphHiLo = (0.0,0.0)
     ; graphSentiment = create_graph data
+    ; graphVolume = create_graph data
     ; tickerBox = {x = 94 ; y = 875 ; width = 100; height = 25; on=false; message="Ticker:"; reg_color = 0x058BBD; clicked_color = 0x00FFFF}
     ; timeBox = {x = 288 ; y = 875 ; width = 100; height = 25; on=false; message="Days:"; reg_color = 0x058BBD; clicked_color = 0x00FFFF}
     ; calcBox = {x = 482 ; y = 875 ; width = 100; height = 25; on=false; message="Calculate"; reg_color = 0x06A217; clicked_color = 0x00FF00}
@@ -89,19 +91,28 @@ let plot_datapoints (datum : Datapoints.t) =
 
   Core.print_s [%message "highs/lows: " (Float.to_string datum.price_high) (Float.to_string datum.price_low)];
   let tickSize = 450.0 /. (datum.price_high -. datum.price_low) in
+  let tickVolume = 450.0 /. (datum.deltavol_high -. datum.deltavol_low) in
   Core.print_s [%message "data: " (Float.to_string tickSize) (Float.to_string datum.price_low)];
+  Core.print_s [%message "data volume: " (Float.to_string tickVolume) (Float.to_string datum.deltavol_low)];
   let height_multiplier_price price = (350 + (Int.of_float ((price -. datum.price_low) *. tickSize))) in
+  let height_multiplier_vol vol = (350 + (Int.of_float ((vol -. datum.deltavol_low) *. tickVolume))) in
   let height_multiplier_sent sentiment = (575 + (Int.of_float (225.0 *. sentiment))) in
 
   let pointListPrice = Array.init numPts ~f:(fun _f -> (0,0)) in
   let pointListSentiment = Array.init numPts ~f:(fun _f -> (0,0)) in
+  let pointListVolume = Array.init numPts ~f:(fun _f -> (0,0)) in
   List.iteri datum.data ~f:(fun ind point -> 
     Array.set pointListPrice ind ((List.nth_exn width_list ind), (height_multiplier_price point.price));
     Array.set pointListSentiment ind ((List.nth_exn width_list ind), (height_multiplier_sent point.sentiment));
+    Array.set pointListVolume ind ((List.nth_exn width_list ind), (height_multiplier_vol point.delta_volume));
   );
 
-  (pointListPrice, pointListSentiment)
+  (pointListPrice, pointListSentiment, pointListVolume)
 ;;
+
+let first_element (x, _, _) = x
+let second_element (_, y, _) = y
+let third_element (_, _, z) = z
 
 let handle_click (t : t) (pos : int * int) =
   let x_pos = fst pos in
@@ -134,9 +145,10 @@ let handle_click (t : t) (pos : int * int) =
         t.regressionEqtn <- regressionEqtn;
         t.graphInfo <- datapoints.gemini_ans;
         t.graphHiLo <- (datapoints.price_low, datapoints.price_high);
-        let datapair : ((int * int) array * (int * int) array) = plot_datapoints datapoints in 
-        t.graphFinance <- {height = 500; width = 500; data = fst datapair};
-        t.graphSentiment <- {height = 500; width = 500; data = snd datapair};
+        let datapair : ((int * int) array * (int * int) array * (int * int) array) = plot_datapoints datapoints in 
+        t.graphFinance <- {height = 500; width = 500; data = (first_element datapair)};
+        t.graphSentiment <- {height = 500; width = 500; data = (second_element datapair)};
+        t.graphVolume <- {height = 500; width = 500; data = (third_element datapair)};
         Graphics.set_color (Graphics.rgb 255 255 255);
         Graphics.moveto ((t.graphSentiment.width / 2) + 50) (600);
         Graphics.draw_string "Loading";

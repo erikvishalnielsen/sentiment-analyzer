@@ -34,6 +34,7 @@ val input_timeframe : t -> int
 val graphFinance : t -> Graph.t
 val graphHiLo : t -> (float * float)
 val graphSentiment : t -> Graph.t
+val graphVolume : t -> Graph.t
 val tickerBox : t -> Button.t
 val timeBox : t -> Button.t
 val calcBox : t -> Button.t

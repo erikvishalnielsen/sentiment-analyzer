@@ -5,6 +5,7 @@ module Datapoint = struct
   { date : Finviz_parser.Stock_date.t
   ; price : float
   ; sentiment : float
+  ; delta_volume : float
   }
 [@@deriving compare, equal, sexp_of]
 end
@@ -13,6 +14,8 @@ type t =
     { mutable data : Datapoint.t list;
       mutable price_high : float;
       mutable price_low : float;
+      mutable deltavol_high : float;
+      mutable deltavol_low : float;
       gemini_ans : string list
     } [@@deriving sexp_of]
 
@@ -78,7 +81,8 @@ let json_to_datapoints ticker days =
     let sentiments = List.rev (List.slice sentimentsinit 0 days) in
     let price = List.rev (List.slice priceinit 0 days) in
     
-    let lastPrice = ref (List.nth_exn (snd (List.nth_exn price 0)) 1) in 
+    let lastPrice = ref (List.nth_exn (snd (List.nth_exn price 0)) 1) in
+    let lastVol =  ref (List.nth_exn (snd (List.nth_exn price 0)) 2) in (* STARTING VOLUME VALUE *)
 
     let emptyList : Datapoint.t list = [] in
     let dataList : Datapoint.t list = List.foldi sentiments ~init:(emptyList) ~f:(fun ind currData currSentiment -> 
@@ -87,18 +91,24 @@ let json_to_datapoints ticker days =
       match found with
       | Some item -> (
         let newData : Datapoint.t = {date = Finviz_parser.get_date_from_json date ; price = List.nth_exn (snd item) 1 ; 
-        sentiment = (List.fold (snd currSentiment) ~init:(0.0) ~f:(fun sum currItem -> sum +. currItem)) /. (Int.to_float (List.length (snd currSentiment))) } in
+        sentiment = (List.fold (snd currSentiment) ~init:(0.0) ~f:(fun sum currItem -> sum +. currItem)) /. (Int.to_float (List.length (snd currSentiment))) ;
+        delta_volume = (if Float.(=) !lastVol 0.0 then 0.0 else ((List.nth_exn (snd item) 2) -. !lastVol) /. !lastVol) } in
         lastPrice := (List.nth_exn (snd item) 1);
+        lastVol := (List.nth_exn (snd item) 2);
         (currData @ [newData]);
       )
       | None -> (
         let newData : Datapoint.t = {date = Finviz_parser.get_date_from_json date ; price = !lastPrice ; 
-        sentiment = (List.fold (snd currSentiment) ~init:(0.0) ~f:(fun sum currItem -> sum +. currItem)) /. (Int.to_float (List.length (snd currSentiment))) } in
+        sentiment = (List.fold (snd currSentiment) ~init:(0.0) ~f:(fun sum currItem -> sum +. currItem)) /. (Int.to_float (List.length (snd currSentiment))) ;
+        delta_volume = (if Float.(=) !lastVol 0.0 then 0.0 else (0.0 -. !lastVol) /. !lastVol) } in
+        lastVol := 0.0;
         (currData @ [newData]);
       )
     ) in
     let dataptList = {data = dataList ; price_high = (match (List.max_elt dataList ~compare:(fun item1 item2 -> if (Float.(>.) (item1.price) (item2.price)) then 1 else -1)) with | Some item -> item.price | None -> failwith "error")
-    ; price_low = (match (List.min_elt dataList ~compare:(fun item1 item2 -> if (Float.(>.) (item1.price) (item2.price)) then 1 else -1)) with | Some item -> item.price | None -> failwith "error") ; gemini_ans = gemini } in
+    ; price_low = (match (List.min_elt dataList ~compare:(fun item1 item2 -> if (Float.(>.) (item1.price) (item2.price)) then 1 else -1)) with | Some item -> item.price | None -> failwith "error") ; 
+    deltavol_low = (match (List.min_elt dataList ~compare:(fun item1 item2 -> if (Float.(>.) (item1.delta_volume) (item2.delta_volume)) then 1 else -1)) with | Some item -> item.delta_volume | None -> failwith "error") ;
+    deltavol_high = (match (List.max_elt dataList ~compare:(fun item1 item2 -> if (Float.(>.) (item1.delta_volume) (item2.delta_volume)) then 1 else -1)) with | Some item -> item.delta_volume | None -> failwith "error") ; gemini_ans = gemini } in
     Ok dataptList)
   | Error error_type -> Error error_type
 ;;

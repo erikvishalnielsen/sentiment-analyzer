@@ -92,12 +92,15 @@ let draw_graph (interface : Interface.t) =
     in
     let graphPtsSent = Array.of_list (List.rev (Array.to_list (Interface.graphSentiment interface).data)) in
     let graphPtsPrice = Array.of_list (List.rev (Array.to_list (Interface.graphFinance interface).data)) in
+    let graphPtsVol = Array.of_list (List.rev (Array.to_list (Interface.graphVolume interface).data)) in
     Graphics.set_line_width 5;
     Graphics.draw_poly_line edges;
     Graphics.draw_poly_line line;
     Graphics.set_line_width 3;
     Graphics.set_color Colors._green;
     Graphics.draw_poly_line graphPtsPrice;
+    Graphics.set_color Colors._blue;
+    Graphics.draw_poly_line graphPtsVol;
     Graphics.set_color Colors._red;
     Graphics.draw_poly_line graphPtsSent;
     Graphics.set_color Colors.black;
@@ -118,12 +121,20 @@ let draw_graph (interface : Interface.t) =
     Graphics.moveto ((width / 2) + 25) (height + 305);
     Graphics.draw_string ((Interface.input_ticker interface) ^ " Sentiment Graph");
     
-    Graphics.moveto 480 820;
+
+
+    Graphics.moveto 510 850;
+    Graphics.set_color Colors.black;
+    Graphics.draw_string ("GRAPH KEY");
+    Graphics.moveto 510 835;
+    Graphics.set_color Colors._blue;
+    Graphics.draw_string ("Blue: % Change in Volume");
+    Graphics.moveto 510 820;
     Graphics.set_color Colors._green;
-    Graphics.draw_string ("Green: Price ");
-    Graphics.moveto 575 820;
+    Graphics.draw_string ("Green: Price");
+    Graphics.moveto 510 805;
     Graphics.set_color Colors._red;
-    Graphics.draw_string(" Red: Sentiment");
+    Graphics.draw_string("Red: Sentiment [-1:1]");
 
     (* CORRELATIONS *)
     Graphics.set_color Colors._blue;
