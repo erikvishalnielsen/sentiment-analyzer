@@ -63,18 +63,6 @@ let draw_button (button : Interface.Button.t) message =
     Graphics.draw_string (Printf.sprintf " %s %s" header_text message)
 ;;
 
-let draw_calculate_box (button : Interface.Button.t) =
-  let open Constants in
-  let text_color = if button.on then Graphics.green else 0x06A217 in
-  Graphics.set_color text_color;
-  Graphics.fill_rect 482 (gui_height - 25) 100 25;
-  let header_text = "Calculate" in
-  Graphics.set_color Colors.black;
-  Graphics.set_text_size 200;
-  Graphics.moveto 499 (gui_height - 19);
-  Graphics.draw_string (Printf.sprintf " %s" header_text)
-;; 
-
 let draw_play_area () =
   let open Constants in
   Graphics.set_color Colors.white;
@@ -117,7 +105,7 @@ let draw_graph (interface : Interface.t) =
     Graphics.draw_string "Price";
     (* Graphics.moveto 90 (((interface.graphSentiment.height + 50) / 2) - 5);
     Graphics.draw_string "0"; *)
-    Graphics.moveto 55 (height + 595);
+    Graphics.moveto 55 (height + 300);
     Graphics.draw_string (Float.to_string (snd (Interface.graphHiLo interface)));
     Graphics.moveto 55 (50 + 300);
     Graphics.draw_string (Float.to_string (fst (Interface.graphHiLo interface)));
@@ -173,12 +161,20 @@ let draw_graph (interface : Interface.t) =
     Graphics.draw_string (snd predStr);
 
     (* AI INFORMATION *)
+    Graphics.set_color Colors.black;
     let ai_answers = Interface.graphInfo interface in
     let height_start = 280 in
     let _x = List.init (List.length ai_answers) ~f:(fun num ->
-      let minus = num * 20 in
+      let minus = num * 40 in
       Graphics.moveto 10 (height_start-minus);
-      Graphics.draw_string (List.nth_exn ai_answers num);
+      let str = List.nth_exn ai_answers num in
+      let spaceInd = String.index_from str 100 (' ') in 
+      let str_pair = (match spaceInd with 
+      | Some ind -> (String.slice str 0 ind, String.slice str (ind+1) (String.length str))
+      | None -> (str, " ")) in
+      Graphics.draw_string (fst str_pair);
+      Graphics.moveto 10 (height_start-minus-20);
+      Graphics.draw_string (snd str_pair);
     ) in
 
 
