@@ -61,7 +61,9 @@ let get_date (date : string) : Stock_date.t =
 ;;
 
 let get_date_from_json (date : string) : Stock_date.t =
-  let dateList = String.split ~on:'-' (List.nth_exn (String.split ~on:' ' date) 0) in
+  let dateList =
+    String.split ~on:'-' (List.nth_exn (String.split ~on:' ' date) 0)
+  in
   let currDate = Date.today ~zone:Timezone.utc in
   let newdate : Date.t =
     Date.create_exn
@@ -133,8 +135,7 @@ let createFindlJson
   let command =
     Printf.sprintf
       "/bin/python3 \
-       /home/ubuntu/sentiment-analyzer/main/lib/sentiment_ml.py %s %s %s \
-       %s"
+       /home/ubuntu/sentiment-analyzer/main/lib/sentiment_ml.py %s %s %s %s"
       ticker
       startDate
       endDate
@@ -145,4 +146,3 @@ let createFindlJson
     "Command status: %s\n"
     (Core_unix.Exit_or_signal.to_string_hum status)
 ;;
-
