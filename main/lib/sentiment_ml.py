@@ -6,7 +6,7 @@ import os
 import re
 from dotenv import load_dotenv, dotenv_values
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 import pathlib
 import textwrap
 
@@ -61,14 +61,15 @@ def my_api(initTicker, start, end):
     print(newsData.status_code)
     return(priceData.json(),newsData.json())
 
-if len(sys.argv) != 5:
-    print("Usage: python sentiment_ml.py [ticker] [starting_date] [ending_date] [max_search]")
+if len(sys.argv) != 6:
+    print("Usage: python sentiment_ml.py [ticker] [starting_date] [ending_date] [max_search] [total_days_in_period]")
     sys.exit(1)
 
 ticker = sys.argv[1]
 start = sys.argv[2]
 end = sys.argv[3]
 max_search = sys.argv[4]
+total_days_in_period = sys.argv[5]
 
 try: 
     open(f"data/{ticker}_{end}_fundamentals.json", "r")
@@ -120,14 +121,6 @@ def create_news_datapoints(data):
         else:
             news_sentiments[news_dict.get("date")[0:10]] = [sentiment]
 
-questionList = ["Give me a 1 sentence summary of " + ticker + " (stock ticker) stock", "Give me a 1 sentence summary of where " + ticker + " (stock ticker) company makes its money", "Give me a short list of companies who compete with " + ticker + " (stock ticker) stock in one sentence"]
-answerList = []
-for question in questionList:
-    answerList.append((model.generate_content(question)).text)
-
-for answer in answerList:
-    print(answer)
-
 try: 
     open("data/" + ticker +  '_' + end + "_sentiment_price.json", "r")
 except IOError:
@@ -138,16 +131,29 @@ except IOError:
         financedata = json.load(financefile) # returns list of dicts
         financepricedata = financedata["results"]
         financedict = {}
+        closingList = []
 
         for dict in financepricedata:
             timestamp = dict["t"] / 1000
             currdate = (datetime.fromtimestamp(timestamp)).strftime("%Y-%m-%d")
             financedict[currdate] = [dict["o"], dict["c"], dict["v"]]
+            closingList.append(str(dict["c"]))
 
         # Sentiment info
         file = open("data/" + ticker + '_' + end + "_news.json")
         news_data = json.load(file) # returns list of dicts
         news_sentiments = {}
+
+        closingListLen = len(closingList)
+        newClosingList = (closingList[0:closingListLen])
+        questionList = ["Give me a 1 sentence summary of " + ticker + " (stock ticker) stock", "Give me a 1 sentence summary of where " + ticker + " (stock ticker) company makes its money", "Give me a short list of companies who compete with " + ticker + " (stock ticker) stock in one sentence"
+                        , "Take the following list of closing prices for " + ticker + " for the past " + str(closingListLen) + " days. Describe the price movements in 1 sentence: " + (', ').join(closingList)]
+        answerList = []
+        for question in questionList:
+            answerList.append((model.generate_content(question)).text)
+
+        for answer in answerList:
+            print(answer)
 
         # Create json
         create_news_datapoints(news_data)

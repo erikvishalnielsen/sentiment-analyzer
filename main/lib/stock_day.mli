@@ -23,6 +23,7 @@ val createFindlJson
   -> startDate:string
   -> endDate:string
   -> max_search:string
+  -> total_days:string
   -> unit
 
 val convert_date_tostring : Date.t -> string

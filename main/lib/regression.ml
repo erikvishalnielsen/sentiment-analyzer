@@ -75,6 +75,7 @@ let regressionEqtn
   (ptList : (float * float) list list)
   (corrs : float list)
   latestPrice
+  (data : Datapoints.t)
   : t option
   =
   let maxCorr = ref (-2.0) in
@@ -115,7 +116,9 @@ let regressionEqtn
     let a_init = meanY -. (b_init *. meanX) in
     let days_init = List.nth_exn dayList maxInd in
     let deltaSentiment : float =
-      fst (List.nth_exn bestList (List.length bestList - 1 - days_init))
+      (List.nth_exn data.data (List.length data.data - days_init)).sentiment
+      -. (List.nth_exn data.data (List.length data.data - days_init - 1))
+           .sentiment
     in
     let deltaPrice = a_init +. (b_init *. deltaSentiment) in
     let newPrice = latestPrice +. deltaPrice in
@@ -169,7 +172,7 @@ let regressionCorrelation (data : Datapoints.t) : float list * t option =
     (List.nth_exn data.data (List.length data.data - 1)).price
   in
   let bestFitEtqn =
-    regressionEqtn correlationList correlations latestPrice
+    regressionEqtn correlationList correlations latestPrice data
   in
   Core.print_s
     [%message

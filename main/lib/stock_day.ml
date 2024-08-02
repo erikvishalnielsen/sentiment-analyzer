@@ -103,17 +103,19 @@ let createFindlJson
   ~(startDate : string)
   ~(endDate : string)
   ~(max_search : string)
+  ~(total_days : string)
   : unit
   =
   Core.print_s [%message "Dates: " startDate endDate];
   let command =
     Printf.sprintf
       "/bin/python3 \
-       /home/ubuntu/sentiment-analyzer/main/lib/sentiment_ml.py %s %s %s %s"
+       /home/ubuntu/sentiment-analyzer/main/lib/sentiment_ml.py %s %s %s %s %s"
       ticker
       startDate
       endDate
       max_search
+      total_days
   in
   let status = executeCmd command in
   Printf.printf
