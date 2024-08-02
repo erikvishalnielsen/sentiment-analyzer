@@ -3,7 +3,7 @@ PUBLIC STOCK SENTIMENT ANALYZER
 By Erik Nielsen and Sam Meddin
 
 LANGUAGES USED
-- Ocaml
+- OCaml
 - Python
 
 HOW TO USE
