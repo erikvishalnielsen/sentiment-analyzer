@@ -26,33 +26,29 @@ let handle_keys (interface : Interface.t) =
       if (Interface.time_textbox interface).rectangle.on
       then (
         match
-          Char.is_digit key && Interface.input_timeframe interface < 100
+          Char.is_digit key && (Int.of_string (Interface.time_textbox interface).message) < 100
         with
         | true ->
-          Interface.set_input_timeframe
-            interface
-            (Int.of_string
+          (Interface.time_textbox interface).message <-
                (String.concat
-                  [ Int.to_string (Interface.input_timeframe interface)
+                  [ (Interface.time_textbox interface).message
                   ; String.of_char key
-                  ]))
+                  ])
         | false ->
           (match Char.to_int key with
            | 8 ->
              let len =
                String.length
-                 (Int.to_string (Interface.input_timeframe interface))
+              (Interface.time_textbox interface).message
              in
              if not (len = 1 || len = 0)
              then
-               Interface.set_input_timeframe
-                 interface
-                 (Int.of_string
-                    (String.slice
-                       (Int.to_string (Interface.input_timeframe interface))
+              (Interface.time_textbox interface).message <-
+                 (String.slice
+                 (Interface.time_textbox interface).message
                        0
-                       (len - 1)))
-             else Interface.set_input_timeframe interface 0
+                       (len - 1))
+             else (Interface.time_textbox interface).message <- "0"
            | _ -> ()));
       if (Interface.ticker_textbox interface).rectangle.on
       then (
@@ -61,23 +57,22 @@ let handle_keys (interface : Interface.t) =
           && String.length (Interface.ticker_textbox interface).message < 6
         with
         | true ->
-          Interface.set_input_ticker
-            interface
+          (Interface.ticker_textbox 
+            interface).message <-
             (String.concat
-               [ Interface.input_ticker interface; String.of_char key ])
+               [ (Interface.ticker_textbox interface).message; String.of_char key ])
         | false ->
           (match Char.to_int key with
            | 8 ->
-             let len = String.length (Interface.input_ticker interface) in
+             let len = String.length (Interface.ticker_textbox interface).message in
              if not (len = 1 || len = 0)
              then
-               Interface.set_input_ticker
-                 interface
+              (Interface.ticker_textbox interface).message <-
                  (String.slice
-                    (Interface.input_ticker interface)
+                 (Interface.ticker_textbox interface).message
                     0
                     (len - 1))
-             else Interface.set_input_ticker interface ""
+             else (Interface.ticker_textbox interface).message <- ""
            | _ -> ())))
 ;;
 

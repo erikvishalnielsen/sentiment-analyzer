@@ -129,7 +129,7 @@ let create () =
             ; clicked_color = 0x00FFFF
             }
         ; textbox_text = "Days:"
-        ; message = ""
+        ; message = "0"
         }
     ; calc_button =
         { rectangle =
@@ -267,15 +267,15 @@ let handle_click (t : t) (pos : int * int) =
           t.ticker_textbox.message
           ~startDate:
             (Stock_day.convert_date_tostring
-               (Date.add_days todayDate (-1 * t.input_timeframe)))
+               (Date.add_days todayDate (-1 * (Int.of_string t.time_textbox.message))))
           ~endDate:
             (Stock_day.convert_date_tostring (Date.add_days todayDate (-1)))
           ~max_search:
             (Stock_day.convert_date_tostring
                (Date.add_days todayDate (-180)))
-          ~total_days:(Int.to_string t.input_timeframe);
+          ~total_days:(t.time_textbox.message);
         match
-          Datapoints.json_to_datapoints t.ticker_textbox.message t.input_timeframe
+          Datapoints.json_to_datapoints t.ticker_textbox.message (Int.of_string t.time_textbox.message)
         with
         | Ok datapoints ->
           let correlations, regressionEqtn =

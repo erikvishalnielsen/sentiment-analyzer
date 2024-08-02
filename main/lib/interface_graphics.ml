@@ -111,7 +111,7 @@ let draw_graph (interface : Interface.t) =
     Graphics.draw_string "0";
     Graphics.moveto (width - 5) (30 + 300);
     Graphics.draw_string
-      (Int.to_string (Interface.input_timeframe interface));
+      (Interface.time_textbox interface).message;
     Graphics.moveto ((width / 2) + 50) (10 + 300);
     Graphics.draw_string "Days";
     Graphics.moveto ((width / 2) + 25) (height + 305);
