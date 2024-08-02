@@ -272,7 +272,8 @@ let handle_click (t : t) (pos : int * int) =
             (Stock_day.convert_date_tostring (Date.add_days todayDate (-1)))
           ~max_search:
             (Stock_day.convert_date_tostring
-               (Date.add_days todayDate (-180)));
+               (Date.add_days todayDate (-180)))
+          ~total_days:(t.input_timeframe);
         match
           Datapoints.json_to_datapoints t.ticker_textbox.message t.input_timeframe
         with

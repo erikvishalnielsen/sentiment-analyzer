@@ -69,7 +69,7 @@ ticker = sys.argv[1]
 start = sys.argv[2]
 end = sys.argv[3]
 max_search = sys.argv[4]
-total_days_in_period = sys.argv[5]
+total_days_in_period = int(sys.argv[5])
 
 try: 
     open(f"data/{ticker}_{end}_fundamentals.json", "r")
