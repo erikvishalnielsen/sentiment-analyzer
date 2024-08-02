@@ -49,8 +49,6 @@ val create : unit -> t
 val create_graph : (int * int) array -> Graph.t
 val handle_click : t -> int * int -> unit
 val check_error : t -> unit
-val input_ticker : t -> string
-val input_timeframe : t -> int
 val graphFinance : t -> Graph.t
 val graphHiLo : t -> float * float
 val graphSentiment : t -> Graph.t
@@ -67,5 +65,3 @@ val graphInfo : t -> string list
 
 val correlations : t -> float list
 val regressionEqtn : t -> Regression.t option
-val set_input_timeframe : t -> int -> unit
-val set_input_ticker : t -> string -> unit

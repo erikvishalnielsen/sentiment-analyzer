@@ -71,9 +71,7 @@ module Textbox = struct
 end
 
 type t =
-  { mutable input_ticker : string
-  ; mutable input_timeframe : int
-  ; mutable graphFinance : Graph.t
+  { mutable graphFinance : Graph.t
   ; mutable graphHiLo : float * float
   ; mutable graphSentiment : Graph.t
   ; mutable graphVolume : Graph.t
@@ -99,9 +97,7 @@ let create () =
     Array.init 5 ~f:(fun num -> (num * 100) + 100, ((num + 5) * 25) + 50)
   in
   let interface =
-    { input_ticker = ""
-    ; input_timeframe = 0
-    ; graphFinance = create_graph data
+    { graphFinance = create_graph data
     ; graphHiLo = 0.0, 0.0
     ; graphSentiment = create_graph data
     ; graphVolume = create_graph data
@@ -344,5 +340,3 @@ let check_error t =
   Graphics.draw_string t.displayError
 ;;
 
-let set_input_timeframe t timeframe = t.input_timeframe <- timeframe
-let set_input_ticker t ticker = t.input_ticker <- ticker

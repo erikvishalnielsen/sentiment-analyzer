@@ -222,7 +222,7 @@ let draw_graph (interface : Interface.t) =
     Interface.Button.draw_button (Interface.volume_button interface);
     let _img_link =
       "https://eodhd.com/img/logos/US/"
-      ^ Interface.input_ticker interface
+      ^ (Interface.ticker_textbox interface).message
       ^ ".png"
     in
     ())
