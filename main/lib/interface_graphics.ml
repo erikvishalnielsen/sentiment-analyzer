@@ -106,12 +106,15 @@ let draw_graph (interface : Interface.t) =
     Graphics.draw_poly_line edges;
     Graphics.draw_poly_line line;
     Graphics.set_line_width 3;
+
+    (* GRAPHS PLOTTED HERE *)
     Graphics.set_color Colors._green;
     Graphics.draw_poly_line graphPtsPrice;
     Graphics.set_color Colors._blue;
     Graphics.draw_poly_line graphPtsVol;
     Graphics.set_color Colors._red;
     Graphics.draw_poly_line graphPtsSent;
+    
     Graphics.set_color Colors.black;
     Graphics.moveto 10 (((height + 650) / 2) - 5);
     Graphics.draw_string "Price";
