@@ -116,7 +116,7 @@ let draw_graph (interface : Interface.t) =
     Graphics.draw_string "Days";
     Graphics.moveto ((width / 2) + 25) (height + 305);
     Graphics.draw_string
-      (Interface.input_ticker interface ^ " Sentiment Graph");
+    ((Interface.ticker_textbox interface).message ^ " Sentiment Graph");
     Graphics.moveto 510 850;
     Graphics.set_color Colors.black;
     Graphics.draw_string "GRAPH KEY";

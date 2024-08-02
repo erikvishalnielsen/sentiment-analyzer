@@ -58,7 +58,7 @@ let handle_keys (interface : Interface.t) =
       then (
         match
           Char.is_alpha key
-          && String.length (Interface.input_ticker interface) < 6
+          && String.length (Interface.ticker_textbox interface).message < 6
         with
         | true ->
           Interface.set_input_ticker

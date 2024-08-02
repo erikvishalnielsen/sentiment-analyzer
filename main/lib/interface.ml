@@ -264,7 +264,7 @@ let handle_click (t : t) (pos : int * int) =
     t.calc_button.rectangle.on
     <- (let todayDate = Date.today ~zone:Timezone.utc in
         Stock_day.createFindlJson
-          t.input_ticker
+          t.ticker_textbox.message
           ~startDate:
             (Stock_day.convert_date_tostring
                (Date.add_days todayDate (-1 * t.input_timeframe)))
@@ -274,7 +274,7 @@ let handle_click (t : t) (pos : int * int) =
             (Stock_day.convert_date_tostring
                (Date.add_days todayDate (-180)));
         match
-          Datapoints.json_to_datapoints t.input_ticker t.input_timeframe
+          Datapoints.json_to_datapoints t.ticker_textbox.message t.input_timeframe
         with
         | Ok datapoints ->
           let correlations, regressionEqtn =
