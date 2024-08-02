@@ -34,7 +34,7 @@ type t =
   ; mutable timeBox : Button.t
   ; mutable calcBox : Button.t
   ; mutable displayError : string
-  ; mutable finViz : Finviz_parser.Finviz_parser.t
+      (* ; mutable finViz : Finviz_parser.Finviz_parser.t *)
   ; mutable correlations : float list
   ; mutable regressionEqtn : Regression.t option
   ; mutable graphInfo : string list
@@ -86,13 +86,10 @@ let create () =
         ; reg_color = 0x06A217
         ; clicked_color = 0x00FF00
         }
-    ; displayError = ""
-    ; finViz =
-        { stock_ticker = ""
-        ; time_period = 0
-        ; link = ""
-        ; headlines = [ Finviz_parser.get_date "Jan-01-24", "" ]
-        }
+    ; displayError =
+        ""
+        (* ; finViz = { stock_ticker = "" ; time_period = 0 ; link = "" ;
+           headlines = [ Finviz_parser.get_date "Jan-01-24", "" ] } *)
     ; correlations = []
     ; regressionEqtn = None
     ; graphInfo = []
@@ -173,16 +170,15 @@ let handle_click (t : t) (pos : int * int) =
     Graphics.draw_string "Loading...";
     t.calcBox.on
     <- (let todayDate = Date.today ~zone:Timezone.utc in
-        Finviz_parser.createFindlJson
+        Stock_day.createFindlJson
           t.input_ticker
           ~startDate:
-            (Finviz_parser.convert_date_tostring
+            (Stock_day.convert_date_tostring
                (Date.add_days todayDate (-1 * t.input_timeframe)))
           ~endDate:
-            (Finviz_parser.convert_date_tostring
-               (Date.add_days todayDate (-1)))
+            (Stock_day.convert_date_tostring (Date.add_days todayDate (-1)))
           ~max_search:
-            (Finviz_parser.convert_date_tostring
+            (Stock_day.convert_date_tostring
                (Date.add_days todayDate (-180)));
         match
           Datapoints.json_to_datapoints t.input_ticker t.input_timeframe

@@ -10,4 +10,3 @@ val init_exn : unit -> Interface.t
 val read_key : unit -> char option
 
 val render : Interface.t -> unit
-

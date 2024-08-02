@@ -2,7 +2,7 @@ open! Core
 
 module Datapoint = struct
   type t =
-    { date : Finviz_parser.Stock_date.t
+    { date : Stock_day.Stock_date.t
     ; price : float
     ; sentiment : float
     ; delta_volume : float
@@ -107,7 +107,7 @@ let json_to_datapoints ticker days =
             match found with
             | Some item ->
               let newData : Datapoint.t =
-                { date = Finviz_parser.get_date_from_json date
+                { date = Stock_day.get_date_from_json date
                 ; price = List.nth_exn (snd item) 1
                 ; sentiment =
                     List.fold
@@ -126,7 +126,7 @@ let json_to_datapoints ticker days =
               currData @ [ newData ]
             | None ->
               let newData : Datapoint.t =
-                { date = Finviz_parser.get_date_from_json date
+                { date = Stock_day.get_date_from_json date
                 ; price = !lastPrice
                 ; sentiment =
                     List.fold
