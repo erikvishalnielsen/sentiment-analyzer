@@ -29,7 +29,7 @@ let handle_keys (interface : Interface.t) =
           Char.is_digit key && (Int.of_string (Interface.time_textbox interface).message) < 100
         with
         | true ->
-          (Interface.time_textbox interface).message <-
+          (Interface.time_textbox interface).message <- if (String.equal (Interface.time_textbox interface).message "0") then String.of_char key else 
                (String.concat
                   [ (Interface.time_textbox interface).message
                   ; String.of_char key
