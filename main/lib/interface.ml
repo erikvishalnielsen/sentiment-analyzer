@@ -9,18 +9,65 @@ module Graph = struct
   [@@deriving sexp_of]
 end
 
-module Button = struct
+module Colors = struct
+  let black = Graphics.rgb 000 000 000
+  let white = Graphics.rgb 255 255 255
+end
+
+module Rectangle = struct
   type t =
     { x : int
     ; y : int
     ; width : int
     ; height : int
     ; mutable on : bool
-    ; message : string
     ; reg_color : int
     ; clicked_color : int
     }
   [@@deriving sexp_of]
+
+  let draw_rectangle (t : t) =
+    let box_color = if t.on then t.clicked_color else t.reg_color in
+    Graphics.set_color box_color;
+    Graphics.fill_rect t.x t.y t.width t.height
+  ;;
+end
+
+module Button = struct
+  type t =
+    { rectangle : Rectangle.t
+    ; button_text : string
+    }
+    [@@deriving sexp_of]
+
+  let draw_button (t : t) =
+    Rectangle.draw_rectangle t.rectangle;
+    let button_text = t.button_text in
+    Graphics.set_color Colors.black;
+    Graphics.moveto
+      (t.rectangle.x
+       - (fst (Graphics.text_size button_text) / 2)
+       + Int.of_float (34.0 *. (Float.of_int t.rectangle.width /. 80.)))
+      (t.rectangle.y + 6);
+    Graphics.draw_string (Printf.sprintf " %s" button_text)
+  ;;
+end
+
+module Textbox = struct
+  type t =
+    { rectangle : Rectangle.t
+    ; textbox_text : string
+    ; mutable message : string
+    }
+    [@@deriving sexp_of]
+
+  let draw_textbox (t : t) =
+    Rectangle.draw_rectangle t.rectangle;
+    Graphics.set_color Colors.black;
+    Graphics.set_text_size 200;
+    Graphics.moveto (t.rectangle.x + 5) (t.rectangle.y + 6);
+    Graphics.draw_string (Printf.sprintf " %s %s" t.textbox_text t.message)
+  ;;
 end
 
 type t =
@@ -30,11 +77,13 @@ type t =
   ; mutable graphHiLo : float * float
   ; mutable graphSentiment : Graph.t
   ; mutable graphVolume : Graph.t
-  ; mutable tickerBox : Button.t
-  ; mutable timeBox : Button.t
-  ; mutable calcBox : Button.t
+  ; mutable ticker_textbox : Textbox.t
+  ; mutable time_textbox : Textbox.t
+  ; mutable calc_button : Button.t
+  ; mutable price_button : Button.t
+  ; mutable sentiment_button : Button.t
+  ; mutable volume_button : Button.t
   ; mutable displayError : string
-      (* ; mutable finViz : Finviz_parser.Finviz_parser.t *)
   ; mutable correlations : float list
   ; mutable regressionEqtn : Regression.t option
   ; mutable graphInfo : string list
@@ -56,35 +105,79 @@ let create () =
     ; graphHiLo = 0.0, 0.0
     ; graphSentiment = create_graph data
     ; graphVolume = create_graph data
-    ; tickerBox =
-        { x = 94
-        ; y = 875
-        ; width = 100
-        ; height = 25
-        ; on = false
-        ; message = "Ticker:"
-        ; reg_color = 0x058BBD
-        ; clicked_color = 0x00FFFF
+    ; ticker_textbox =
+        { rectangle =
+            { x = 94
+            ; y = 875
+            ; width = 100
+            ; height = 25
+            ; on = false
+            ; reg_color = 0x058BBD
+            ; clicked_color = 0x00FFFF
+            }
+        ; textbox_text = "Ticker:"
+        ; message = ""
         }
-    ; timeBox =
-        { x = 288
-        ; y = 875
-        ; width = 100
-        ; height = 25
-        ; on = false
-        ; message = "Days:"
-        ; reg_color = 0x058BBD
-        ; clicked_color = 0x00FFFF
+    ; time_textbox =
+        { rectangle =
+            { x = 288
+            ; y = 875
+            ; width = 100
+            ; height = 25
+            ; on = false
+            ; reg_color = 0x058BBD
+            ; clicked_color = 0x00FFFF
+            }
+        ; textbox_text = "Days:"
+        ; message = ""
         }
-    ; calcBox =
-        { x = 482
-        ; y = 875
-        ; width = 100
-        ; height = 25
-        ; on = false
-        ; message = "Calculate"
-        ; reg_color = 0x06A217
-        ; clicked_color = 0x00FF00
+    ; calc_button =
+        { rectangle =
+            { x = 482
+            ; y = 875
+            ; width = 100
+            ; height = 25
+            ; on = false
+            ; reg_color = 0x06A217
+            ; clicked_color = 0x00FF00
+            }
+        ; button_text = "Calculate"
+        }
+    ; price_button =
+        { rectangle =
+            { x = 550
+            ; y = 430
+            ; width = 80
+            ; height = 25
+            ; on = false
+            ; reg_color = 0x06A217
+            ; clicked_color = 0x00FF00
+            }
+        ; button_text = "Price"
+        }
+    ; sentiment_button =
+        { rectangle =
+            { x = 550
+            ; y = 390
+            ; width = 80
+            ; height = 25
+            ; on = false
+            ; reg_color = 0x06A217
+            ; clicked_color = 0x00FF00
+            }
+        ; button_text = "Sentiment"
+        }
+    ; volume_button =
+        { rectangle =
+            { x = 550
+            ; y = 350
+            ; width = 80
+            ; height = 25
+            ; on = false
+            ; reg_color = 0x06A217
+            ; clicked_color = 0x00FF00
+            }
+        ; button_text = "Volume"
         }
     ; displayError =
         ""
@@ -168,7 +261,7 @@ let handle_click (t : t) (pos : int * int) =
     Graphics.set_color (Graphics.rgb 0 0 0);
     Graphics.moveto ((t.graphSentiment.width / 2) + 50) 600;
     Graphics.draw_string "Loading...";
-    t.calcBox.on
+    t.calc_button.rectangle.on
     <- (let todayDate = Date.today ~zone:Timezone.utc in
         Stock_day.createFindlJson
           t.input_ticker
@@ -209,14 +302,14 @@ let handle_click (t : t) (pos : int * int) =
         | Error error ->
           t.displayError <- Error.to_string_hum error;
           false);
-    t.tickerBox.on <- false;
-    t.timeBox.on <- false;
+    t.ticker_textbox.rectangle.on <- false;
+    t.ticker_textbox.rectangle.on <- false;
     Core.print_s [%message "calcbox"] (* Ticker: 94 575 100 25 *))
   else if x_pos >= 94 && x_pos <= 194 && y_pos >= 875 && y_pos <= 900
   then (
-    t.calcBox.on <- false;
-    t.tickerBox.on <- true;
-    t.timeBox.on <- false;
+    t.calc_button.rectangle.on <- false;
+    t.ticker_textbox.rectangle.on <- true;
+    t.time_textbox.rectangle.on <- false;
     if not (String.equal t.displayError "")
     then (
       Graphics.set_color (Graphics.rgb 255 255 255);
@@ -226,9 +319,9 @@ let handle_click (t : t) (pos : int * int) =
     Core.print_s [%message "tickerbox"] (* Timeline: 288 575 100 25 *))
   else if x_pos >= 288 && x_pos <= 384 && y_pos >= 875 && y_pos <= 900
   then (
-    t.calcBox.on <- false;
-    t.tickerBox.on <- false;
-    t.timeBox.on <- true;
+    t.calc_button.rectangle.on <- false;
+    t.ticker_textbox.rectangle.on <- false;
+    t.time_textbox.rectangle.on <- true;
     if not (String.equal t.displayError "")
     then (
       Graphics.set_color (Graphics.rgb 255 255 255);
@@ -237,9 +330,9 @@ let handle_click (t : t) (pos : int * int) =
     t.displayError <- "";
     Core.print_s [%message "timebox"])
   else (
-    t.calcBox <- t.calcBox;
-    t.tickerBox.on <- false;
-    t.timeBox.on <- false;
+    (* t.calcBox <- t.calcBox; *)
+    t.ticker_textbox.rectangle.on <- false;
+    t.time_textbox.rectangle.on <- false;
     Core.print_s [%message "nothing"])
 ;;
 

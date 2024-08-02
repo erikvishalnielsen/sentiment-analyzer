@@ -23,7 +23,7 @@ let handle_keys (interface : Interface.t) =
     match Interface_graphics.read_key () with
     | None -> ()
     | Some key ->
-      if (Interface.timeBox interface).on
+      if (Interface.time_textbox interface).rectangle.on
       then (
         match
           Char.is_digit key && Interface.input_timeframe interface < 100
@@ -54,7 +54,7 @@ let handle_keys (interface : Interface.t) =
                        (len - 1)))
              else Interface.set_input_timeframe interface 0
            | _ -> ()));
-      if (Interface.tickerBox interface).on
+      if (Interface.ticker_textbox interface).rectangle.on
       then (
         match
           Char.is_alpha key

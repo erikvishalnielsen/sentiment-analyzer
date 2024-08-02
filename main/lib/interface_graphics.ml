@@ -47,24 +47,6 @@ let draw_header () =
   Graphics.draw_string (Printf.sprintf " %s" header_text)
 ;;
 
-let draw_button (button : Interface.Button.t) message =
-  let open Constants in
-  let text_color =
-    if button.on then button.clicked_color else button.reg_color
-  in
-  Graphics.set_color text_color;
-  Graphics.fill_rect button.x button.y button.width button.height;
-  let header_text = button.message in
-  Graphics.set_color Colors.black;
-  Graphics.set_text_size 200;
-  Graphics.moveto (button.x + 5) (gui_height - 19);
-  if String.equal message "CALCULATE BUTTON"
-  then (
-    Graphics.moveto 499 (gui_height - 19);
-    Graphics.draw_string (Printf.sprintf " %s" header_text))
-  else Graphics.draw_string (Printf.sprintf " %s %s" header_text message)
-;;
-
 let draw_play_area () =
   let open Constants in
   Graphics.set_color Colors.white;
@@ -72,8 +54,7 @@ let draw_play_area () =
 ;;
 
 let draw_graph (interface : Interface.t) =
-  (* let open Interface_lib__Finviz_parser in *)
-  if (Interface.calcBox interface).on
+  if (Interface.calc_button interface).rectangle.on
   then (
     let open Constants in
     (* Graphics.set_color Colors.black; *)
@@ -236,6 +217,9 @@ let draw_graph (interface : Interface.t) =
     Graphics.moveto ((width / 2) + 50) (gui_height / 2);
     Graphics.draw_string "Loading";
     (* *)
+    Interface.Button.draw_button (Interface.price_button interface);
+    Interface.Button.draw_button (Interface.sentiment_button interface);
+    Interface.Button.draw_button (Interface.volume_button interface);
     let _img_link =
       "https://eodhd.com/img/logos/US/"
       ^ Interface.input_ticker interface
@@ -256,13 +240,11 @@ let render (interface : Interface.t) =
   Graphics.display_mode false;
   draw_header ();
   draw_play_area ();
-  draw_button
-    (Interface.tickerBox interface)
-    (Interface.input_ticker interface);
-  draw_button
-    (Interface.timeBox interface)
-    (Int.to_string (Interface.input_timeframe interface));
-  draw_button (Interface.calcBox interface) "CALCULATE BUTTON";
+  Interface.Textbox.draw_textbox
+    (Interface.ticker_textbox interface);
+    Interface.Textbox.draw_textbox
+    (Interface.time_textbox interface);
+    Interface.Button.draw_button (Interface.calc_button interface);
   Graphics.set_window_title "S&E Trading";
   (* Graphics.auto_synchronize true; *)
   draw_graph interface;
