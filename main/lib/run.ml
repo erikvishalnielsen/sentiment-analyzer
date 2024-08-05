@@ -50,6 +50,72 @@ let handle_keys (interface : Interface.t) =
                        (len - 1))
              else (Interface.time_textbox interface).message <- "0"
            | _ -> ()));
+      if (Interface.bid_textbox interface).rectangle.on
+      then (
+        match
+          Char.is_digit key
+        with
+        | true ->
+          (Interface.bid_textbox interface).message <- if (String.equal (Interface.bid_textbox interface).message "0") then String.of_char key else 
+               (String.concat
+                  [ (Interface.bid_textbox interface).message
+                  ; String.of_char key
+                  ])
+        | false ->
+          (match Char.to_int key with
+           | 8 ->
+             let len =
+               String.length
+              (Interface.bid_textbox interface).message
+             in
+             if not (len = 1 || len = 0)
+             then
+              (Interface.bid_textbox interface).message <-
+                 (String.slice
+                 (Interface.bid_textbox interface).message
+                       0
+                       (len - 1))
+             else (Interface.bid_textbox interface).message <- "0"
+           | 46 -> (
+            (Interface.bid_textbox interface).message <- (String.concat
+            [ (Interface.bid_textbox interface).message
+            ; "."
+            ]
+           ))
+           | _ -> ()));
+if (Interface.ask_textbox interface).rectangle.on
+      then (
+        match
+          Char.is_digit key
+        with
+        | true ->
+          (Interface.ask_textbox interface).message <- if (String.equal (Interface.ask_textbox interface).message "0") then String.of_char key else 
+               (String.concat
+                  [ (Interface.ask_textbox interface).message
+                  ; String.of_char key
+                  ])
+        | false ->
+          (match Char.to_int key with
+           | 8 ->
+             let len =
+               String.length
+              (Interface.ask_textbox interface).message
+             in
+             if not (len = 1 || len = 0)
+             then
+              (Interface.ask_textbox interface).message <-
+                 (String.slice
+                 (Interface.ask_textbox interface).message
+                       0
+                       (len - 1))
+             else (Interface.ask_textbox interface).message <- "0"
+           | 46 -> (
+            (Interface.ask_textbox interface).message <- (String.concat
+            [ (Interface.ask_textbox interface).message
+            ; "."
+            ]
+           ))
+           | _ -> ()));
       if (Interface.ticker_textbox interface).rectangle.on
       then (
         match
@@ -73,7 +139,7 @@ let handle_keys (interface : Interface.t) =
                     0
                     (len - 1))
              else (Interface.ticker_textbox interface).message <- ""
-           | _ -> ())))
+           | _ -> ())));
 ;;
 
 let handle_clicks (interface : Interface.t) =

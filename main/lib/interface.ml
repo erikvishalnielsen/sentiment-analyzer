@@ -77,6 +77,8 @@ type t =
   ; mutable graphVolume : Graph.t
   ; mutable ticker_textbox : Textbox.t
   ; mutable time_textbox : Textbox.t
+  ; mutable bid_textbox : Textbox.t
+  ; mutable ask_textbox : Textbox.t
   ; mutable calc_button : Button.t
   ; mutable price_button : Button.t
   ; mutable sentiment_button : Button.t
@@ -127,6 +129,32 @@ let create () =
         ; textbox_text = "Days:"
         ; message = "0"
         }
+    ; bid_textbox =
+        { rectangle =
+            { x = 50
+            ; y = 50
+            ; width = 100
+            ; height = 25
+            ; on = false
+            ; reg_color = 0x058BBD
+            ; clicked_color = 0x00FFFF
+            }
+        ; textbox_text = "Bid:"
+        ; message = "0"
+        }
+    ; ask_textbox =
+    { rectangle =
+        { x = 200
+        ; y = 50
+        ; width = 100
+        ; height = 25
+        ; on = false
+        ; reg_color = 0x058BBD
+        ; clicked_color = 0x00FFFF
+        }
+      ; textbox_text = "Ask:"
+      ; message = "0"
+    }
     ; calc_button =
         { rectangle =
             { x = 482
@@ -337,6 +365,22 @@ else if x_pos >= t.sentiment_button.rectangle.x && x_pos <= t.sentiment_button.r
 else if x_pos >= t.volume_button.rectangle.x && x_pos <= t.volume_button.rectangle.x + t.volume_button.rectangle.width && y_pos >= t.volume_button.rectangle.y && y_pos <= t.volume_button.rectangle.y + t.volume_button.rectangle.height then
   (
     if (t.volume_button.rectangle.on) then t.volume_button.rectangle.on <- false else t.volume_button.rectangle.on <- true
+  )
+else if x_pos >= t.bid_textbox.rectangle.x && x_pos <= t.bid_textbox.rectangle.x + t.bid_textbox.rectangle.width && y_pos >= t.bid_textbox.rectangle.y && y_pos <= t.bid_textbox.rectangle.y + t.bid_textbox.rectangle.height then
+  (
+    if (t.bid_textbox.rectangle.on) then (
+      t.bid_textbox.rectangle.on <- false;
+    ) else (
+      t.bid_textbox.rectangle.on <- true;
+      t.ask_textbox.rectangle.on <- false)
+  )
+else if x_pos >= t.ask_textbox.rectangle.x && x_pos <= t.ask_textbox.rectangle.x + t.ask_textbox.rectangle.width && y_pos >= t.ask_textbox.rectangle.y && y_pos <= t.ask_textbox.rectangle.y + t.ask_textbox.rectangle.height then
+  (
+    if (t.ask_textbox.rectangle.on) then (
+      t.ask_textbox.rectangle.on <- false
+    ) else (
+      t.ask_textbox.rectangle.on <- true;
+      t.bid_textbox.rectangle.on <- false)
   )
   else (
     (* t.calcBox <- t.calcBox; *)

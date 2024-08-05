@@ -89,12 +89,18 @@ let draw_graph (interface : Interface.t) =
     Graphics.set_line_width 3;
 
     (* GRAPHS PLOTTED HERE *)
-    Graphics.set_color Colors._green;
-    Graphics.draw_poly_line graphPtsPrice;
-    Graphics.set_color Colors._blue;
-    Graphics.draw_poly_line graphPtsVol;
-    Graphics.set_color Colors._red;
-    Graphics.draw_poly_line graphPtsSent;
+    if ((Interface.price_button interface).rectangle.on) then (
+      Graphics.set_color Colors._green;
+      Graphics.draw_poly_line graphPtsPrice;
+    );
+    if ((Interface.sentiment_button interface).rectangle.on) then (
+      Graphics.set_color Colors._red;
+      Graphics.draw_poly_line graphPtsSent;
+    );
+    if ((Interface.volume_button interface).rectangle.on) then (
+      Graphics.set_color Colors._blue;
+      Graphics.draw_poly_line graphPtsVol;
+    );
     
     Graphics.set_color Colors.black;
     Graphics.moveto 10 (((height + 650) / 2) - 5);
@@ -220,6 +226,9 @@ let draw_graph (interface : Interface.t) =
     Interface.Button.draw_button (Interface.price_button interface);
     Interface.Button.draw_button (Interface.sentiment_button interface);
     Interface.Button.draw_button (Interface.volume_button interface);
+
+    Interface.Textbox.draw_textbox (Interface.ask_textbox interface);
+    Interface.Textbox.draw_textbox (Interface.bid_textbox interface);
     let _img_link =
       "https://eodhd.com/img/logos/US/"
       ^ (Interface.ticker_textbox interface).message

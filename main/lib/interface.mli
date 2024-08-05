@@ -55,6 +55,8 @@ val graphSentiment : t -> Graph.t
 val graphVolume : t -> Graph.t
 val ticker_textbox : t -> Textbox.t
 val time_textbox : t -> Textbox.t
+val bid_textbox : t -> Textbox.t
+val ask_textbox : t -> Textbox.t
 val calc_button : t -> Button.t
 val price_button : t -> Button.t
 val sentiment_button : t -> Button.t
