@@ -144,9 +144,9 @@ except IOError:
         news_data = json.load(file) # returns list of dicts
         news_sentiments = {}
 
-        newClosingList = (closingList[0:total_days_in_period]).reverse()
+        newClosingList = (closingList[0:30]).reverse()
         questionList = ["Give me a 1 sentence summary of " + ticker + " (stock ticker) stock", "Give me a 1 sentence summary of where " + ticker + " (stock ticker) company makes its money", "Give me a short list of companies who compete with " + ticker + " (stock ticker) stock in one sentence"
-                        , "Take the following list of closing prices for " + ticker + " for the past " + str(total_days_in_period) + " days. Describe the price movements in 1 sentence: " + (', ').join(closingList)]
+                        , "Take the following list of closing prices for " + ticker + " for the past 30 days. Describe the price movements in 1 sentence: " + (', ').join(closingList)]
         answerList = []
         for question in questionList:
             answerList.append((model.generate_content(question)).text)
