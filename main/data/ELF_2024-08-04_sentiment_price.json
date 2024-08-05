@@ -1,5 +1,11 @@
 [
     {
+        "2024-08-03": [
+            0.10115
+        ],
+        "2024-08-02": [
+            0.72585
+        ],
         "2024-08-01": [
             0.79255,
             0.2288
@@ -401,30 +407,14 @@
             0.7928999999999999,
             0.79285,
             0.68885
-        ],
-        "2024-02-06": [
-            0.4588,
-            0.7921,
-            0.65215,
-            0.9133,
-            0.8818,
-            0.5594,
-            0.7928,
-            0.65875,
-            0.5859,
-            0.5306
-        ],
-        "2024-02-05": [
-            0.6564,
-            0.11624999999999999,
-            0.6564,
-            0.49435
-        ],
-        "2024-02-04": [
-            0.73465
         ]
     },
     {
+        "2024-08-02": [
+            161.49,
+            165.95,
+            1790538.0
+        ],
         "2024-08-01": [
             173.25,
             167.62,
@@ -1034,21 +1024,12 @@
             171.16,
             164.82,
             4177779.0
-        ],
-        "2024-02-06": [
-            169.73,
-            173.32,
-            2509431.0
-        ],
-        "2024-02-05": [
-            172.59,
-            169.74,
-            1906905.0
         ]
     },
     [
-        "ELF is a publicly traded company that owns and operates convenience stores primarily in the Midwest and Southeast regions of the United States. \n",
-        "ELF (stock ticker) makes its money by providing energy services and products to residential, commercial, and industrial customers across the United States. \n",
-        "ELF Cosmetics' main competitors include Revlon, L'Or\u00e9al, Est\u00e9e Lauder, and Coty, all offering similar beauty products in the mass market space. \n"
+        "ELF (stock ticker) is a publicly traded company that produces and markets energy-efficient lighting and other energy-saving products. \n",
+        "ELF (stock ticker) is a leading provider of specialty chemicals and additives for the lubricant, fuel, and other industries, primarily making money through the sales of its high-performance products. \n",
+        "ELF Cosmetics' main competitors include Revlon, L'Or\u00e9al, and Estee Lauder, all of whom offer a wide range of beauty products. \n",
+        "ELF's closing prices exhibited a volatile trend over the past 30 days, with significant fluctuations and periods of both upward and downward movements. \n"
     ]
 ]

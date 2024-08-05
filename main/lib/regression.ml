@@ -91,7 +91,7 @@ let regressionEqtn
       ~init:(-1)
   in
   match maxInd with
-  | -1 | 0 -> None
+  | 0 | 1 -> None
   | _ ->
     (* GET REGRESSION EQUATION HERE *)
     let dayList = [ -1; 0; 1; 2 ] in
