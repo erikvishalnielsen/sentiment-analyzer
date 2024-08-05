@@ -1,14 +1,23 @@
 [
     {
+        "2024-08-03": [
+            0.6899,
+            0.60085
+        ],
+        "2024-08-02": [
+            0.4993
+        ],
         "2024-08-01": [
             0.49935,
             0.7628999999999999
         ],
         "2024-07-31": [
-            0.4958
+            0.4958,
+            0.0
         ],
         "2024-07-30": [
-            0.4487
+            0.4487,
+            0.3046
         ],
         "2024-07-26": [
             0.824
@@ -613,21 +622,14 @@
         "2024-02-07": [
             0.5253,
             0.6997
-        ],
-        "2024-02-06": [
-            0.49985,
-            0.0
-        ],
-        "2024-02-05": [
-            0.4958,
-            0.7176,
-            0.62415,
-            0.6245499999999999,
-            0.4404,
-            0.24695
         ]
     },
     {
+        "2024-08-02": [
+            43.79,
+            42.71,
+            6140360.0
+        ],
         "2024-08-01": [
             46.27,
             44.8,
@@ -1237,22 +1239,12 @@
             55.8,
             57.77,
             3382053.0
-        ],
-        "2024-02-06": [
-            53.17,
-            55.8,
-            5688943.0
-        ],
-        "2024-02-05": [
-            52.54,
-            53.21,
-            3811739.0
         ]
     },
     [
-        "CELH (Celsius Holdings, Inc.) is a rapidly growing beverage company specializing in energy drinks and other functional beverages. \n",
-        "CELH (Celanese Corporation) makes its money primarily through the manufacturing and sale of specialty chemicals and materials, including engineered materials, acetate tow, and intermediates. \n",
-        "CELH (Celanese Corporation) competes with other chemical companies like Eastman Chemical, DuPont, and LyondellBasell. \n",
-        "CELH stock price exhibited a volatile pattern over the past 124 days, with periods of strong upward momentum followed by significant declines. \n"
+        "CELH (Celanese Corporation) is a global chemical and specialty materials company focused on producing essential materials for various industries, including automotive, consumer goods, and industrial applications. \n",
+        "CELH (Celsius Holdings, Inc.) makes its money primarily through the sale of its flagship energy drink, Celsius, and other functional beverage products. \n",
+        "CELH, or Celsius Holdings, primarily competes with other energy drink companies like Monster Beverage (MNST), Red Bull (RHHBY), and Bang Energy. \n",
+        "CELH experienced a volatile period with significant price fluctuations, including a sharp rise from the low 50s to over 95, followed by a decline to the low 60s, and a subsequent climb back to the mid-80s before ultimately closing the period near 58. \n"
     ]
 ]

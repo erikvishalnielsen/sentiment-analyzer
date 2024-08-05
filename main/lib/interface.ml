@@ -145,7 +145,7 @@ let create () =
             ; y = 430
             ; width = 80
             ; height = 25
-            ; on = false
+            ; on = true
             ; reg_color = 0x06A217
             ; clicked_color = 0x00FF00
             }
@@ -157,9 +157,9 @@ let create () =
             ; y = 390
             ; width = 80
             ; height = 25
-            ; on = false
-            ; reg_color = 0x06A217
-            ; clicked_color = 0x00FF00
+            ; on = true
+            ; reg_color = 0x8B0000
+            ; clicked_color = Graphics.red
             }
         ; button_text = "Sentiment"
         }
@@ -169,9 +169,9 @@ let create () =
             ; y = 350
             ; width = 80
             ; height = 25
-            ; on = false
-            ; reg_color = 0x06A217
-            ; clicked_color = 0x00FF00
+            ; on = true
+            ; reg_color = Graphics.blue
+            ; clicked_color = 0x00FFFF
             }
         ; button_text = "Volume"
         }
@@ -326,6 +326,18 @@ let handle_click (t : t) (pos : int * int) =
       Graphics.draw_string t.displayError);
     t.displayError <- "";
     Core.print_s [%message "timebox"])
+else if x_pos >= t.price_button.rectangle.x && x_pos <= t.price_button.rectangle.x + t.price_button.rectangle.width && y_pos >= t.price_button.rectangle.y && y_pos <= t.price_button.rectangle.y + t.price_button.rectangle.height then
+  (
+    if (t.price_button.rectangle.on) then t.price_button.rectangle.on <- false else t.price_button.rectangle.on <- true
+  )
+else if x_pos >= t.sentiment_button.rectangle.x && x_pos <= t.sentiment_button.rectangle.x + t.sentiment_button.rectangle.width && y_pos >= t.sentiment_button.rectangle.y && y_pos <= t.sentiment_button.rectangle.y + t.sentiment_button.rectangle.height then
+  (
+    if (t.sentiment_button.rectangle.on) then t.sentiment_button.rectangle.on <- false else t.sentiment_button.rectangle.on <- true
+  )
+else if x_pos >= t.volume_button.rectangle.x && x_pos <= t.volume_button.rectangle.x + t.volume_button.rectangle.width && y_pos >= t.volume_button.rectangle.y && y_pos <= t.volume_button.rectangle.y + t.volume_button.rectangle.height then
+  (
+    if (t.volume_button.rectangle.on) then t.volume_button.rectangle.on <- false else t.volume_button.rectangle.on <- true
+  )
   else (
     (* t.calcBox <- t.calcBox; *)
     t.ticker_textbox.rectangle.on <- false;
