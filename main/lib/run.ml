@@ -60,7 +60,7 @@ let handle_keys (interface : Interface.t) =
           (Interface.ticker_textbox 
             interface).message <-
             (String.concat
-               [ (Interface.ticker_textbox interface).message; String.of_char key ])
+               [ (Interface.ticker_textbox interface).message; String.uppercase (String.of_char key) ])
         | false ->
           (match Char.to_int key with
            | 8 ->
