@@ -206,14 +206,15 @@ let draw_graph (interface : Interface.t) =
             0
             (String.length (List.nth_exn ai_answers num) - 1)
         in
+        let str_pair = if(String.length str >= 100) then (
         let spaceInd = String.index_from str 100 ' ' in
-        let str_pair =
           match spaceInd with
           | Some ind ->
             ( String.slice str 0 ind
             , String.slice str (ind + 1) (String.length str) )
-          | None -> str, " "
-        in
+          | None -> str, " ") else (
+            str, " "
+        ) in
         Graphics.draw_string (fst str_pair);
         Graphics.moveto 10 (height_start - minus - 20);
         Graphics.draw_string (snd str_pair))
@@ -226,6 +227,10 @@ let draw_graph (interface : Interface.t) =
     Interface.Button.draw_button (Interface.price_button interface);
     Interface.Button.draw_button (Interface.sentiment_button interface);
     Interface.Button.draw_button (Interface.volume_button interface);
+    Interface.Button.draw_button (Interface.submit_button interface);
+
+    Graphics.moveto 455 55;
+    if fst (Interface.recieptText interface) then (Graphics.draw_string (snd (Interface.recieptText interface)));
 
     Interface.Textbox.draw_textbox (Interface.ask_textbox interface);
     Interface.Textbox.draw_textbox (Interface.bid_textbox interface);

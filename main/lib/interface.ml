@@ -1,4 +1,5 @@
 open! Core
+open Yojson.Basic.Util
 
 module Graph = struct
   type t =
@@ -83,10 +84,13 @@ type t =
   ; mutable price_button : Button.t
   ; mutable sentiment_button : Button.t
   ; mutable volume_button : Button.t
+  ; mutable submit_button : Button.t
   ; mutable displayError : string
   ; mutable correlations : float list
   ; mutable regressionEqtn : Regression.t option
   ; mutable graphInfo : string list
+  ; mutable datapts : Datapoints.t
+  ; mutable recieptText : (bool * string)
   }
 [@@deriving sexp_of, fields]
 
@@ -203,6 +207,18 @@ let create () =
             }
         ; button_text = "Volume"
         }
+    ; submit_button =
+    { rectangle =
+        { x = 350
+        ; y = 50
+        ; width = 100
+        ; height = 25
+        ; on = true
+        ; reg_color = 0xDB1456
+        ; clicked_color = 0xED4A80
+        }
+    ; button_text = "Submit Guess"
+    }
     ; displayError =
         ""
         (* ; finViz = { stock_ticker = "" ; time_period = 0 ; link = "" ;
@@ -210,6 +226,8 @@ let create () =
     ; correlations = []
     ; regressionEqtn = None
     ; graphInfo = []
+    ; datapts = { Datapoints.data = [] ; price_high = 0.0 ; price_low = 0.0 ; deltavol_high = 0.0 ; deltavol_low = 0.0 ; gemini_ans = [] }
+    ; recieptText = (false, "")
     }
   in
   interface
@@ -276,9 +294,70 @@ let first_element (x, _, _) = x
 let second_element (_, y, _) = y
 let third_element (_, _, z) = z
 
+let generate_random_8_digit_key () : int =
+  let min_key = 10000000 in
+  let max_key = 99999999 in
+  Random.int (max_key - min_key + 1) + min_key
+;;
+
+let json_to_hashtbl (json : Yojson.Basic.t) : (int, float list) Hashtbl.t =
+  (* Convert JSON associative list to OCaml list *)
+  let assoc_list = json |> to_assoc in
+  (* Create a new hashtable *)
+  let tbl = Hashtbl.create (module Int) in
+  (* Populate the hashtable *)
+  List.iter assoc_list ~f:(fun (key, value) ->
+    let int_key = int_of_string key in
+    let float_value = List.map (to_list (value)) ~f:(fun elt -> to_float elt) in
+    Hashtbl.add_exn tbl ~key:int_key ~data:float_value;
+  );
+  tbl
+;;
+
+let hashtbl_to_yojson (tbl: (int, float list) Hashtbl.t) : Yojson.Basic.t =
+  (* Convert hashtable to associative list *)
+  let kv_list = Hashtbl.fold ~f:(fun ~key ~data:value acc -> acc @ [(key, value)]) tbl ~init:[] in
+  (* Convert associative list to JSON associative list *)
+  `Assoc (List.map kv_list ~f:(fun (k, v) -> (string_of_int k, `List (List.map v ~f:(fun elt -> `Float elt)))))
+;;
+
+let handle_submit (t : t) (latest_price : float) = 
+  let spread = latest_price *. 0.03 in
+  let model_bid_ask = (match t.regressionEqtn with 
+  | None -> [latest_price -. spread; latest_price +. spread]
+  | Some reg -> [Float.round_decimal ~decimal_digits:2 (reg.one_day_prediction -. spread); Float.round_decimal ~decimal_digits:2 (reg.one_day_prediction +. spread)]) in
+  let user_bid_ask = [Float.round_decimal ~decimal_digits:2 (Float.of_string t.bid_textbox.message); Float.round_decimal ~decimal_digits:2 (Float.of_string t.ask_textbox.message)] in
+  
+  let todayBusinessDate = Date.to_string (Date.add_business_days_rounding_backward ~is_holiday:(Date.is_weekend) (Date.today ~zone:Timezone.utc) 0) in
+  let _tomorrowBusinessDate = Date.to_string (Date.add_business_days_rounding_backward ~is_holiday:(Date.is_weekend) (Date.today ~zone:Timezone.utc) 1) in
+  let filename = todayBusinessDate ^ "_predictions.json" in
+  let mapKey = generate_random_8_digit_key () in
+
+  (match (Sys_unix.file_exists filename) with 
+  | `No -> (
+    let oc = Out_channel.create filename in
+    let hash = Hashtbl.create (module Int) in
+    Hashtbl.add_exn hash ~key:mapKey ~data:(model_bid_ask @ user_bid_ask);
+    Yojson.Basic.pretty_to_channel oc (hashtbl_to_yojson hash);
+  )
+  | `Yes -> (
+    let jsonData = Yojson.Basic.from_file filename in
+    let currHash = json_to_hashtbl jsonData in
+    Hashtbl.add_exn currHash ~key:mapKey ~data:(model_bid_ask @ user_bid_ask);
+    Sys_unix.remove filename;
+    let oc = Out_channel.create filename in
+    Yojson.Basic.pretty_to_channel oc (hashtbl_to_yojson currHash);
+  )
+  | `Unknown -> failwith "erroneus error");
+
+  let output_str = ("Save this key for tomorrow: " ^ (Int.to_string mapKey)) in
+  output_str
+;;
+
 let handle_click (t : t) (pos : int * int) =
   let x_pos = fst pos in
   let y_pos = snd pos in
+  (* let datapts : Datapoints.t ref = ref ({ Datapoints.data = [] ; price_high = 0.0 ; price_low = 0.0 ; deltavol_high = 0.0 ; deltavol_low = 0.0 ; gemini_ans = [] }) in *)
   (* Calculate: 482 575 100 25 *)
   if x_pos >= 482 && x_pos <= 582 && y_pos >= 875 && y_pos <= 900
   then (
@@ -302,6 +381,7 @@ let handle_click (t : t) (pos : int * int) =
           Datapoints.json_to_datapoints t.ticker_textbox.message (Int.of_string t.time_textbox.message)
         with
         | Ok datapoints ->
+          t.datapts <- datapoints;
           let correlations, regressionEqtn =
             Regression.regressionCorrelation datapoints
           in
@@ -354,6 +434,7 @@ let handle_click (t : t) (pos : int * int) =
       Graphics.draw_string t.displayError);
     t.displayError <- "";
     Core.print_s [%message "timebox"])
+
 else if x_pos >= t.price_button.rectangle.x && x_pos <= t.price_button.rectangle.x + t.price_button.rectangle.width && y_pos >= t.price_button.rectangle.y && y_pos <= t.price_button.rectangle.y + t.price_button.rectangle.height then
   (
     if (t.price_button.rectangle.on) then t.price_button.rectangle.on <- false else t.price_button.rectangle.on <- true
@@ -368,24 +449,36 @@ else if x_pos >= t.volume_button.rectangle.x && x_pos <= t.volume_button.rectang
   )
 else if x_pos >= t.bid_textbox.rectangle.x && x_pos <= t.bid_textbox.rectangle.x + t.bid_textbox.rectangle.width && y_pos >= t.bid_textbox.rectangle.y && y_pos <= t.bid_textbox.rectangle.y + t.bid_textbox.rectangle.height then
   (
-    if (t.bid_textbox.rectangle.on) then (
-      t.bid_textbox.rectangle.on <- false;
-    ) else (
+    if not (t.bid_textbox.rectangle.on) then (
       t.bid_textbox.rectangle.on <- true;
-      t.ask_textbox.rectangle.on <- false)
+      t.ask_textbox.rectangle.on <- false;
+      t.submit_button.rectangle.on <- false)
   )
 else if x_pos >= t.ask_textbox.rectangle.x && x_pos <= t.ask_textbox.rectangle.x + t.ask_textbox.rectangle.width && y_pos >= t.ask_textbox.rectangle.y && y_pos <= t.ask_textbox.rectangle.y + t.ask_textbox.rectangle.height then
   (
-    if (t.ask_textbox.rectangle.on) then (
-      t.ask_textbox.rectangle.on <- false
-    ) else (
+    if not (t.ask_textbox.rectangle.on) then (
       t.ask_textbox.rectangle.on <- true;
-      t.bid_textbox.rectangle.on <- false)
+      t.bid_textbox.rectangle.on <- false;
+      t.submit_button.rectangle.on <- false)
+  )
+else if x_pos >= t.submit_button.rectangle.x && x_pos <= t.submit_button.rectangle.x + t.submit_button.rectangle.width && y_pos >= t.submit_button.rectangle.y && y_pos <= t.submit_button.rectangle.y + t.submit_button.rectangle.height then
+  (
+    if not (t.submit_button.rectangle.on) then (
+      t.submit_button.rectangle.on <- true;
+      t.bid_textbox.rectangle.on <- false;
+      t.ask_textbox.rectangle.on <- false;
+      Core.print_s [%message "Datapts len: " (Int.to_string ((List.length t.datapts.data)-1))];
+      let latest = (List.nth_exn (t.datapts.data) ((List.length t.datapts.data)-1)).price in
+      let display = handle_submit t latest in
+      t.recieptText <- (true, display))
   )
   else (
     (* t.calcBox <- t.calcBox; *)
     t.ticker_textbox.rectangle.on <- false;
     t.time_textbox.rectangle.on <- false;
+    t.bid_textbox.rectangle.on <- false;
+    t.ask_textbox.rectangle.on <- false;
+    t.submit_button.rectangle.on <- false;
     Core.print_s [%message "nothing"])
 ;;
 

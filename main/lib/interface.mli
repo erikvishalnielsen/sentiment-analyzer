@@ -60,9 +60,11 @@ val ask_textbox : t -> Textbox.t
 val calc_button : t -> Button.t
 val price_button : t -> Button.t
 val sentiment_button : t -> Button.t
+val submit_button : t -> Button.t
 val volume_button : t -> Button.t
 val displayError : t -> string
 val graphInfo : t -> string list
+val recieptText : t -> (bool * string)
 (* ; mutable finViz : Finviz_parser.Finviz_parser.t *)
 
 val correlations : t -> float list
