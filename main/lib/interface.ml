@@ -136,8 +136,8 @@ let create () =
             ; width = 100
             ; height = 25
             ; on = false
-            ; reg_color = 0x058BBD
-            ; clicked_color = 0x00FFFF
+            ; reg_color = 0xF8A30A
+            ; clicked_color = 0xFFD96A
             }
         ; textbox_text = "Bid:"
         ; message = "0"
@@ -149,8 +149,8 @@ let create () =
         ; width = 100
         ; height = 25
         ; on = false
-        ; reg_color = 0x058BBD
-        ; clicked_color = 0x00FFFF
+        ; reg_color = 0xF8A30A
+        ; clicked_color = 0xFFD96A
         }
       ; textbox_text = "Ask:"
       ; message = "0"
@@ -175,7 +175,7 @@ let create () =
             ; height = 25
             ; on = true
             ; reg_color = 0x06A217
-            ; clicked_color = 0x00FF00
+            ; clicked_color = 0x90EE90
             }
         ; button_text = "Price"
         }
@@ -186,8 +186,8 @@ let create () =
             ; width = 80
             ; height = 25
             ; on = true
-            ; reg_color = 0x8B0000
-            ; clicked_color = Graphics.red
+            ; reg_color = 0xD70040
+            ; clicked_color = 0xF88379
             }
         ; button_text = "Sentiment"
         }
@@ -198,8 +198,8 @@ let create () =
             ; width = 80
             ; height = 25
             ; on = true
-            ; reg_color = Graphics.blue
-            ; clicked_color = 0x00FFFF
+            ; reg_color = 0x6495ED
+            ; clicked_color = 0x7DF9FF
             }
         ; button_text = "Volume"
         }
