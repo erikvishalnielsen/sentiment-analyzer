@@ -77,11 +77,12 @@ let handle_keys (interface : Interface.t) =
                        (len - 1))
              else (Interface.bid_textbox interface).message <- "0"
            | 46 -> (
-            (Interface.bid_textbox interface).message <- (String.concat
-            [ (Interface.bid_textbox interface).message
-            ; "."
-            ]
-           ))
+            if(not (String.exists ~f:(fun c -> Char.equal c '.') (Interface.bid_textbox interface).message)) then (
+              (Interface.bid_textbox interface).message <- (String.concat
+              [ (Interface.bid_textbox interface).message
+              ; "."
+              ])
+             ))
            | _ -> ()));
 if (Interface.ask_textbox interface).rectangle.on
       then (
@@ -110,10 +111,11 @@ if (Interface.ask_textbox interface).rectangle.on
                        (len - 1))
              else (Interface.ask_textbox interface).message <- "0"
            | 46 -> (
+            if(not (String.exists ~f:(fun c -> Char.equal c '.') (Interface.ask_textbox interface).message)) then (
             (Interface.ask_textbox interface).message <- (String.concat
             [ (Interface.ask_textbox interface).message
             ; "."
-            ]
+            ])
            ))
            | _ -> ()));
       if (Interface.ticker_textbox interface).rectangle.on
