@@ -1,5 +1,6 @@
 open! Core
 open Yojson.Basic.Util
+open Core_unix
 
 module Graph = struct
   type t =
@@ -85,14 +86,22 @@ type t =
   ; mutable sentiment_button : Button.t
   ; mutable volume_button : Button.t
   ; mutable submit_button : Button.t
+  ; mutable check_button : Button.t
   ; mutable displayError : string
   ; mutable correlations : float list
   ; mutable regressionEqtn : Regression.t option
   ; mutable graphInfo : string list
   ; mutable datapts : Datapoints.t
-  ; mutable recieptText : (bool * string)
+  ; mutable receiptText : (bool * string)
+  ; mutable guessText : (bool * string)
+  ; mutable checker_textbox : Textbox.t 
   }
 [@@deriving sexp_of, fields]
+
+let run_python_script_concurrently script_name link =
+  let _pid = create_process ~prog:"python" ~args:[ "python"; script_name; link ] in
+  ()
+;;
 
 let create_graph (data : (int * int) array) : Graph.t =
   { height = 500; width = 500; data }
@@ -213,11 +222,23 @@ let create () =
         ; y = 50
         ; width = 100
         ; height = 25
-        ; on = true
+        ; on = false
         ; reg_color = 0xDB1456
         ; clicked_color = 0xED4A80
         }
     ; button_text = "Submit Guess"
+    }
+    ; check_button =
+    { rectangle =
+        { x = 350
+        ; y = 15
+        ; width = 100
+        ; height = 25
+        ; on = false
+        ; reg_color = 0xDB1456
+        ; clicked_color = 0xED4A80
+        }
+    ; button_text = "Check Winner"
     }
     ; displayError =
         ""
@@ -227,7 +248,20 @@ let create () =
     ; regressionEqtn = None
     ; graphInfo = []
     ; datapts = { Datapoints.data = [] ; price_high = 0.0 ; price_low = 0.0 ; deltavol_high = 0.0 ; deltavol_low = 0.0 ; gemini_ans = [] }
-    ; recieptText = (false, "")
+    ; receiptText = (false, "")
+    ; guessText = (false, "")
+    ; checker_textbox = { rectangle =
+      { x = 50
+      ; y = 15
+      ; width = 250
+      ; height = 25
+      ; on = false
+      ; reg_color = 0xCF29BB
+      ; clicked_color = 0xFA73EA
+      }
+    ; textbox_text = "Receipt #:"
+    ; message = "0"
+    }
     }
   in
   interface
@@ -328,9 +362,9 @@ let handle_submit (t : t) (latest_price : float) =
   | Some reg -> [Float.round_decimal ~decimal_digits:2 (reg.one_day_prediction -. spread); Float.round_decimal ~decimal_digits:2 (reg.one_day_prediction +. spread)]) in
   let user_bid_ask = [Float.round_decimal ~decimal_digits:2 (Float.of_string t.bid_textbox.message); Float.round_decimal ~decimal_digits:2 (Float.of_string t.ask_textbox.message)] in
   
-  let todayBusinessDate = Date.to_string (Date.add_business_days_rounding_backward ~is_holiday:(Date.is_weekend) (Date.today ~zone:Timezone.utc) 0) in
-  let _tomorrowBusinessDate = Date.to_string (Date.add_business_days_rounding_backward ~is_holiday:(Date.is_weekend) (Date.today ~zone:Timezone.utc) 1) in
-  let filename = todayBusinessDate ^ "_predictions.json" in
+  let _todayBusinessDate = Date.to_string (Date.add_business_days_rounding_backward ~is_holiday:(Date.is_weekend) (Date.today ~zone:Timezone.utc) 0) in
+  let tomorrowBusinessDate = Date.to_string (Date.add_business_days_rounding_backward ~is_holiday:(Date.is_weekend) (Date.today ~zone:Timezone.utc) 1) in
+  let filename = tomorrowBusinessDate ^ "_predictions.json" in
   let mapKey = generate_random_8_digit_key () in
 
   (match (Sys_unix.file_exists filename) with 
@@ -352,6 +386,43 @@ let handle_submit (t : t) (latest_price : float) =
 
   let output_str = ("Save this key for tomorrow: " ^ (Int.to_string mapKey)) in
   output_str
+;;
+
+let handle_receipt (t : t) (receiptKey : string) (latest_price : float) = 
+  let todayBusinessDate = Date.to_string (Date.add_business_days_rounding_backward ~is_holiday:(Date.is_weekend) (Date.today ~zone:Timezone.utc) 0) in
+  let filename = todayBusinessDate ^ "_predictions.json" in
+
+  let output = (match (Sys_unix.file_exists filename) with 
+  | `No -> (
+    "No Predictions for Yesterday"
+  )
+  | `Yes -> (
+    let jsonData = Yojson.Basic.from_file filename in
+    let currHash = json_to_hashtbl jsonData in
+    let x = Hashtbl.find currHash (Int.of_string receiptKey) in
+    match x with 
+    | Some preds -> (
+      (* FIRST TWO ARE COMPUTER, SECOND TWO ARE USER *)
+      let compCorrect = (Float.(>) latest_price (List.nth_exn preds 0) && Float.(<) latest_price (List.nth_exn preds 1)) in
+      let userCorrect = (Float.(>) latest_price (List.nth_exn preds 2) && Float.(<) latest_price (List.nth_exn preds 3)) in
+      if(compCorrect && not userCorrect) then 
+        "Computer correct. User incorrect."
+      else if(userCorrect && not compCorrect) then 
+        "User correct. Computer incorrect."
+      else if(not userCorrect && not compCorrect) then 
+        "Both user and computer incorrect."
+      else 
+        (
+        let userSpread = (List.nth_exn preds 3) -. (List.nth_exn preds 2) in
+        let compSpread = (List.nth_exn preds 1) -. (List.nth_exn preds 0) in
+        if(Float.(>) userSpread compSpread) then "Computer wins with tighter spread." else "User wins with tighter spread."
+        );
+    )
+    | None -> "Receipt Number Doesn't Exist"
+  )
+  | `Unknown -> failwith "erroneus error") in
+
+  output
 ;;
 
 let handle_click (t : t) (pos : int * int) =
@@ -405,7 +476,7 @@ let handle_click (t : t) (pos : int * int) =
           Graphics.draw_string "Loading";
           true
         | Error error ->
-          t.displayError <- Error.to_string_hum error;
+          t.displayError <- Core.Error.to_string_hum error;
           false);
     t.ticker_textbox.rectangle.on <- false;
     t.ticker_textbox.rectangle.on <- false;
@@ -451,6 +522,8 @@ else if x_pos >= t.bid_textbox.rectangle.x && x_pos <= t.bid_textbox.rectangle.x
   (
     if not (t.bid_textbox.rectangle.on) then (
       t.bid_textbox.rectangle.on <- true;
+      t.checker_textbox.rectangle.on <- false;
+      t.check_button.rectangle.on <- false;
       t.ask_textbox.rectangle.on <- false;
       t.submit_button.rectangle.on <- false)
   )
@@ -458,24 +531,52 @@ else if x_pos >= t.ask_textbox.rectangle.x && x_pos <= t.ask_textbox.rectangle.x
   (
     if not (t.ask_textbox.rectangle.on) then (
       t.ask_textbox.rectangle.on <- true;
+      t.checker_textbox.rectangle.on <- false;
+      t.check_button.rectangle.on <- false;
       t.bid_textbox.rectangle.on <- false;
       t.submit_button.rectangle.on <- false)
+  )
+else if x_pos >= t.checker_textbox.rectangle.x && x_pos <= t.checker_textbox.rectangle.x + t.checker_textbox.rectangle.width && y_pos >= t.checker_textbox.rectangle.y && y_pos <= t.checker_textbox.rectangle.y + t.checker_textbox.rectangle.height then
+  (
+    if not (t.checker_textbox.rectangle.on) then (
+      t.checker_textbox.rectangle.on <- true;
+      t.ask_textbox.rectangle.on <- false;
+      t.check_button.rectangle.on <- false;
+      t.bid_textbox.rectangle.on <- false;
+      t.submit_button.rectangle.on <- false)
+  )
+else if x_pos >= t.check_button.rectangle.x && x_pos <= t.check_button.rectangle.x + t.check_button.rectangle.width && y_pos >= t.check_button.rectangle.y && y_pos <= t.check_button.rectangle.y + t.check_button.rectangle.height then
+  (
+    if not (t.check_button.rectangle.on) then (
+      t.check_button.rectangle.on <- true;
+      t.checker_textbox.rectangle.on <- false;
+      t.ask_textbox.rectangle.on <- false;
+      t.bid_textbox.rectangle.on <- false;
+      t.submit_button.rectangle.on <- false;
+      let receiptKey = t.checker_textbox.message in
+      let latest = (List.nth_exn (t.datapts.data) ((List.length t.datapts.data)-1)).price in
+      let display = handle_receipt t receiptKey latest in
+      t.guessText <- (true, display);
+      )
   )
 else if x_pos >= t.submit_button.rectangle.x && x_pos <= t.submit_button.rectangle.x + t.submit_button.rectangle.width && y_pos >= t.submit_button.rectangle.y && y_pos <= t.submit_button.rectangle.y + t.submit_button.rectangle.height then
   (
     if not (t.submit_button.rectangle.on) then (
       t.submit_button.rectangle.on <- true;
+      t.checker_textbox.rectangle.on <- false;
+      t.check_button.rectangle.on <- false;
       t.bid_textbox.rectangle.on <- false;
       t.ask_textbox.rectangle.on <- false;
       Core.print_s [%message "Datapts len: " (Int.to_string ((List.length t.datapts.data)-1))];
       let latest = (List.nth_exn (t.datapts.data) ((List.length t.datapts.data)-1)).price in
       let display = handle_submit t latest in
-      t.recieptText <- (true, display))
+      t.receiptText <- (true, display))
   )
   else (
     (* t.calcBox <- t.calcBox; *)
     t.ticker_textbox.rectangle.on <- false;
     t.time_textbox.rectangle.on <- false;
+    t.check_button.rectangle.on <- false;
     t.bid_textbox.rectangle.on <- false;
     t.ask_textbox.rectangle.on <- false;
     t.submit_button.rectangle.on <- false;

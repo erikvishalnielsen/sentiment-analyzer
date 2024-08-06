@@ -228,12 +228,18 @@ let draw_graph (interface : Interface.t) =
     Interface.Button.draw_button (Interface.sentiment_button interface);
     Interface.Button.draw_button (Interface.volume_button interface);
     Interface.Button.draw_button (Interface.submit_button interface);
+    Interface.Button.draw_button (Interface.check_button interface);
 
     Graphics.moveto 455 55;
-    if fst (Interface.recieptText interface) then (Graphics.draw_string (snd (Interface.recieptText interface)));
+    if fst (Interface.receiptText interface) then (Graphics.draw_string (snd (Interface.receiptText interface)));
+    Graphics.moveto 455 20;
+    if fst (Interface.guessText interface) then (Graphics.draw_string (snd (Interface.guessText interface)));
+    Graphics.moveto 50 90;
+    Graphics.draw_string ("Make a Market on " ^ (Interface.ticker_textbox interface).message ^ " Against the Computer");
 
     Interface.Textbox.draw_textbox (Interface.ask_textbox interface);
     Interface.Textbox.draw_textbox (Interface.bid_textbox interface);
+    Interface.Textbox.draw_textbox (Interface.checker_textbox interface);
     let _img_link =
       "https://eodhd.com/img/logos/US/"
       ^ (Interface.ticker_textbox interface).message

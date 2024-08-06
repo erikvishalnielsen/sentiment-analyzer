@@ -1,14 +1,45 @@
 [
     {
+        "2024-08-05": [
+            -0.82205,
+            0.3408,
+            0.49905,
+            0.4617,
+            0.69475,
+            -0.11495,
+            -0.6124
+        ],
+        "2024-08-04": [
+            -0.3731
+        ],
+        "2024-08-03": [
+            0.636,
+            0.42955
+        ],
+        "2024-08-02": [
+            0.7354,
+            0.6454500000000001
+        ],
+        "2024-08-01": [
+            0.8052,
+            0.7983,
+            0.8762000000000001,
+            0.4477
+        ],
         "2024-07-31": [
             0.73245,
+            0.6248,
             0.499,
             0.34,
             0.64985,
-            0.5003
+            0.5003,
+            0.24695,
+            0.2997
         ],
         "2024-07-30": [
+            0.91755,
             0.7993,
+            0.25745,
             0.79745,
             0.12915
         ],
@@ -19,6 +50,7 @@
         ],
         "2024-07-28": [
             0.51015,
+            0.8401,
             0.5104
         ],
         "2024-07-27": [
@@ -26,6 +58,7 @@
             0.0
         ],
         "2024-07-26": [
+            0.49945,
             0.4988,
             0.9192499999999999,
             0.7783,
@@ -1274,40 +1307,24 @@
             0.3953,
             -0.40225,
             -0.08805
-        ],
-        "2024-02-27": [
-            0.7994,
-            0.54425,
-            0.0
-        ],
-        "2024-02-26": [
-            0.8672,
-            0.79935,
-            0.8741000000000001,
-            0.38795,
-            0.79935,
-            0.58855,
-            0.20095,
-            0.2997
-        ],
-        "2024-02-25": [
-            0.8184,
-            0.73805,
-            0.64535,
-            0.91335,
-            0.7994,
-            0.6697,
-            0.3825,
-            0.0
-        ],
-        "2024-02-24": [
-            0.88835,
-            0.942,
-            0.7803,
-            0.84945
         ]
     },
     {
+        "2024-08-05": [
+            535.59,
+            608.83,
+            7078733.0
+        ],
+        "2024-08-02": [
+            630,
+            624.65,
+            7698824.0
+        ],
+        "2024-08-01": [
+            704.56,
+            672.24,
+            5415798.0
+        ],
         "2024-07-31": [
             710,
             701.65,
@@ -1907,26 +1924,12 @@
             670.76,
             698,
             9413737.0
-        ],
-        "2024-02-07": [
-            675,
-            683.6,
-            12332979.0
-        ],
-        "2024-02-06": [
-            673,
-            681.59,
-            18488979.0
-        ],
-        "2024-02-05": [
-            589.88,
-            663.35,
-            17594558.0
         ]
     },
     [
-        "SMCI (Super Micro Computer, Inc.) designs, manufactures, and sells high-performance computing systems, including servers, workstations, and storage systems, primarily for enterprise and data center customers. \n",
-        "SMCI (Scientific Management Corporation) makes money by providing consulting and technology services to healthcare clients, primarily focused on improving efficiency and patient outcomes. \n",
-        "SMCI (ServiceMaster Global Holdings) competes with companies like **Terminix Global Holdings (TMX), Rollins (ROL), and Rentokil Initial (RTO.L)** in the pest control and building services industries. \n"
+        "SMCI (Super Micro Computer, Inc.) designs, manufactures, and sells a wide range of high-performance computing, storage, networking, and software solutions, primarily for data centers and enterprise applications. \n",
+        "I do not have access to real-time information, including financial data about specific companies like SMCI.  To find out how SMCI makes its money, I recommend checking their official website or a financial news website. \n",
+        "SMCI (Super Micro Computer, Inc.) competes with other server and data center infrastructure providers like Dell Technologies, Hewlett Packard Enterprise, Lenovo, and Cisco Systems. \n",
+        "SMCI's closing price exhibited a volatile trend over the past 30 days, experiencing both significant gains and losses, with a general upward trend throughout the period. \n"
     ]
 ]

@@ -64,7 +64,10 @@ val submit_button : t -> Button.t
 val volume_button : t -> Button.t
 val displayError : t -> string
 val graphInfo : t -> string list
-val recieptText : t -> (bool * string)
+val receiptText : t -> (bool * string)
+val guessText : t -> (bool * string)
+val checker_textbox : t -> Textbox.t
+val check_button : t -> Button.t
 (* ; mutable finViz : Finviz_parser.Finviz_parser.t *)
 
 val correlations : t -> float list

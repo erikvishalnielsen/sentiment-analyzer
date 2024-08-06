@@ -50,6 +50,33 @@ let handle_keys (interface : Interface.t) =
                        (len - 1))
              else (Interface.time_textbox interface).message <- "0"
            | _ -> ()));
+      if (Interface.checker_textbox interface).rectangle.on
+      then (
+        match
+          Char.is_digit key && (Int.of_string (Interface.checker_textbox interface).message) < 100000000
+        with
+        | true ->
+          (Interface.checker_textbox interface).message <- if (String.equal (Interface.checker_textbox interface).message "0") then String.of_char key else 
+               (String.concat
+                  [ (Interface.checker_textbox interface).message
+                  ; String.of_char key
+                  ])
+        | false ->
+          (match Char.to_int key with
+           | 8 ->
+             let len =
+               String.length
+              (Interface.checker_textbox interface).message
+             in
+             if not (len = 1 || len = 0)
+             then
+              (Interface.checker_textbox interface).message <-
+                 (String.slice
+                 (Interface.checker_textbox interface).message
+                       0
+                       (len - 1))
+             else (Interface.checker_textbox interface).message <- "0"
+           | _ -> ()));
       if (Interface.bid_textbox interface).rectangle.on
       then (
         match
