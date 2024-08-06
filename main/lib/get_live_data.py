@@ -68,11 +68,11 @@ async def download_audio_part(url: str, output_file: str):
     
 
 
-async def convert(part_file: str, output_file: str):
-    def convert_part_to_wav():
+async def convert(output_file: str):
+    def convert_part_to_wav(part_file):
         print("Converting audio pt1...")
-        part_file = PART_2
         output_file = TEMP_AUDIO_FILE
+        part_file = part_file + ".part"
         # Ensure the output file has a .wav extension
         wav_file = f"{output_file}.wav"
         # Construct the ffmpeg command
@@ -90,10 +90,8 @@ async def convert(part_file: str, output_file: str):
         # Remove the .part file after conversion
         os.remove(part_file)
 
-    await asyncio.to_thread(convert_part_to_wav)
-
     # Function to convert audio if necessary
-    def convert_wav_to_wav(input_file: str, output_file: str):
+    def convert_wav_to_wav():
         print("Converting audio pt2...")
         input_file = TEMP_A2
         output_file = CONVERTED_AUDIO_FILE
@@ -102,11 +100,10 @@ async def convert(part_file: str, output_file: str):
             '-ar', '16000', '-ac', '1', '-f', 'wav', 
             output_file
         ], check=True)
-
-    await asyncio.to_thread(convert_wav_to_wav)
+        os.remove(TEMP_A2)
 
     # Function to transcribe audio using Google Cloud Speech-to-Text
-    def transcribe_audio(file_path: str):
+    def transcribe_audio():
         print("Transcribing audio...")
         file_path = CONVERTED_AUDIO_FILE
         model = whisper.load_model("base")  # Load Whisper model
@@ -115,12 +112,13 @@ async def convert(part_file: str, output_file: str):
         print("Transcript: {}".format(result['text']))
     
     # while True:
-    await convert_part_to_wav()
-    asyncio.sleep(1)
-    await convert_wav_to_wav
-    asyncio.sleep(1)
-    await transcribe_audio()
-    asyncio.sleep(1)
+    async for part_file in download_audio_part(LIVE_STREAM_URL, TEMP_AUDIO_FILE):
+        convert_part_to_wav(part_file)
+        time.sleep(1)
+        convert_wav_to_wav()
+        time.sleep(1)
+        transcribe_audio()
+        time.sleep(1)
 
 threads = []
 
@@ -135,7 +133,7 @@ async def main():
         # threads.append(th)
     # download_audio(LIVE_STREAM_URL, TEMP_AUDIO_FILE)
     # th1 = threading.Thread(target=download_audio, args=(LIVE_STREAM_URL, TEMP_AUDIO_FILE))
-    download_task = asyncio.create_task(download_audio_part(LIVE_STREAM_URL, TEMP_AUDIO_FILE))
+    await convert(TEMP_AUDIO_FILE)
     
     # try:
     #     await asyncio.wait_for(download, timeout=60)
@@ -143,9 +141,6 @@ async def main():
     #     print("Download task killed")
     #     download.cancel()
     # convert_task = asyncio.create_task(convert(PART_FILE, TEMP_AUDIO_FILE))
-
-    await download_task
-
     
     
     # os.remove(TEMP_A2)
