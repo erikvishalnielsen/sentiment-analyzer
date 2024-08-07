@@ -256,8 +256,12 @@ let draw_live (interface : Interface.t) =
     match Interface.live_channel interface with 
     | None -> ()
     | Some channel -> (
-    let string_output = In_channel.input_lines channel in
-    List.iter string_output ~f:(fun f -> print_s [%message "Elt: " f]);
+    try
+      let string_output = In_channel.input_line_exn channel in
+      Printf.printf "Received: %s\n" string_output
+    with End_of_file -> (
+      Printf.printf "End of file reached.\n")
+    (*List.iter string_output ~f:(fun f -> print_s [%message "Elt: " f]);*)
     )
   );
 ;;

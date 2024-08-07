@@ -108,8 +108,8 @@ let run_python_script_concurrently t script_name link =
 
 let close_python_script t = 
   match t.live_channel with 
-  | Some channel -> close_process_in channel
-  | None -> Ok ()
+  | Some channel -> In_channel.close channel
+  | None -> ()
 ;;
 
 let create_graph (data : (int * int) array) : Graph.t =
@@ -496,7 +496,7 @@ let handle_click (t : t) (pos : int * int) =
         t.earnings_link_text.rectangle.on <- false;
         run_python_script_concurrently t "/home/ubuntu/sentiment-analyzer/main/lib/get_live_data.py" t.earnings_link_text.message
       ) else (
-        let _result = close_python_script t in
+        close_python_script t;
         t.earnings_link_submit.rectangle.on <- false;
       )
   );
