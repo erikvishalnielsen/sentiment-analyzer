@@ -43,7 +43,7 @@ module Textbox : sig
   val draw_textbox : t -> unit
 end
 
-type t [@@deriving sexp_of]
+type t
 
 val create : unit -> t
 val create_graph : (int * int) array -> Graph.t
@@ -71,6 +71,7 @@ val check_button : t -> Button.t
 val earnings_live_button : t -> Button.t
 val earnings_link_text : t -> Textbox.t
 val earnings_link_submit : t -> Button.t
+val live_channel : t -> In_channel.t option
 (* ; mutable finViz : Finviz_parser.Finviz_parser.t *)
 
 val correlations : t -> float list

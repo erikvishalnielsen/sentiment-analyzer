@@ -253,6 +253,12 @@ let draw_live (interface : Interface.t) =
   if((Interface.earnings_live_button interface).rectangle.on) then (
     Interface.Button.draw_button (Interface.earnings_link_submit interface);
     Interface.Textbox.draw_textbox (Interface.earnings_link_text interface);
+    match Interface.live_channel interface with 
+    | None -> ()
+    | Some channel -> (
+    let string_output = In_channel.input_lines channel in
+    List.iter string_output ~f:(fun f -> print_s [%message "Elt: " f]);
+    )
   );
 ;;
 

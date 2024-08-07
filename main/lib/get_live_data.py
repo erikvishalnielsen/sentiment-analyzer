@@ -2,7 +2,6 @@ import yt_dlp
 import subprocess
 import os
 import whisper
-from google.cloud import speech_v1 as speech
 import json
 # import sys
 import threading
@@ -108,8 +107,10 @@ async def main():
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
+        print(str(sys.argv))
         print("Usage: python get_live_data.py [YouTube_link]")
         sys.exit(1)
+    print("get_live_data.py is working . . .")
     yt_link = sys.argv[1]
-    
+
     asyncio.run(main())

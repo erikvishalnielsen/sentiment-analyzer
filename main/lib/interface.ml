@@ -98,12 +98,18 @@ type t =
   ; mutable earnings_live_button : Button.t
   ; mutable earnings_link_text : Textbox.t
   ; mutable earnings_link_submit : Button.t
+  ; mutable live_channel : In_channel.t option [@sexp.opaque]
   }
-[@@deriving sexp_of, fields]
+[@@deriving fields]
 
-let run_python_script_concurrently script_name link =
-  let _pid = create_process ~prog:"python" ~args:[ "python"; script_name; link ] in
-  ()
+let run_python_script_concurrently t script_name link =
+  t.live_channel <- Some (open_process_in ("/bin/python3 " ^ script_name ^ " " ^ link));
+;;
+
+let close_python_script t = 
+  match t.live_channel with 
+  | Some channel -> close_process_in channel
+  | None -> Ok ()
 ;;
 
 let create_graph (data : (int * int) array) : Graph.t =
@@ -302,6 +308,7 @@ let create () =
         }
       ; button_text = "Submit Link"
     }
+    ; live_channel = None
   }
   in
   interface
@@ -487,7 +494,10 @@ let handle_click (t : t) (pos : int * int) =
       if not (t.earnings_link_submit.rectangle.on) then (
         t.earnings_link_submit.rectangle.on <- true;
         t.earnings_link_text.rectangle.on <- false;
-        run_python_script_concurrently "get_live_data.py" t.earnings_link_text.message;
+        run_python_script_concurrently t "/home/ubuntu/sentiment-analyzer/main/lib/get_live_data.py" t.earnings_link_text.message
+      ) else (
+        let _result = close_python_script t in
+        t.earnings_link_submit.rectangle.on <- false;
       )
   );
 
