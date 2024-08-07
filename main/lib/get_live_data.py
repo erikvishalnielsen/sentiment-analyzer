@@ -5,7 +5,7 @@ import whisper
 import sys
 import time
 import asyncio
-from sentiment_ml import get_live_sentiment
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 # import threading
 # import time
 
@@ -17,6 +17,13 @@ PART_2 = 'live_stream_audio.wav.part'
 TEMP_A2 = 'live_stream_audio.wav'
 CONVERTED_AUDIO_FILE = 'converted_audio.wav'
 GOOGLE_APPLICATION_CREDENTIALS = 'path/to/your/service_account_key.json'
+
+def get_live_sentiment(content):
+    analyzer = SentimentIntensityAnalyzer()
+
+    content_scores = analyzer.polarity_scores(content)
+
+    return content_scores.get("compound")
 
 async def download_audio_part(url: str, output_file: str):
     part_number = 0
@@ -91,7 +98,7 @@ async def convert(output_file: str):
         result = model.transcribe(file_path)  # Transcribe the audio file
         # json.dumps(result)
         print("Transcript: {}".format(result['text']), flush=True)
-        print(get_live_sentiment(result['text']))
+        # print(get_live_sentiment(result['text']))
         os.remove(CONVERTED_AUDIO_FILE)
     
     async for part_file in download_audio_part(LIVE_STREAM_URL, TEMP_AUDIO_FILE):
