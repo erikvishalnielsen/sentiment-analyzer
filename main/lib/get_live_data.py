@@ -23,7 +23,7 @@ async def download_audio_part(url: str, output_file: str):
     part_number = 0
 
     for x in range(10):
-        print("Downloading audio...")
+        print("Downloading audio...", flush=True)
         # Ensure the output file has a .part extension
         part_file = f"{output_file}{part_number}"
         ydl_opts = {
@@ -33,7 +33,7 @@ async def download_audio_part(url: str, output_file: str):
             'quiet': True,
             'username': 'oauth2',
             'password': '',
-            'cookies-from-browser': 'chrome',
+            # 'cookies-from-browser': 'chrome',
 
         }
         part_number += 1
@@ -41,20 +41,20 @@ async def download_audio_part(url: str, output_file: str):
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             task = asyncio.get_running_loop().run_in_executor(None, ydl.download, [url])
             try:
-                await asyncio.wait_for(task, timeout=30.0)
+                await asyncio.wait_for(task, timeout=10.0)
                 
             except asyncio.TimeoutError:
                 task.cancel()
                 print("hi")
 
-        print("Downloaded")
+        print("Downloaded", flush=True)
         yield part_file
     
 
 
 async def convert(output_file: str):
     def convert_part_to_wav(part_file):
-        print("Converting audio pt1...")
+        print("Converting audio pt1...", flush=True)
         output_file = TEMP_AUDIO_FILE
         part_file = part_file + ".part"
         # Ensure the output file has a .wav extension
@@ -74,7 +74,7 @@ async def convert(output_file: str):
         os.remove(part_file)
 
     def convert_wav_to_wav():
-        print("Converting audio pt2...")
+        print("Converting audio pt2...", flush=True)
         input_file = TEMP_A2
         output_file = CONVERTED_AUDIO_FILE
         subprocess.run([
@@ -86,12 +86,12 @@ async def convert(output_file: str):
 
     # Function to transcribe audio using Google Cloud Speech-to-Text
     def transcribe_audio():
-        print("Transcribing audio...")
+        print("Transcribing audio...", flush=True)
         file_path = CONVERTED_AUDIO_FILE
         model = whisper.load_model("base")  # Load Whisper model
         result = model.transcribe(file_path)  # Transcribe the audio file
         # json.dumps(result)
-        print("Transcript: {}".format(result['text']))
+        print("Transcript: {}".format(result['text']), flush=True)
         os.remove(CONVERTED_AUDIO_FILE)
     
     async for part_file in download_audio_part(LIVE_STREAM_URL, TEMP_AUDIO_FILE):
