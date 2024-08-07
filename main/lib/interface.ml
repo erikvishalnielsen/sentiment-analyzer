@@ -103,7 +103,7 @@ type t =
 [@@deriving fields]
 
 let run_python_script_concurrently t script_name link =
-  t.live_channel <- Some (open_process_in ("/bin/python3 " ^ script_name ^ " " ^ link));
+  t.live_channel <- Some (open_process_in ("/bin/python3 -u " ^ script_name ^ " " ^ link));
 ;;
 
 let close_python_script t = 
