@@ -260,7 +260,7 @@ let draw_live (interface : Interface.t) =
       let string_output = In_channel.input_line_exn channel in
       Core.print_s [%message "Received: " string_output];
     with End_of_file -> (
-      Core.print_s [%message "End of file reached."];
+      ()
     (*List.iter string_output ~f:(fun f -> print_s [%message "Elt: " f]);*)
     )
   ));
