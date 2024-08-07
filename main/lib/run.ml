@@ -172,7 +172,7 @@ if (Interface.ask_textbox interface).rectangle.on
     if (Interface.earnings_link_text interface).rectangle.on
       then (
         match
-          Char.is_alpha key
+          not ((Char.to_int key) = 8)
         with
         | true ->
           (Interface.earnings_link_text

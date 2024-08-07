@@ -3,7 +3,9 @@ import subprocess
 import os
 import whisper
 from google.cloud import speech_v1 as speech
+import json
 # import sys
+import threading
 import time
 import asyncio
 # import threading
@@ -105,4 +107,9 @@ async def main():
     await convert(TEMP_AUDIO_FILE)      
 
 if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python get_live_data.py [YouTube_link]")
+        sys.exit(1)
+    yt_link = sys.argv[1]
+    
     asyncio.run(main())

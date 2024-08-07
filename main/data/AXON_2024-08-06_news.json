@@ -7,7 +7,15 @@
         "symbols": [
             "0HKE.LSE",
             "AXON.US",
+<<<<<<< HEAD
             "TCS.F"
+=======
+            "TCS.BE",
+            "TCS.DU",
+            "TCS.F",
+            "TCS.MU",
+            "TCS.STU"
+>>>>>>> 91d468e (changes)
         ],
         "tags": [],
         "sentiment": {
@@ -25,7 +33,15 @@
         "symbols": [
             "0HKE.LSE",
             "AXON.US",
+<<<<<<< HEAD
             "TCS.F"
+=======
+            "TCS.BE",
+            "TCS.DU",
+            "TCS.F",
+            "TCS.MU",
+            "TCS.STU"
+>>>>>>> 91d468e (changes)
         ],
         "tags": [],
         "sentiment": {
@@ -43,7 +59,15 @@
         "symbols": [
             "0HKE.LSE",
             "AXON.US",
+<<<<<<< HEAD
             "TCS.F"
+=======
+            "TCS.BE",
+            "TCS.DU",
+            "TCS.F",
+            "TCS.MU",
+            "TCS.STU"
+>>>>>>> 91d468e (changes)
         ],
         "tags": [],
         "sentiment": {
@@ -61,7 +85,15 @@
         "symbols": [
             "0HKE.LSE",
             "AXON.US",
+<<<<<<< HEAD
             "TCS.F"
+=======
+            "TCS.BE",
+            "TCS.DU",
+            "TCS.F",
+            "TCS.MU",
+            "TCS.STU"
+>>>>>>> 91d468e (changes)
         ],
         "tags": [],
         "sentiment": {

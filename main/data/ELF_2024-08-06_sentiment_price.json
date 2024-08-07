@@ -1,5 +1,8 @@
 [
     {
+        "2024-08-06": [
+            0.8788
+        ],
         "2024-08-05": [
             0.8589
         ],
@@ -394,19 +397,14 @@
         ],
         "2024-02-09": [
             0.49985
-        ],
-        "2024-02-08": [
-            0.7888999999999999,
-            0.68965,
-            0.6908,
-            0.39485,
-            0.7920499999999999,
-            0.5931,
-            0.45424999999999993,
-            0.29414999999999997
         ]
     },
     {
+        "2024-08-06": [
+            181.23,
+            183.74,
+            1575391.0
+        ],
         "2024-08-05": [
             154.8,
             175.65,
@@ -1016,17 +1014,12 @@
             172.75,
             174.52,
             1517622.0
-        ],
-        "2024-02-08": [
-            167.67,
-            171.54,
-            1911742.0
         ]
     },
     [
-        "ELF (stock ticker) represents **Energizer Holdings, Inc., a leading global manufacturer and marketer of batteries, household and personal care products, and auto care products.** \n",
-        "ELF (stock ticker) is a publicly traded company, but there is no company with that ticker symbol. Please provide the correct ticker symbol for a summary of its revenue stream. \n",
-        "ELF Cosmetics' main competitors in the beauty industry include L'Or\u00e9al, Est\u00e9e Lauder, Revlon, and Coty. \n",
-        "ELF experienced a volatile period with significant price fluctuations, including a sharp rise in early August, followed by a decline in September, and then a rebound in October before settling around a slightly lower price than at the beginning of the month. \n"
+        "ELF is a U.S. based company that operates a chain of convenience stores and gas stations. \n",
+        "ELF (stock ticker) makes its money primarily through the sale of refined petroleum products and bio-based fuels. \n",
+        "ELF Cosmetics competes with other beauty and personal care companies like Ulta Beauty, Sephora, and L'Or\u00e9al. \n",
+        "The closing price of ELF has experienced significant volatility over the past 30 days, with periods of both sharp increases and decreases. \n"
     ]
 ]
