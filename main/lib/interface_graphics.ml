@@ -87,21 +87,19 @@ let draw_graph (interface : Interface.t) =
     Graphics.draw_poly_line edges;
     Graphics.draw_poly_line line;
     Graphics.set_line_width 3;
-
     (* GRAPHS PLOTTED HERE *)
-    if ((Interface.price_button interface).rectangle.on) then (
+    if (Interface.price_button interface).rectangle.on
+    then (
       Graphics.set_color Colors._green;
-      Graphics.draw_poly_line graphPtsPrice;
-    );
-    if ((Interface.sentiment_button interface).rectangle.on) then (
+      Graphics.draw_poly_line graphPtsPrice);
+    if (Interface.sentiment_button interface).rectangle.on
+    then (
       Graphics.set_color Colors._red;
-      Graphics.draw_poly_line graphPtsSent;
-    );
-    if ((Interface.volume_button interface).rectangle.on) then (
+      Graphics.draw_poly_line graphPtsSent);
+    if (Interface.volume_button interface).rectangle.on
+    then (
       Graphics.set_color Colors._blue;
-      Graphics.draw_poly_line graphPtsVol;
-    );
-    
+      Graphics.draw_poly_line graphPtsVol);
     Graphics.set_color Colors.black;
     Graphics.moveto 10 (((height + 650) / 2) - 5);
     Graphics.draw_string "Price";
@@ -116,13 +114,12 @@ let draw_graph (interface : Interface.t) =
     Graphics.moveto 100 (30 + 300);
     Graphics.draw_string "0";
     Graphics.moveto (width - 5) (30 + 300);
-    Graphics.draw_string
-      (Interface.time_textbox interface).message;
+    Graphics.draw_string (Interface.time_textbox interface).message;
     Graphics.moveto ((width / 2) + 50) (10 + 300);
     Graphics.draw_string "Days";
     Graphics.moveto ((width / 2) + 25) (height + 305);
     Graphics.draw_string
-    ((Interface.ticker_textbox interface).message ^ " Sentiment Graph");
+      ((Interface.ticker_textbox interface).message ^ " Sentiment Graph");
     Graphics.moveto 510 850;
     Graphics.set_color Colors.black;
     Graphics.draw_string "GRAPH KEY";
@@ -206,15 +203,17 @@ let draw_graph (interface : Interface.t) =
             0
             (String.length (List.nth_exn ai_answers num) - 1)
         in
-        let str_pair = if(String.length str >= 100) then (
-        let spaceInd = String.index_from str 100 ' ' in
-          match spaceInd with
-          | Some ind ->
-            ( String.slice str 0 ind
-            , String.slice str (ind + 1) (String.length str) )
-          | None -> str, " ") else (
-            str, " "
-        ) in
+        let str_pair =
+          if String.length str >= 100
+          then (
+            let spaceInd = String.index_from str 100 ' ' in
+            match spaceInd with
+            | Some ind ->
+              ( String.slice str 0 ind
+              , String.slice str (ind + 1) (String.length str) )
+            | None -> str, " ")
+          else str, " "
+        in
         Graphics.draw_string (fst str_pair);
         Graphics.moveto 10 (height_start - minus - 20);
         Graphics.draw_string (snd str_pair))
@@ -229,14 +228,17 @@ let draw_graph (interface : Interface.t) =
     Interface.Button.draw_button (Interface.volume_button interface);
     Interface.Button.draw_button (Interface.submit_button interface);
     Interface.Button.draw_button (Interface.check_button interface);
-
     Graphics.moveto 455 55;
-    if fst (Interface.receiptText interface) then (Graphics.draw_string (snd (Interface.receiptText interface)));
+    if fst (Interface.receiptText interface)
+    then Graphics.draw_string (snd (Interface.receiptText interface));
     Graphics.moveto 455 20;
-    if fst (Interface.guessText interface) then (Graphics.draw_string (snd (Interface.guessText interface)));
+    if fst (Interface.guessText interface)
+    then Graphics.draw_string (snd (Interface.guessText interface));
     Graphics.moveto 50 90;
-    Graphics.draw_string ("Make a Market on " ^ (Interface.ticker_textbox interface).message ^ " Against the Computer");
-
+    Graphics.draw_string
+      ("Make a Market on "
+       ^ (Interface.ticker_textbox interface).message
+       ^ " Against the Computer");
     Interface.Textbox.draw_textbox (Interface.ask_textbox interface);
     Interface.Textbox.draw_textbox (Interface.bid_textbox interface);
     Interface.Textbox.draw_textbox (Interface.checker_textbox interface);
@@ -255,11 +257,12 @@ let has_data ic =
   List.length read_fds > 0
 ;;
 
-let draw_live (interface : Interface.t) = 
-  if((Interface.earnings_live_button interface).rectangle.on) then (
+let draw_live (interface : Interface.t) =
+  if (Interface.earnings_live_button interface).rectangle.on
+  then (
     Interface.Button.draw_button (Interface.earnings_link_submit interface);
     Interface.Textbox.draw_textbox (Interface.earnings_link_text interface);
-    match Interface.live_channel interface with 
+    match Interface.live_channel interface with
     | None -> ()
     | Some channel -> (
       if (has_data channel) then (
@@ -284,17 +287,15 @@ let render (interface : Interface.t) =
   Graphics.display_mode false;
   draw_header ();
   draw_play_area ();
-  Interface.Textbox.draw_textbox
-    (Interface.ticker_textbox interface);
-    Interface.Textbox.draw_textbox
-    (Interface.time_textbox interface);
-    Interface.Button.draw_button
-    (Interface.earnings_live_button interface);
-    Interface.Button.draw_button (Interface.calc_button interface);
+  Interface.Textbox.draw_textbox (Interface.ticker_textbox interface);
+  Interface.Textbox.draw_textbox (Interface.time_textbox interface);
+  Interface.Button.draw_button (Interface.earnings_live_button interface);
+  Interface.Button.draw_button (Interface.calc_button interface);
   Graphics.set_window_title "S&E Trading";
   (* Graphics.auto_synchronize true; *)
-  draw_graph interface;
   draw_live interface;
+  Core.print_s [%message "Past live"];
+  draw_graph interface;
   Interface.check_error interface;
   Graphics.display_mode true;
   Graphics.synchronize ()
