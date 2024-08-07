@@ -294,7 +294,6 @@ let render (interface : Interface.t) =
   Graphics.set_window_title "S&E Trading";
   (* Graphics.auto_synchronize true; *)
   draw_live interface;
-  Core.print_s [%message "Past live"];
   draw_graph interface;
   Interface.check_error interface;
   Graphics.display_mode true;
