@@ -3,20 +3,18 @@ import subprocess
 import os
 import whisper
 from google.cloud import speech_v1 as speech
-import json
 # import sys
-import threading
 import time
 import asyncio
 # import threading
 # import time
 
 # Configure paths and URLs
-LIVE_STREAM_URL = 'https://www.youtube.com/live/OEh-6f1qIdc'  # Replace with the actual URL
-TEMP_AUDIO_FILE = 'live_stream_audio.wav'
-PART_FILE = 'live_stream_audio.wav.part.part'
+LIVE_STREAM_URL = 'https://www.youtube.com/live/SQyRNQbm8nA'  # Replace with the actual URL
+TEMP_AUDIO_FILE = 'live_stream_audio'
+PART_FILE = 'live_stream_audio.part'
 PART_2 = 'live_stream_audio.wav.part'
-TEMP_A2 = 'live_stream_audio.wav.wav'
+TEMP_A2 = 'live_stream_audio.wav'
 CONVERTED_AUDIO_FILE = 'converted_audio.wav'
 GOOGLE_APPLICATION_CREDENTIALS = 'path/to/your/service_account_key.json'
 
@@ -26,7 +24,7 @@ async def download_audio_part(url: str, output_file: str):
     for x in range(10):
         print("Downloading audio...")
         # Ensure the output file has a .part extension
-        part_file = f"{output_file}{part_number}.part"
+        part_file = f"{output_file}{part_number}"
         ydl_opts = {
             'format': 'bestaudio/best',
             'outtmpl': part_file,
@@ -34,13 +32,15 @@ async def download_audio_part(url: str, output_file: str):
             'quiet': True,
             'username': 'oauth2',
             'password': '',
+            'cookies-from-browser': 'chrome',
+
         }
         part_number += 1
     
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             task = asyncio.get_running_loop().run_in_executor(None, ydl.download, [url])
             try:
-                await asyncio.wait_for(task, timeout=10.0)
+                await asyncio.wait_for(task, timeout=30.0)
                 
             except asyncio.TimeoutError:
                 task.cancel()
@@ -95,11 +95,11 @@ async def convert(output_file: str):
     
     async for part_file in download_audio_part(LIVE_STREAM_URL, TEMP_AUDIO_FILE):
         convert_part_to_wav(part_file)
-        time.sleep(1)
+        time.sleep(2)
         convert_wav_to_wav()
         time.sleep(1)
         transcribe_audio()
-        time.sleep(1)
+        time.sleep(.5)
 
 async def main():
     await convert(TEMP_AUDIO_FILE)      
