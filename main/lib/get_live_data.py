@@ -3,7 +3,7 @@ import subprocess
 import os
 import whisper
 import json
-# import sys
+import sys
 import threading
 import time
 import asyncio
