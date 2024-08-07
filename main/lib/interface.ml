@@ -487,6 +487,7 @@ let handle_click (t : t) (pos : int * int) =
       if not (t.earnings_link_submit.rectangle.on) then (
         t.earnings_link_submit.rectangle.on <- true;
         t.earnings_link_text.rectangle.on <- false;
+        run_python_script_concurrently "get_live_data.py" t.earnings_link_text.message;
       )
   );
 
