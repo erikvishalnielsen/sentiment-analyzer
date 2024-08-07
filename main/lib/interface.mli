@@ -68,6 +68,9 @@ val receiptText : t -> (bool * string)
 val guessText : t -> (bool * string)
 val checker_textbox : t -> Textbox.t
 val check_button : t -> Button.t
+val earnings_live_button : t -> Button.t
+val earnings_link_text : t -> Textbox.t
+val earnings_link_submit : t -> Button.t
 (* ; mutable finViz : Finviz_parser.Finviz_parser.t *)
 
 val correlations : t -> float list

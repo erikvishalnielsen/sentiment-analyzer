@@ -95,6 +95,9 @@ type t =
   ; mutable receiptText : (bool * string)
   ; mutable guessText : (bool * string)
   ; mutable checker_textbox : Textbox.t 
+  ; mutable earnings_live_button : Button.t
+  ; mutable earnings_link_text : Textbox.t
+  ; mutable earnings_link_submit : Button.t
   }
 [@@deriving sexp_of, fields]
 
@@ -262,7 +265,44 @@ let create () =
     ; textbox_text = "Receipt #:"
     ; message = "0"
     }
+    ; earnings_live_button =
+    { rectangle =
+        { x = 268
+        ; y = 840
+        ; width = 140
+        ; height = 25
+        ; on = false
+        ; reg_color = 0xDB1456
+        ; clicked_color = 0xED4A80
+        }
+      ; button_text = "Earnings Call Live"
     }
+    ; earnings_link_text = 
+    { rectangle =
+      { x = 50
+      ; y = 800
+      ; width = 475
+      ; height = 25
+      ; on = false
+      ; reg_color = 0xCF29BB
+      ; clicked_color = 0xFA73EA
+      }
+    ; textbox_text = "YouTube Link:"
+    ; message = ""
+    }
+    ; earnings_link_submit =
+    { rectangle =
+        { x = 550
+        ; y = 800
+        ; width = 100
+        ; height = 25
+        ; on = false
+        ; reg_color = 0xDB1456
+        ; clicked_color = 0xED4A80
+        }
+      ; button_text = "Submit Link"
+    }
+  }
   in
   interface
 ;;
@@ -430,11 +470,32 @@ let handle_click (t : t) (pos : int * int) =
   let y_pos = snd pos in
   (* let datapts : Datapoints.t ref = ref ({ Datapoints.data = [] ; price_high = 0.0 ; price_low = 0.0 ; deltavol_high = 0.0 ; deltavol_low = 0.0 ; gemini_ans = [] }) in *)
   (* Calculate: 482 575 100 25 *)
+  if x_pos >= t.earnings_live_button.rectangle.x && x_pos <= t.earnings_live_button.rectangle.x + t.earnings_live_button.rectangle.width && y_pos >= t.earnings_live_button.rectangle.y && y_pos <= t.earnings_live_button.rectangle.y + t.earnings_live_button.rectangle.height then
+  (
+    if not (t.earnings_live_button.rectangle.on) then (
+      t.earnings_live_button.rectangle.on <- true;
+      t.calc_button.rectangle.on <- false
+      )
+  ) else if x_pos >= t.earnings_link_text.rectangle.x && x_pos <= t.earnings_link_text.rectangle.x + t.earnings_link_text.rectangle.width && y_pos >= t.earnings_link_text.rectangle.y && y_pos <= t.earnings_link_text.rectangle.y + t.earnings_link_text.rectangle.height then
+    (
+      if not (t.earnings_link_text.rectangle.on) then (
+        t.earnings_link_text.rectangle.on <- true;
+        t.earnings_link_submit.rectangle.on <- false;
+      )
+  ) else if x_pos >= t.earnings_link_submit.rectangle.x && x_pos <= t.earnings_link_submit.rectangle.x + t.earnings_link_submit.rectangle.width && y_pos >= t.earnings_link_submit.rectangle.y && y_pos <= t.earnings_link_submit.rectangle.y + t.earnings_link_submit.rectangle.height then
+    (
+      if not (t.earnings_link_submit.rectangle.on) then (
+        t.earnings_link_submit.rectangle.on <- true;
+        t.earnings_link_text.rectangle.on <- false;
+      )
+  );
+
   if x_pos >= 482 && x_pos <= 582 && y_pos >= 875 && y_pos <= 900
   then (
     Graphics.set_color (Graphics.rgb 0 0 0);
     Graphics.moveto ((t.graphSentiment.width / 2) + 50) 600;
     Graphics.draw_string "Loading...";
+    t.earnings_live_button.rectangle.on <- false;
     t.calc_button.rectangle.on
     <- (let todayDate = Date.today ~zone:Timezone.utc in
         Stock_day.createFindlJson

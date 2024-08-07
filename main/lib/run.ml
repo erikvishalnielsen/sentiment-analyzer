@@ -168,6 +168,29 @@ if (Interface.ask_textbox interface).rectangle.on
                     0
                     (len - 1))
              else (Interface.ticker_textbox interface).message <- ""
+           | _ -> ()));
+    if (Interface.earnings_link_text interface).rectangle.on
+      then (
+        match
+          Char.is_alpha key
+        with
+        | true ->
+          (Interface.earnings_link_text
+            interface).message <-
+            (String.concat
+               [ (Interface.earnings_link_text interface).message; String.uppercase (String.of_char key) ])
+        | false ->
+          (match Char.to_int key with
+           | 8 ->
+             let len = String.length (Interface.earnings_link_text interface).message in
+             if not (len = 1 || len = 0)
+             then
+              (Interface.earnings_link_text interface).message <-
+                 (String.slice
+                 (Interface.earnings_link_text interface).message
+                    0
+                    (len - 1))
+             else (Interface.earnings_link_text interface).message <- ""
            | _ -> ())));
 ;;
 

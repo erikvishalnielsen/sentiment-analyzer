@@ -249,6 +249,13 @@ let draw_graph (interface : Interface.t) =
   else ()
 ;;
 
+let draw_live (interface : Interface.t) = 
+  if((Interface.earnings_live_button interface).rectangle.on) then (
+    Interface.Button.draw_button (Interface.earnings_link_submit interface);
+    Interface.Textbox.draw_textbox (Interface.earnings_link_text interface);
+  );
+;;
+
 let render (interface : Interface.t) =
   (* We want double-buffering. See
      https://v2.ocaml.org/releases/4.03/htmlman/libref/Graphics.html for more
@@ -264,10 +271,13 @@ let render (interface : Interface.t) =
     (Interface.ticker_textbox interface);
     Interface.Textbox.draw_textbox
     (Interface.time_textbox interface);
+    Interface.Button.draw_button
+    (Interface.earnings_live_button interface);
     Interface.Button.draw_button (Interface.calc_button interface);
   Graphics.set_window_title "S&E Trading";
   (* Graphics.auto_synchronize true; *)
   draw_graph interface;
+  draw_live interface;
   Interface.check_error interface;
   Graphics.display_mode true;
   Graphics.synchronize ()
