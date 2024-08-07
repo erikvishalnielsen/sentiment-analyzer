@@ -2,11 +2,10 @@ import yt_dlp
 import subprocess
 import os
 import whisper
-import json
 import sys
-import threading
 import time
 import asyncio
+from sentiment_ml import get_live_sentiment
 # import threading
 # import time
 
@@ -92,6 +91,7 @@ async def convert(output_file: str):
         result = model.transcribe(file_path)  # Transcribe the audio file
         # json.dumps(result)
         print("Transcript: {}".format(result['text']), flush=True)
+        print(get_live_sentiment(result['text']))
         os.remove(CONVERTED_AUDIO_FILE)
     
     async for part_file in download_audio_part(LIVE_STREAM_URL, TEMP_AUDIO_FILE):
