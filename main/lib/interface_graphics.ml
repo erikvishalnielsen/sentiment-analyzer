@@ -249,6 +249,12 @@ let draw_graph (interface : Interface.t) =
   else ()
 ;;
 
+let has_data ic =
+  let fd = Core_unix.descr_of_in_channel ic in
+  let read_fds = (Core_unix.select ~read:[fd] ~write:[] ~except:[] ~timeout:(`Immediately) ()).read in
+  List.length read_fds > 0
+;;
+
 let draw_live (interface : Interface.t) = 
   if((Interface.earnings_live_button interface).rectangle.on) then (
     Interface.Button.draw_button (Interface.earnings_link_submit interface);
@@ -256,13 +262,14 @@ let draw_live (interface : Interface.t) =
     match Interface.live_channel interface with 
     | None -> ()
     | Some channel -> (
+      if (has_data channel) then (
     try
       let string_output = In_channel.input_line_exn channel in
       Core.print_s [%message "Received: " string_output];
     with End_of_file -> (
       ()
     (*List.iter string_output ~f:(fun f -> print_s [%message "Elt: " f]);*)
-    )
+    ))
   ));
 ;;
 
