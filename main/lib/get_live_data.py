@@ -12,7 +12,7 @@ import asyncio
 # import time
 
 # Configure paths and URLs
-LIVE_STREAM_URL = 'https://www.youtube.com/live/yUVq6zpK5m8'  # Replace with the actual URL
+LIVE_STREAM_URL = 'https://www.youtube.com/live/OEh-6f1qIdc'  # Replace with the actual URL
 TEMP_AUDIO_FILE = 'live_stream_audio.wav'
 PART_FILE = 'live_stream_audio.wav.part.part'
 PART_2 = 'live_stream_audio.wav.part'
@@ -87,10 +87,8 @@ async def convert(output_file: str):
         ]
         # Run the ffmpeg command
         subprocess.run(command, check=True)
-        # Remove the .part file after conversion
         os.remove(part_file)
 
-    # Function to convert audio if necessary
     def convert_wav_to_wav():
         print("Converting audio pt2...")
         input_file = TEMP_A2
@@ -110,8 +108,8 @@ async def convert(output_file: str):
         result = model.transcribe(file_path)  # Transcribe the audio file
         # json.dumps(result)
         print("Transcript: {}".format(result['text']))
+        os.remove(CONVERTED_AUDIO_FILE)
     
-    # while True:
     async for part_file in download_audio_part(LIVE_STREAM_URL, TEMP_AUDIO_FILE):
         convert_part_to_wav(part_file)
         time.sleep(1)
@@ -120,33 +118,8 @@ async def convert(output_file: str):
         transcribe_audio()
         time.sleep(1)
 
-threads = []
-
 async def main():
-    # Set up Google Cloud credentials
-    # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = GOOGLE_APPLICATION_CREDENTIALS
-    # threads = list()
-    
-    # for i in range(5):
-    #     th = 
-    # th1 = TimelimitedThread(target=download_audio, args=(LIVE_STREAM_URL, TEMP_AUDIO_FILE), time_limit=THREAD_TIME_LIMIT)
-        # threads.append(th)
-    # download_audio(LIVE_STREAM_URL, TEMP_AUDIO_FILE)
-    # th1 = threading.Thread(target=download_audio, args=(LIVE_STREAM_URL, TEMP_AUDIO_FILE))
-    await convert(TEMP_AUDIO_FILE)
-    
-    # try:
-    #     await asyncio.wait_for(download, timeout=60)
-    # except asyncio.TimeoutError:
-    #     print("Download task killed")
-    #     download.cancel()
-    # convert_task = asyncio.create_task(convert(PART_FILE, TEMP_AUDIO_FILE))
-    
-    
-    # os.remove(TEMP_A2)
-    # os.remove(CONVERTED_AUDIO_FILE)
-    print("yo")
-      
+    await convert(TEMP_AUDIO_FILE)      
 
 if __name__ == "__main__":
     asyncio.run(main())
