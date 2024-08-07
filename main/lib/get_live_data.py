@@ -6,6 +6,7 @@ import sys
 import time
 import asyncio
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+import glob
 # import threading
 # import time
 
@@ -26,6 +27,14 @@ def get_live_sentiment(content):
     return content_scores.get("compound")
 
 async def download_audio_part(url: str, output_file: str):
+    directory = "/home/ubuntu/sentiment-analyzer/"
+    wav_files_to_delete = glob.glob(directory + "*.wav")
+    part_files_to_delete = glob.glob(directory + "*.part")
+    for file in wav_files_to_delete:
+        os.remove(file)
+    for file in part_files_to_delete:
+        os.remove(file)
+    
     part_number = 0
 
     for x in range(10):
