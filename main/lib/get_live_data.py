@@ -20,23 +20,6 @@ TEMP_A2 = 'live_stream_audio.wav.wav'
 CONVERTED_AUDIO_FILE = 'converted_audio.wav'
 GOOGLE_APPLICATION_CREDENTIALS = 'path/to/your/service_account_key.json'
 
-# Function to download live stream audio
-# def download_audio(url: str, output_file: str):
-#     ydl_opts = {
-#         'format': 'bestaudio/best',
-#         'outtmpl': output_file,
-#         'noplaylist': True,
-#         'quiet': True,
-#         'postprocessors': [{
-#             'key': 'FFmpegExtractAudio',
-#             'preferredcodec': 'wav',
-#             'preferredquality': '192',
-#         }],
-#     }
-#     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-#         ydl.download([url])
-
-
 async def download_audio_part(url: str, output_file: str):
     part_number = 0
 
