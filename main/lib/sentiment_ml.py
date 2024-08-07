@@ -112,6 +112,12 @@ def get_sentiment_of_article(headline, content):
 
     return (headline_scores.get("compound") + content_scores.get("compound")) / 2
 
+def get_live_sentiment(content):
+    analyzer = SentimentIntensityAnalyzer()
+
+    content_scores = analyzer.polarity_scores(content)
+
+    return content_scores.get("compound")
 
 def create_news_datapoints(data):
     for news_dict in data:
