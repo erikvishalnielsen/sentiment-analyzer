@@ -99,11 +99,14 @@ type t =
   ; mutable earnings_link_text : Textbox.t
   ; mutable earnings_link_submit : Button.t
   ; mutable live_channel : In_channel.t option [@sexp.opaque]
+  ; mutable process : Process_info.t option
   }
 [@@deriving fields]
 
 let run_python_script_concurrently t script_name link =
-  t.live_channel <- Some (open_process_in ("/bin/python3 -u " ^ script_name ^ " " ^ link));
+  let process = (create_process ~prog:"/bin/python3" ~args:[script_name; link]) in
+  t.process <- Some process;
+  t.live_channel <- Some (in_channel_of_descr process.stdout);
 ;;
 
 let close_python_script t = 
@@ -309,6 +312,7 @@ let create () =
       ; button_text = "Submit Link"
     }
     ; live_channel = None
+    ; process = None
   }
   in
   interface

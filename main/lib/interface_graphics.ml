@@ -268,6 +268,11 @@ let draw_live (interface : Interface.t) =
       if (has_data channel) then (
     try
       let string_output = In_channel.input_line_exn channel in
+      (try 
+        (* PLOT THIS DATA SOMEWHERE *)
+        let _data_float = Float.of_string string_output in
+        ()
+      with _ -> ());
       Core.print_s [%message "Received: " string_output];
     with End_of_file -> (
       ()
