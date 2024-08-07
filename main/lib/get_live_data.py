@@ -28,11 +28,8 @@ def get_live_sentiment(content):
 
 async def download_audio_part(url: str, output_file: str):
     directory = "/home/ubuntu/sentiment-analyzer/"
-    wav_files_to_delete = glob.glob(directory + "*.wav")
-    part_files_to_delete = glob.glob(directory + "*.part")
-    for file in wav_files_to_delete:
-        os.remove(file)
-    for file in part_files_to_delete:
+    files_to_delete = glob.glob(directory + "*.wav") + glob.glob(directory + "*.part")
+    for file in files_to_delete:
         os.remove(file)
     
     part_number = 0
