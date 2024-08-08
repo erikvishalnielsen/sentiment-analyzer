@@ -72,7 +72,6 @@ val earnings_live_button : t -> Button.t
 val earnings_link_text : t -> Textbox.t
 val earnings_link_submit : t -> Button.t
 val live_channel : t -> In_channel.t option
-(* ; mutable finViz : Finviz_parser.Finviz_parser.t *)
-
+ 
 val correlations : t -> float list
 val regressionEqtn : t -> Regression.t option
