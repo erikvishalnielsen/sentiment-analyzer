@@ -282,8 +282,6 @@ let draw_live (interface : Interface.t) =
     let pts = Array.of_list (Interface.earnings_pts interface) in
     Graphics.draw_poly_line pts;
 
-    List.iter (Interface.earnings_pts interface) ~f:(fun f -> Core.print_s [%message "PT: " (Int.to_string (fst f)) (Int.to_string (snd f))]);
-
     match Interface.live_channel interface with
     | None -> ()
     | Some channel -> (
@@ -297,13 +295,9 @@ let draw_live (interface : Interface.t) =
         let height_multiplier_sent sentiment =
           425 + Int.of_float (225.0 *. sentiment)
         in
-        Core.print_s [%message "WOO"];
         let currPts = (Interface.earnings_pts interface) @ [(0, (height_multiplier_sent data_float))] in
-        Core.print_s [%message "WOO"];
         let n = List.length currPts in
-        Core.print_s [%message "WOO"];
         let width_lst = Interface.get_list_of_widths n in
-        Core.print_s [%message "WOO"];
         Interface.set_earnings_pts interface (List.mapi currPts ~f:(fun ind pt -> ((List.nth_exn width_lst ind), (snd pt)))))
       with _ -> ());
       Core.print_s [%message "Received: " string_output];
