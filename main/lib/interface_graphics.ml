@@ -304,8 +304,7 @@ let draw_live (interface : Interface.t) =
         Core.print_s [%message "WOO"];
         let width_lst = Interface.get_list_of_widths n in
         Core.print_s [%message "WOO"];
-        Interface.set_earnings_pts interface (List.mapi currPts ~f:(fun ind pt -> ((List.nth_exn width_lst ind), (snd pt))));
-        if List.length (Interface.earnings_pts interface) = 0 then Core.print_s [%message "NOOOO"] else Core.print_s [%message "WEEE"])
+        Interface.set_earnings_pts interface (List.mapi currPts ~f:(fun ind pt -> ((List.nth_exn width_lst ind), (snd pt)))))
       with _ -> ());
       Core.print_s [%message "Received: " string_output];
     with End_of_file -> (
