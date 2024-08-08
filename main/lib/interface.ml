@@ -100,6 +100,7 @@ type t =
   ; mutable earnings_link_submit : Button.t
   ; mutable live_channel : In_channel.t option [@sexp.opaque]
   ; mutable process : Process_info.t option
+  ; mutable earnings_pts : (int * int) list
   }
 [@@deriving fields]
 
@@ -325,15 +326,21 @@ let create () =
     }
     ; live_channel = None
     ; process = None
+    ; earnings_pts = []
   }
   in
   interface
 ;;
 
 let get_list_of_widths numPts =
+  if(numPts = 0) then [0] else (
   let dist = 400.0 /. Int.to_float (numPts - 1) in
   List.init numPts ~f:(fun num ->
-    100 + Int.of_float (Int.to_float num *. dist))
+    100 + Int.of_float (Int.to_float num *. dist)))
+;;
+
+let set_earnings_pts (t : t) lst =
+  t.earnings_pts <- lst;
 ;;
 
 let plot_datapoints (datum : Datapoints.t) =
@@ -514,6 +521,7 @@ let handle_click (t : t) (pos : int * int) =
       ) else (
         close_python_script t;
         t.earnings_link_submit.rectangle.on <- false;
+        t.earnings_pts <- [];
       )
   );
 

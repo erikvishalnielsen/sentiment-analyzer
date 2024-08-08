@@ -262,6 +262,28 @@ let draw_live (interface : Interface.t) =
   then (
     Interface.Button.draw_button (Interface.earnings_link_submit interface);
     Interface.Textbox.draw_textbox (Interface.earnings_link_text interface);
+    let width = (Interface.graphSentiment interface).width in
+    let height = (Interface.graphSentiment interface).height in
+    let edges : (int * int) array =
+      [| 100, height + 150; 100, 150 + 50; width, 150 + 50 |]
+    in
+    let line : (int * int) array =
+      [| 100, 225 + 200; width, 225 + 200 |]
+    in
+    Graphics.set_line_width 5;
+    Graphics.draw_poly_line edges;
+    Graphics.draw_poly_line line;
+    Graphics.set_line_width 3;
+    Graphics.moveto ((width / 2) + 25) (height + 155);
+    Graphics.draw_string
+      ("Live Sentiment Graph");
+    Graphics.set_line_width 3;
+    Graphics.set_color Colors.black;
+    let pts = Array.of_list (Interface.earnings_pts interface) in
+    Graphics.draw_poly_line pts;
+
+    List.iter (Interface.earnings_pts interface) ~f:(fun f -> Core.print_s [%message "PT: " (Int.to_string (fst f)) (Int.to_string (snd f))]);
+
     match Interface.live_channel interface with
     | None -> ()
     | Some channel -> (
@@ -270,14 +292,23 @@ let draw_live (interface : Interface.t) =
       let string_output = In_channel.input_line_exn channel in
       (try 
         (* PLOT THIS DATA SOMEWHERE *)
-        let _data_float = Float.of_string string_output in
-        ()
+        let data_float = Float.of_string string_output in
+        Core.print_s [%message "POINT: " (Float.to_string data_float)];
+        let height_multiplier_sent sentiment =
+          425 + Int.of_float (225.0 *. sentiment)
+        in
+        let currPts = (Interface.earnings_pts interface) @ [(0, (height_multiplier_sent data_float))] in
+        let n = List.length currPts in
+        let width_lst = Interface.get_list_of_widths n in
+        Interface.set_earnings_pts interface (List.mapi currPts ~f:(fun ind pt -> ((List.nth_exn width_lst ind), (snd pt))));
+        if List.length (Interface.earnings_pts interface) = 0 then Core.print_s [%message "NOOOO"] else Core.print_s [%message "WEEE"];
+
       with _ -> ());
       Core.print_s [%message "Received: " string_output];
     with End_of_file -> (
       ()
     (*List.iter string_output ~f:(fun f -> print_s [%message "Elt: " f]);*)
-    ))
+    ));
   ));
 ;;
 
