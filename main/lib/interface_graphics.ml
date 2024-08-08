@@ -292,7 +292,7 @@ let draw_live (interface : Interface.t) =
       let string_output = In_channel.input_line_exn channel in
       (try 
         (* PLOT THIS DATA SOMEWHERE *)
-        let data_float = Float.of_string string_output in
+        (let data_float = Float.of_string string_output in
         Core.print_s [%message "POINT: " (Float.to_string data_float)];
         let height_multiplier_sent sentiment =
           425 + Int.of_float (225.0 *. sentiment)
@@ -301,8 +301,7 @@ let draw_live (interface : Interface.t) =
         let n = List.length currPts in
         let width_lst = Interface.get_list_of_widths n in
         Interface.set_earnings_pts interface (List.mapi currPts ~f:(fun ind pt -> ((List.nth_exn width_lst ind), (snd pt))));
-        if List.length (Interface.earnings_pts interface) = 0 then Core.print_s [%message "NOOOO"] else Core.print_s [%message "WEEE"];
-
+        if List.length (Interface.earnings_pts interface) = 0 then Core.print_s [%message "NOOOO"] else Core.print_s [%message "WEEE"])
       with _ -> ());
       Core.print_s [%message "Received: " string_output];
     with End_of_file -> (
