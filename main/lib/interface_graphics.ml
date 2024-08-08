@@ -297,9 +297,13 @@ let draw_live (interface : Interface.t) =
         let height_multiplier_sent sentiment =
           425 + Int.of_float (225.0 *. sentiment)
         in
+        Core.print_s [%message "WOO"];
         let currPts = (Interface.earnings_pts interface) @ [(0, (height_multiplier_sent data_float))] in
+        Core.print_s [%message "WOO"];
         let n = List.length currPts in
+        Core.print_s [%message "WOO"];
         let width_lst = Interface.get_list_of_widths n in
+        Core.print_s [%message "WOO"];
         Interface.set_earnings_pts interface (List.mapi currPts ~f:(fun ind pt -> ((List.nth_exn width_lst ind), (snd pt))));
         if List.length (Interface.earnings_pts interface) = 0 then Core.print_s [%message "NOOOO"] else Core.print_s [%message "WEEE"])
       with _ -> ());
