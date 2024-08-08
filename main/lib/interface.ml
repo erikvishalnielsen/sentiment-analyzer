@@ -333,7 +333,7 @@ let create () =
 ;;
 
 let get_list_of_widths numPts =
-  if(numPts = 0) then [0] else (
+  if(numPts = 1) then [0] else (
   let dist = 400.0 /. Int.to_float (numPts - 1) in
   List.init numPts ~f:(fun num ->
     100 + Int.of_float (Int.to_float num *. dist)))
