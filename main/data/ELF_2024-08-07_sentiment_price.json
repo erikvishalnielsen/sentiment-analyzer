@@ -1,5 +1,8 @@
 [
     {
+        "2024-08-07": [
+            0.49725
+        ],
         "2024-08-06": [
             0.8788
         ],
@@ -13,6 +16,7 @@
             0.72585
         ],
         "2024-08-01": [
+            0.49925,
             0.79255,
             0.2288
         ],
@@ -394,12 +398,14 @@
         ],
         "2024-02-11": [
             0.6021000000000001
-        ],
-        "2024-02-09": [
-            0.49985
         ]
     },
     {
+        "2024-08-07": [
+            187.16,
+            181.75,
+            1389034.0
+        ],
         "2024-08-06": [
             181.23,
             183.74,
@@ -1009,17 +1015,12 @@
             173.88,
             171.91,
             1404668.0
-        ],
-        "2024-02-09": [
-            172.75,
-            174.52,
-            1517622.0
         ]
     },
     [
-        "ELF is a U.S. based company that operates a chain of convenience stores and gas stations. \n",
-        "ELF (stock ticker) makes its money primarily through the sale of refined petroleum products and bio-based fuels. \n",
-        "ELF Cosmetics competes with other beauty and personal care companies like Ulta Beauty, Sephora, and L'Or\u00e9al. \n",
-        "The closing price of ELF has experienced significant volatility over the past 30 days, with periods of both sharp increases and decreases. \n"
+        "ELF is a leading provider of specialty chemicals and additives for the fuel and lubricant industries. \n",
+        "ELF (stock ticker) makes its money through the production and sale of specialty chemicals, particularly for the oil and gas industry. \n",
+        "ELF Cosmetics competes with other cosmetics brands like  L'Or\u00e9al, Est\u00e9e Lauder, Revlon, and Coty. \n",
+        "ELF's closing prices over the past 30 days have shown significant volatility, with periods of substantial gains followed by sharp declines. \n"
     ]
 ]
