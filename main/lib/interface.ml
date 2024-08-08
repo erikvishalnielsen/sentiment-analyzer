@@ -112,6 +112,18 @@ let run_python_script_concurrently t script_name link =
 let close_python_script t = 
   match t.live_channel with 
   | Some channel -> In_channel.close channel
+  | None -> ();
+;;
+
+(* Function to forcibly stop a process given a process_info record *)
+let stop_process t =
+  match t.process with 
+  | Some process -> (
+    let pid = process.pid in
+    let pid_str = Pid.to_string pid in
+    let _process = (create_process ~prog:"kill" ~args:[pid_str]) in
+    t.process <- None;
+  )
   | None -> ()
 ;;
 
