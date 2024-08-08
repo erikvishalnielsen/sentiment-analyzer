@@ -1,6 +1,23 @@
-PUBLIC STOCK SENTIMENT ANALYZER
+# Public Stock Sentiment Analyzer
 
 By Erik Nielsen and Sam Meddin
+
+## Highlights
+- Analyze real time sentiment of live earnings calls utilizing asyncronous frameworks to simultaneously download new audio data while transcribing and analyzing previously collected data
+- Collect financial news data about a given stock ticker in the time frame specified to create a visualization of change in stock sentiment relate to change in price and change in volume
+- Calculate four separate correlations between price and sentiment to determine if sentiment is lagging or leading price in the time frame specified by one or two days as well as determining strength of correlation
+- Predict the closing price of a stock ticker using a linear prediciton model that analyzes sentiment data from the time frame
+- Provide general information about a given stock ticker including how the company generates revenue, 
+
+## Description
+
+
+
+## Getting Started
+
+## Authors
+
+
 
 LANGUAGES USED
 - OCaml

@@ -11,7 +11,7 @@ import glob
 # import time
 
 # Configure paths and URLs
-LIVE_STREAM_URL = 'https://www.youtube.com/watch?v=-mvUkiILTqI'  # Replace with the actual URL
+LIVE_STREAM_URL = 'https://www.youtube.com/watch?v=cekscukbuco'  # Replace with the actual URL
 TEMP_AUDIO_FILE = 'live_stream_audio'
 PART_FILE = 'live_stream_audio.part'
 PART_2 = 'live_stream_audio.wav.part'
@@ -104,7 +104,7 @@ async def convert(output_file: str):
         result = model.transcribe(file_path)  # Transcribe the audio file
         # json.dumps(result)
         print("Transcript: {}".format(result['text']), flush=True)
-        # print(get_live_sentiment(result['text']))
+        print(get_live_sentiment(result['text']))
         os.remove(CONVERTED_AUDIO_FILE)
     
     async for part_file in download_audio_part(LIVE_STREAM_URL, TEMP_AUDIO_FILE):
