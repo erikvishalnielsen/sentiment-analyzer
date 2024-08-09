@@ -120,6 +120,7 @@ let regressionEqtn
       -. (List.nth_exn data.data (List.length data.data - days_init - 1))
            .sentiment
     in
+    Core.print_s [%message "Delta Sentiment: " (Float.to_string deltaSentiment)];
     let deltaPrice = a_init +. (b_init *. deltaSentiment) in
     let newPrice = latestPrice +. deltaPrice in
     let regression : t =
