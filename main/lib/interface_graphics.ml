@@ -281,6 +281,18 @@ let draw_live (interface : Interface.t) =
     Graphics.set_color Colors.black;
     let pts = Array.of_list (Interface.earnings_pts interface) in
     Graphics.draw_poly_line pts;
+    Graphics.moveto 10 (((height + 350) / 2) - 5);
+    Graphics.draw_string "Sentiment";
+    (* Graphics.moveto 90 (((interface.graphSentiment.height + 50) / 2) - 5);
+       Graphics.draw_string "0"; *)
+    Graphics.moveto 75 (height + 150);
+    Graphics.draw_string
+      ("1");
+    Graphics.moveto 75 (50 + 150);
+    Graphics.draw_string
+      ("-1");
+    Graphics.moveto ((width / 2) + 50) (10 + 150);
+    Graphics.draw_string "Time ->";
 
     match Interface.live_channel interface with
     | None -> ()
