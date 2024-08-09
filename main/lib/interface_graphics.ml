@@ -296,12 +296,31 @@ let draw_live (interface : Interface.t) =
     Graphics.moveto ((width / 2) + 50) (10 + 150);
     Graphics.draw_string "Time ->";
 
+    let transcript = Interface.transcript_output interface in
+    let height_start = 200 in
+          let str_pair =
+            if String.length transcript >= 100
+            then (
+              let spaceInd = String.index_from transcript 100 ' ' in
+              match spaceInd with
+              | Some ind ->
+                ( String.slice transcript 0 ind
+                , String.slice transcript (ind + 1) (String.length transcript) )
+              | None -> transcript, " ")
+            else transcript, " "
+          in
+          Graphics.moveto 10 (height_start);
+          Graphics.draw_string (fst str_pair);
+          Graphics.moveto 10 (height_start - 20);
+          Graphics.draw_string (snd str_pair);
+
     match Interface.live_channel interface with
     | None -> ()
     | Some channel -> (
       if (has_data channel) then (
     try
       let string_output = In_channel.input_line_exn channel in
+      if (String.length string_output > 50) then (Interface.set_transcript_output interface string_output);
       (try 
         (* PLOT THIS DATA SOMEWHERE *)
         (let data_float = Float.of_string string_output in

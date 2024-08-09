@@ -73,8 +73,10 @@ val earnings_link_text : t -> Textbox.t
 val earnings_link_submit : t -> Button.t
 val live_channel : t -> In_channel.t option
 val earnings_pts : t -> (int * int) list
+val transcript_output : t -> string
  
 val correlations : t -> float list
 val regressionEqtn : t -> Regression.t option
 val get_list_of_widths : int -> int list
 val set_earnings_pts : t -> (int * int) list -> unit
+val set_transcript_output : t -> string -> unit

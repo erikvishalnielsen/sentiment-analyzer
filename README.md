@@ -27,6 +27,7 @@ Our second feature provides sentiment changes for the ticker specified within th
 ### How to use
 1) Run the Program using the following:
 
+```cd main```
 ```dune exec bin/main.exe```
 
 2) Once the graphical interface is open, you can enter a stock ticker and a number of days by clicking on those fields. The boxes will light up, allowing you to enter and delete text. When you are satisfied, press the green "CALCULATE" button. Additionally, the live option allows you to view real-time sentiment during an earnings call by entering the URL for the earnings call when the link is active.

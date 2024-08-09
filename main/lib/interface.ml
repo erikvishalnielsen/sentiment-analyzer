@@ -101,6 +101,7 @@ type t =
   ; mutable live_channel : In_channel.t option [@sexp.opaque]
   ; mutable process : Process_info.t option
   ; mutable earnings_pts : (int * int) list
+  ; mutable transcript_output : string
   }
 [@@deriving fields]
 
@@ -131,6 +132,10 @@ let stop_process t =
 
 let create_graph (data : (int * int) array) : Graph.t =
   { height = 500; width = 500; data }
+;;
+
+let set_transcript_output (t : t) trans =
+  t.transcript_output <- trans;
 ;;
 
 let create () =
@@ -328,6 +333,7 @@ let create () =
     ; live_channel = None
     ; process = None
     ; earnings_pts = []
+    ; transcript_output = "";
   }
   in
   interface
