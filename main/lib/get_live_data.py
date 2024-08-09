@@ -11,7 +11,7 @@ import glob
 # import time
 
 # Configure paths and URLs
-LIVE_STREAM_URL = 'https://www.youtube.com/watch?v=f39oHo6vFLg'  # Replace with the actual URL
+LIVE_STREAM_URL = 'https://www.youtube.com/watch?v=-mvUkiILTqI'  # Replace with the actual URL
 TEMP_AUDIO_FILE = 'live_stream_audio'
 PART_FILE = 'live_stream_audio.part'
 PART_2 = 'live_stream_audio.wav.part'
@@ -37,7 +37,7 @@ async def download_audio_part(url: str, output_file: str):
     for x in range(10):
         print("Downloading audio...", flush=True)
         # Ensure the output file has a .part extension
-        part_file = f"{output_file}{part_number}"
+        part_file = f"{output_file}{part_number}.part"
         ydl_opts = {
             'format': 'bestaudio/best',
             'outtmpl': part_file,
@@ -60,6 +60,7 @@ async def download_audio_part(url: str, output_file: str):
                 print("hi")
 
         print("Downloaded", flush=True)
+        await asyncio.sleep(1)
         yield part_file
     
 
@@ -79,7 +80,7 @@ async def convert(output_file: str):
             '-acodec', 'pcm_s16le',  # Audio codec
             '-ar', '44100',  # Audio sample rate
             '-ac', '2',  # Number of audio channels
-            wav_file
+            wav_file,
         ]
         # Run the ffmpeg command
         subprocess.run(command, check=True)
