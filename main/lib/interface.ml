@@ -124,6 +124,7 @@ let stop_process t =
     let pid_str = Pid.to_string pid in
     let _process = (create_process ~prog:"kill" ~args:[pid_str]) in
     t.process <- None;
+    t.live_channel <- None;
   )
   | None -> ()
 ;;
