@@ -11,7 +11,7 @@ import glob
 # import time
 
 # Configure paths and URLs
-LIVE_STREAM_URL = 'https://www.youtube.com/watch?v=-mvUkiILTqI'  # Replace with the actual URL
+LIVE_STREAM_URL = 'https://www.youtube.com/watch?v=f39oHo6vFLg'  # Replace with the actual URL
 TEMP_AUDIO_FILE = 'live_stream_audio'
 PART_FILE = 'live_stream_audio.part'
 PART_2 = 'live_stream_audio.wav.part'

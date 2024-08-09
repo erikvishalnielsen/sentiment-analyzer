@@ -297,7 +297,7 @@ let draw_live (interface : Interface.t) =
     Graphics.draw_string "Time ->";
 
     let transcript = Interface.transcript_output interface in
-    let height_start = 200 in
+    let height_start = 110 in
           let str_pair =
             if String.length transcript >= 100
             then (
