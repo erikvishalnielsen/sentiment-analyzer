@@ -1,9 +1,19 @@
 {
     "ticker": "ELF",
-    "queryCount": 123,
-    "resultsCount": 123,
+    "queryCount": 124,
+    "resultsCount": 124,
     "adjusted": true,
     "results": [
+        {
+            "v": 2584848.0,
+            "vw": 181.4139,
+            "o": 182.49,
+            "c": 187.95,
+            "h": 188.15,
+            "l": 182.1,
+            "t": 1723089600000,
+            "n": 51262
+        },
         {
             "v": 1389034.0,
             "vw": 184.2708,
@@ -1236,6 +1246,6 @@
         }
     ],
     "status": "OK",
-    "request_id": "8398d370a86f10c39192fb8153f4618e",
-    "count": 123
+    "request_id": "393e4519abbec2ecbd0e61dbcb2ab1fa",
+    "count": 124
 }
