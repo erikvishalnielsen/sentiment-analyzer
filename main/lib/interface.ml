@@ -519,7 +519,7 @@ let handle_click (t : t) (pos : int * int) =
         t.earnings_link_text.rectangle.on <- false;
         run_python_script_concurrently t "/home/ubuntu/sentiment-analyzer/main/lib/get_live_data.py" t.earnings_link_text.message
       ) else (
-        close_python_script t;
+        stop_process t;
         t.earnings_link_submit.rectangle.on <- false;
         t.earnings_pts <- [];
       )
